@@ -2,21 +2,19 @@
 
 namespace backend\helpers;
 
-class PaymentType
+class CustomerType
 {
     const TYPE_1 = 1;
     const TYPE_2 = 2;
-    const TYPE_3 = 3;
-    const TYPE_4 = 4;
 
     private static $data = [
-        1 => 'จ่ายเงินปลายทาง',
-        2 => 'จ่ายหน้างาน'
+        1 => 'บุคคลทั่วไป',
+        2 => 'ห้าง/ร้าน'
     ];
 
     private static $dataobj = [
-        ['id'=>1,'name' => 'จ่ายเงินปลายทาง'],
-        ['id'=>2,'name' => 'จ่ายหน้างาน'],
+        ['id'=>1,'name' => 'บุคคลทั่วไป'],
+        ['id'=>2,'name' => 'ห้าง/ร้าน'],
     ];
     public static function asArray()
     {

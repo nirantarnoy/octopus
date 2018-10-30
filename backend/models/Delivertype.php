@@ -4,7 +4,7 @@ use Yii;
 use yii\db\ActiveRecord;
 date_default_timezone_set('Asia/Bangkok');
 
-class Order extends \common\models\Order
+class Delivertype extends \common\models\DeliveryType
 {
     public function behaviors()
     {
@@ -47,39 +47,9 @@ class Order extends \common\models\Order
         ];
     }
 
-//    public function findBankinfo($id){
-//        $model = Bank::find()->where(['id'=>$id])->one();
-//        return count($model)>0?$model:null;
-//    }
-//    public function getLogo($id){
-//        $model = Bank::find()->where(['id'=>$id])->one();
-//        return count($model)>0?$model->logo:'';
-//    }
-//    public function getBankname($id){
-//        $model = Bank::find()->where(['id'=>$id])->one();
-//        return count($model)>0?$model->name:'';
-//    }
-//    public function getBankshortname($id){
-//        $model = Bank::find()->where(['id'=>$id])->one();
-//        return count($model)>0?$model->short_name:'';
-//    }
-    public function getLastNo($trans_type){
-        $model = \backend\models\Order::find()->where(['order_type'=>$trans_type])->MAX('order_no');
-//        $pre = \backend\models\Sequence::find()->where(['module_id'=>$trans_type])->one();
-        if($model){
-            $prefix = substr(date("Y"),2,2);
-            $cnum = substr((string)$model,strlen($prefix),strlen($model));
-            $len = strlen($cnum);
-            $clen = strlen($cnum + 1);
-            $loop = $len - $clen;
-            for($i=1;$i<=$loop;$i++){
-                $prefix.="0";
-            }
-            $prefix.=$cnum + 1;
-            return $prefix;
-        }else{
-            $prefix =substr(date("Y"),2,2);
-            return $prefix.'000001';
-        }
+    public function findName($id){
+        $model = Delivertype::find()->where(['id'=>$id])->one();
+        return count($model)>0?$model->name:'';
     }
+
 }

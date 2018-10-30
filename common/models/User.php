@@ -24,7 +24,9 @@ use yii\web\IdentityInterface;
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
+    const STATUS_ACTIVE = 1;
+
+    public $roles,$pwd;
 
 
     /**
@@ -51,8 +53,12 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            [['username'],'required'],
+            [['username'],'unique'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            [['roles','pwd'],'safe'],
+            [['group_id'],'integer'],
+            // ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
     }
 
@@ -185,5 +191,20 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+    public function attributeLabels()
+    {
+        return [
+            'id' => Yii::t('app', 'ID'),
+            'username' => Yii::t('app', 'Username'),
+            'auth_key' => Yii::t('app', 'Auth Key'),
+            'password_hash' => Yii::t('app', 'Password Hash'),
+            'password_reset_token' => Yii::t('app', 'Password Reset Token'),
+            'email' => Yii::t('app', 'Email'),
+            'status' => Yii::t('app', 'สถานะ'),
+            'created_at' => Yii::t('app', 'สร้างเมื่อ'),
+            'updated_at' => Yii::t('app', 'แก้ไขเมื่อ'),
+
+        ];
     }
 }
