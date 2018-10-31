@@ -64,8 +64,10 @@ $this->registerCss('
                                     return \backend\helpers\CustomerType::getTypeById($data->customer_type);
                                 }
                             ],
+                            'quotation_no',
                             'contact_name',
                             'contact_info',
+                            'appointment_date',
 
                         ],
                     ]) ?>
@@ -125,15 +127,6 @@ $this->registerCss('
 
 
 </div>
-    <div class="x_panel">
-        <div class="x_title">
-            <h4><i class="fa fa-list-alt"></i> เอกสารเสนอราคา<small></small></h4>
-            <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-
-        </div>
-    </div>
     <div class="x_panel">
         <div class="x_title">
             <h4><i class="fa fa-file-archive-o"></i> ไฟล์แนบ<small></small></h4>

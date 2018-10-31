@@ -6,6 +6,7 @@ use kartik\select2\Select2;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use kartik\file\FileInput;
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Order */
@@ -53,12 +54,21 @@ use kartik\file\FileInput;
                     ]) ?>
                 </div>
                 <div class="col-lg-4">
-                    <?= $form->field($model, 'contact_name')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'quotation_no')->textInput(['maxlength' => true]) ?>
                 </div>
             </div>
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-4">
+                <?= $form->field($model, 'contact_name')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-lg-4">
                 <?= $form->field($model, 'contact_info')->textarea(['maxlength' => true]) ?>
+            </div>
+            <div class="col-lg-4">
+                <?= $form->field($model, 'appointment_date')->widget(DatePicker::className(),[
+                        'value' => date('d-m-Y'),
+
+                ]) ?>
             </div>
         </div>
 
@@ -96,15 +106,6 @@ use kartik\file\FileInput;
     </div>
             <div class="row">
                 <div class="col-lg-6">
-                    <?php echo '<label class="control-label">แนบไฟล์ใบเสนอราคา</label>';
-                        echo FileInput::widget([
-                        'model' => $model,
-                        'attribute' => 'quotation_no',
-                        'options' => ['multiple' => true]
-                        ]);
-                    ?>
-                </div>
-                <div class="col-lg-6">
                     <?php echo '<label class="control-label">แนบไฟล์งาน</label>';
                     echo FileInput::widget([
                         'model' => $modelfile,
@@ -113,8 +114,6 @@ use kartik\file\FileInput;
                     ]);
                     ?>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-lg-6">
                     <?php echo '<label class="control-label">แนบไฟล์รูปงาน</label>';
                     echo FileInput::widget([
@@ -124,7 +123,6 @@ use kartik\file\FileInput;
                     ]);
                     ?>
                 </div>
-
             </div>
 
     <div class="form-group">

@@ -18,20 +18,20 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
+//            'access' => [
+//                'class' => AccessControl::className(),
+//                'rules' => [
+//                    [
+//                        'actions' => ['login', 'error'],
+//                        'allow' => true,
+//                    ],
+//                    [
+//                        'actions' => ['logout', 'index'],
+//                        'allow' => true,
+//                        'roles' => ['@'],
+//                    ],
+//                ],
+//            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -96,5 +96,24 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+    public function actionResetpassword(){
+        $model=new \backend\models\Resetform();
+        if($model->load(Yii::$app->request->post())){
+
+            $model_user = \backend\models\User::find()->where(['id'=>Yii::$app->user->id])->one();
+            if($model_user->validatePassword($model->oldpw)){
+                $model_user->setPassword($model->confirmpw);
+                $model_user->save();
+                return $this->redirect(['site/index']);
+            }else{
+                $session = Yii::$app->session;
+                $session->setFlash('msg_err','รหัสผ่านเดิมไม่ถูกต้อง');
+            }
+
+        }
+        return $this->render('_setpassword',[
+            'model'=>$model
+        ]);
     }
 }

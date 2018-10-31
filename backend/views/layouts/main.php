@@ -149,7 +149,12 @@ Yii::$app->name = "Octopus";
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="javascript:;">  ข้อมูลผู้ใช้</a>
+                                <li>
+                                    <?= Html::a(
+                                        "<i class='fa fa-refresh pull-right'></i> เปลี่ยนรหัสผ่าน",
+                                        ['/site/resetpassword'],
+                                        ['data-method' => 'post']
+                                    ) ?>
                                 </li>
                                 <!-- <li>
                                     <a href="javascript:;">
