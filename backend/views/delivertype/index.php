@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="delivertype-index">
     <div class="x_panel">
         <div class="x_title">
-            <h3><i class="fa fa-cubes"></i> <?=$this->title?> <small></small></h3>
+            <h3><i class="fa fa-truck"></i> <?=$this->title?> <small></small></h3>
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
@@ -46,7 +46,11 @@ $this->params['breadcrumbs'][] = $this->title;
             //'updated_at',
             //'updated_by',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'buttonOptions'=>['class'=>'btn btn-default'],
+                'template'=>'<div class="btn-group btn-group-sm text-center" role="group"> {view} {update} {delete} </div>',
+            ],
         ],
     ]); ?>
     <?php Pjax::end(); ?>

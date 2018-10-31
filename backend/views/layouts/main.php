@@ -89,7 +89,7 @@ Yii::$app->name = "Octopus";
                                         "items" => [
                                             ["label" => "กลุ่มผู้ใช้งาน", "url" => ["usergroup/index"]],
                                             ["label" => "ผู้ใช้งาน", "url" => ["user/index"]],
-                                            ["label" => "สิทธิ์การใช้งาน", "url" => ["assignrole/index"]],
+                                            ["label" => "สิทธิ์การใช้งาน", "url" => ["authitem/index"]],
                                         ],
 
                                     ],

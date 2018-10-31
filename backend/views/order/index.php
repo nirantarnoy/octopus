@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\OrderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -37,16 +38,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'order_type',
                 'value'=>function($data){
                    return \backend\helpers\OrderType::getTypeById($data->order_type);
-                }
+                },
+                'filter'=>ArrayHelper::map(\backend\helpers\OrderType::asArrayObject(), 'id', 'name'),
             ],
             'order_admin',
 
             'customer_name',
             [
+               'attribute' => 'created_at',
+               'value' => function($data){
+                  return date('d-m-Y',$data->created_at);
+               }
+            ],
+            [
                 'attribute' => 'order_status',
                 'value'=>function($data){
                     return $data->order_status;
-                }
+                },
+                'filter'=>ArrayHelper::map(\backend\helpers\PaymentStatus::asArrayObject(), 'id', 'name'),
             ],
             //'customer_type',
             //'contact_name',
@@ -60,7 +69,12 @@ $this->params['breadcrumbs'][] = $this->title;
             //'updated_at',
             //'updated_by',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                    'class' => 'yii\grid\ActionColumn',
+                    'options'=>['style'=>'width:120px;'],
+                    'buttonOptions'=>['class'=>'btn btn-default'],
+                    'template'=>'<div class="btn-group btn-group-sm text-center" role="group"> {view} {update} {delete} </div>',
+            ],
         ],
     ]); ?>
     <?php Pjax::end(); ?>

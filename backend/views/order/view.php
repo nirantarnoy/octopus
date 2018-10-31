@@ -57,7 +57,13 @@ $this->registerCss('
                             ],
                             'order_no',
                             'customer_name',
-                            'customer_type',
+                            [
+                                'attribute'=>'customer_type',
+                                'format' => 'html',
+                                'value'=>function($data){
+                                    return \backend\helpers\CustomerType::getTypeById($data->customer_type);
+                                }
+                            ],
                             'contact_name',
                             'contact_info',
 
