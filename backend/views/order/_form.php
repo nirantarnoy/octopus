@@ -22,7 +22,7 @@ use kartik\date\DatePicker;
         </div>
         <div class="x_content">
             <br />
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
 
     <div class="row">
         <div class="col-lg-4">
