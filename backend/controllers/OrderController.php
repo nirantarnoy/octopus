@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\OrderFile;
 use Yii;
 use backend\models\Order;
 use backend\models\OrderSearch;
@@ -16,6 +17,7 @@ use yii\web\UploadedFile;
  */
 class OrderController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
      * {@inheritdoc}
      */
@@ -57,8 +59,12 @@ class OrderController extends Controller
      */
     public function actionView($id)
     {
+        $orderfile = \common\models\OrderFile::find()->where(['order_id'=>$id,'file_type'=>1])->all();
+        $orderimage = \common\models\OrderFile::find()->where(['order_id'=>$id,'file_type'=>2])->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'orderfile' => $orderfile,
+            'orderimage' => $orderimage,
         ]);
     }
 
@@ -74,7 +80,33 @@ class OrderController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
 
+            $uploadfile = UploadedFile::getInstances($modelfile,'file');
+            $uploadimage = UploadedFile::getInstances($modelfile,'file_photo');
+
             if($model->save()){
+
+                if(!empty($uploadfile)){
+                    foreach($uploadfile as $file){
+                        $file->saveAs(Yii::getAlias('@backend') .'/web/uploads/files/'.$file);
+                        $modelfile = new \common\models\OrderFile();
+                        $modelfile->order_id = $model->id;
+                        $modelfile->file_type = 1; // 1 = ไฟล
+                        $modelfile->name = $file;
+                        $modelfile->save(false);
+                    }
+                }
+                if(!empty($uploadimage)){
+                    foreach($uploadimage as $file){
+                        $file->saveAs(Yii::getAlias('@backend') .'/web/uploads/images/'.$file);
+                        $modelfile = new \common\models\OrderFile();
+                        $modelfile->order_id = $model->id;
+                        $modelfile->file_type = 2; // 2 = รูปภาพ
+                        $modelfile->name = $file;
+                        $modelfile->save(false);
+                    }
+                }
+
+
                 $session = Yii::$app->session;
                 $session->setFlash('msg','บันทึกรายการเรียบร้อย');
                 return $this->redirect(['index']);
@@ -99,9 +131,37 @@ class OrderController extends Controller
     {
         $model = $this->findModel($id);
         $modelfile = new Modelfile();
-        if ($model->load(Yii::$app->request->post())) {
+        $orderfile = \common\models\OrderFile::find()->where(['order_id'=>$id,'file_type'=>1])->all();
+        $orderimage = \common\models\OrderFile::find()->where(['order_id'=>$id,'file_type'=>2])->all();
+        if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
+
+            $uploadfile = UploadedFile::getInstances($modelfile,'file');
+            $uploadimage = UploadedFile::getInstances($modelfile,'file_photo');
+
             $model->status = 1;
             if($model->save()){
+
+                if(!empty($uploadfile)){
+                    foreach($uploadfile as $file){
+                        $file->saveAs(Yii::getAlias('@backend') .'/web/uploads/files/'.$file);
+                        $modelfile = new \common\models\OrderFile();
+                        $modelfile->order_id = $model->id;
+                        $modelfile->file_type = 1; // 1 = ไฟล
+                        $modelfile->name = $file;
+                        $modelfile->save(false);
+                    }
+                }
+                if(!empty($uploadimage)){
+                    foreach($uploadimage as $file){
+                        $file->saveAs(Yii::getAlias('@backend') .'/web/uploads/images/'.$file);
+                        $modelfile = new \common\models\OrderFile();
+                        $modelfile->order_id = $model->id;
+                        $modelfile->file_type = 2; // 2 = รูปภาพ
+                        $modelfile->name = $file;
+                        $modelfile->save(false);
+                    }
+                }
+
                 $session = Yii::$app->session;
                 $session->setFlash('msg','บันทึกรายการเรียบร้อย');
                 return $this->redirect(['index']);
@@ -111,6 +171,8 @@ class OrderController extends Controller
         return $this->render('update', [
             'model' => $model,
             'modelfile' => $modelfile,
+            'orderfile' => $orderfile,
+            'orderimage' => $orderimage,
         ]);
     }
 
@@ -142,5 +204,31 @@ class OrderController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+    public function actionDeleteimage(){
+        //$id = \Yii::$app->request->post("product_id");
+        $picid = \Yii::$app->request->post("pic_id");
+        if($picid){
+            $model = \common\models\OrderFile::find()->where(['id'=>$picid])->one();
+            if($model){
+                unlink(Yii::getAlias('@backend') .'/web/uploads/images/'.$model->name);
+                \common\models\OrderFile::deleteAll(['id'=>$picid]);
+            }
+
+            return true;
+        }
+    }
+    public function actionDeletefile(){
+        //$id = \Yii::$app->request->post("product_id");
+        $picid = \Yii::$app->request->post("file_id");
+        if($picid){
+            $model = \common\models\OrderFile::find()->where(['id'=>$picid])->one();
+            if($model){
+                unlink(Yii::getAlias('@backend') .'/web/uploads/files/'.$model->name);
+                \common\models\OrderFile::deleteAll(['id'=>$picid]);
+            }
+
+            return true;
+        }
     }
 }

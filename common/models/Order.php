@@ -41,7 +41,7 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             [['order_type','order_no'],'required'],
-            [['quotation_no'],'file'],
+            [['quotation_no'],'string'],
             [['appointment_date'],'safe'],
             [['order_admin', 'order_type', 'customer_type', 'payment_type', 'delivery_type', 'order_status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['order_no', 'customer_name', 'contact_name', 'contact_info', 'delivery_name'], 'string', 'max' => 255],

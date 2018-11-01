@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Order */
@@ -133,7 +134,29 @@ $this->registerCss('
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-
+            <table class="table">
+                <thead>
+                  <tr>
+                      <th style="width: 5%">#</th>
+                      <th>ชื่อไฟล์</th>
+                      <th>ทำรายการ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($orderfile as $value):?>
+                     <tr>
+                         <td></td>
+                         <td>
+                             <a href="#"><?=$value->name?></a>
+                         </td>
+                         <td>
+                             <div class="btn btn-info"><i class="fa fa-file-o"></i></div>
+                             <div class="btn btn-default"><i class="fa fa-download"></i></div>
+                         </td>
+                     </tr>
+                 <?php endforeach;?></div>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="x_panel">
@@ -142,7 +165,51 @@ $this->registerCss('
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <?php if(1): ?>
+                        <div class="panel panel-body">  <div class="row">
+                                <?php foreach ($orderimage as $value):?>
 
+                                    <div class="col-xs-6 col-md-3">
+                                        <a href="#" class="thumbnail">
+                                            <img src="../../backend/web/uploads/images/<?=$value->name?>" alt="">
+                                        </a>
+                                        <div class="btn btn-danger" data-var="<?=$value->id?>" onclick="removepic($(this));">ลบ</div>
+                                    </div>
+
+                                    <?php //echo Html::img("../../frontend/web/img/screenshots/".$value->filename,['width'=>'10%','class'=>'thumbnail']) ?>
+                                <?php endforeach;?></div>
+                        </div>
+                    <?php endif;?>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<?php
+$url_to_del_file = Url::to(['order/deletefile'],true);
+$url_to_del_image = Url::to(['order/deleteimage'],true);
+$js =<<<JS
+        $(function() {
+
+        });
+       function removepic(e){
+   // alert(e.attr("data-var"));return;
+        if(confirm("ต้องการลบรูปภาพนี้ใช่หรือไม่")){
+            $.ajax({
+               'type':'post',
+               'dataType':'html',
+               'url':"$url_to_del_image",
+               'data': {'pic_id':e.attr("data-var")},
+               'success': function(data) {
+                 location.reload();
+               }
+            });
+        }
+  }
+
+JS;
+$this->registerJs($js,static::POS_END);
+?>
