@@ -7,7 +7,8 @@ $session = new Yii::$app->session();
 $this->title = "เปลี่ยนรหัสผ่านผู้ใช้งาน";
 
 ?>
-<div class="panel panel-headline">
+
+<div class="delivertype-index">
     <div class="panel-heading">
         <div class="x_title">
             <h3><i class="fa fa-life-bouy"></i> <?=$this->title?> </h3>
@@ -29,32 +30,34 @@ $this->title = "เปลี่ยนรหัสผ่านผู้ใช้�
 
             <div class="clearfix"></div>
         </div>
+    </div>
         <div class="panel-body">
             <br />
-<?php $form = ActiveForm::begin()?>
-<div class="row">
-    <div class="col-lg-6">
-       <?php if($session->getFlash('msg_err')!=null){
-        echo "<div class='alert alert-danger'>".$session->getFlash('msg_err').
-             " <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">
-    <span aria-hidden=\"true\">&times;</span>
-  </button>".
-            "</div>";
-        }?>
+            <?php $form = ActiveForm::begin()?>
+            <div class="row">
+                <div class="col-lg-6">
+                   <?php if($session->getFlash('msg_err')!=null){
+                    echo "<div class='alert alert-danger'>".$session->getFlash('msg_err').
+                         " <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">
+                <span aria-hidden=\"true\">&times;</span>
+              </button>".
+                        "</div>";
+                    }?>
 
-        <?php
-           echo $form->field($model,'oldpw')->passwordInput()->label();
+                    <?php
+                       echo $form->field($model,'oldpw')->passwordInput()->label();
 
-        ?>
-        <?php echo $form->field($model,'newpw')->passwordInput()->label()?>
-        <?php echo $form->field($model,'confirmpw')->passwordInput()->label()?>
-        <div class="form-group">
-            <input type="submit" value="ตกลง" class="btn btn-success">
+                    ?>
+                    <?php echo $form->field($model,'newpw')->passwordInput()->label()?>
+                    <?php echo $form->field($model,'confirmpw')->passwordInput()->label()?>
+                    <div class="form-group">
+                        <input type="submit" value="ตกลง" class="btn btn-success">
+                    </div>
+
+                </div>
+            </div>
+            <?php ActiveForm::end(); ?>
         </div>
 
-    </div>
 </div>
-<?php ActiveForm::end(); ?>
-        </div>
-    </div>
-</div>
+
