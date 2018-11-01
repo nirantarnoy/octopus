@@ -44,8 +44,8 @@ class DeliveryType extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'description' => Yii::t('app', 'Description'),
+            'name' => Yii::t('app', 'ชื่อ'),
+            'description' => Yii::t('app', 'รายละเอียด'),
             'status' => Yii::t('app', 'Status'),
             'created_at' => Yii::t('app', 'Created At'),
             'created_by' => Yii::t('app', 'Created By'),

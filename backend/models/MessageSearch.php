@@ -11,6 +11,7 @@ use backend\models\Message;
  */
 class MessageSearch extends Message
 {
+    public $globalSearch;
     /**
      * {@inheritdoc}
      */
@@ -19,6 +20,7 @@ class MessageSearch extends Message
         return [
             [['id', 'message_type', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['title', 'detail'], 'safe'],
+            [['globalSearch'],'string'],
         ];
     }
 
@@ -67,8 +69,10 @@ class MessageSearch extends Message
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'detail', $this->detail]);
+        if($this->globalSearch !=''){
+            $query->orFilterWhere(['like', 'title', $this->globalSearch])
+                ->orFilterWhere(['like', 'detail', $this->globalSearch]);
+        }
 
         return $dataProvider;
     }

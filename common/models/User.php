@@ -201,6 +201,7 @@ class User extends ActiveRecord implements IdentityInterface
             'password_hash' => Yii::t('app', 'Password Hash'),
             'password_reset_token' => Yii::t('app', 'Password Reset Token'),
             'email' => Yii::t('app', 'Email'),
+            'group_id' => Yii::t('app', 'กลุ่มผู้ใช้'),
             'status' => Yii::t('app', 'สถานะ'),
             'created_at' => Yii::t('app', 'สร้างเมื่อ'),
             'updated_at' => Yii::t('app', 'แก้ไขเมื่อ'),

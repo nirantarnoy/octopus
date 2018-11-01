@@ -11,6 +11,7 @@ use backend\models\Usergroup;
  */
 class UsergroupSearch extends Usergroup
 {
+    public $globalSearch;
     /**
      * {@inheritdoc}
      */
@@ -19,6 +20,7 @@ class UsergroupSearch extends Usergroup
         return [
             [['id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'description'], 'safe'],
+            [['globalSearch'],'string'],
         ];
     }
 
@@ -65,9 +67,11 @@ class UsergroupSearch extends Usergroup
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
         ]);
+        if($this->globalSearch !=''){
+            $query->orFilterWhere(['like', 'name', $this->globalSearch])
+                ->orFilterWhere(['like', 'description', $this->globalSearch]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description]);
+        }
 
         return $dataProvider;
     }

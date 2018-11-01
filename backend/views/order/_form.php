@@ -21,7 +21,6 @@ use kartik\date\DatePicker;
             <div class="clearfix"></div>
         </div>
         <div class="x_content">
-            <br />
     <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
 
     <div class="row">

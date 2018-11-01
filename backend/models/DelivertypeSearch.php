@@ -11,6 +11,7 @@ use backend\models\Delivertype;
  */
 class DelivertypeSearch extends Delivertype
 {
+    public $globalSearch;
     /**
      * {@inheritdoc}
      */
@@ -19,6 +20,7 @@ class DelivertypeSearch extends Delivertype
         return [
             [['id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['name', 'description'], 'safe'],
+            [['globalSearch'],'string'],
         ];
     }
 
@@ -65,9 +67,11 @@ class DelivertypeSearch extends Delivertype
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
         ]);
+        if($this->globalSearch !=''){
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            $query->orFilterWhere(['like', 'name', $this->globalSearch])
+                ->orFilterWhere(['like', 'description', $this->globalSearch]);
+        }
 
         return $dataProvider;
     }

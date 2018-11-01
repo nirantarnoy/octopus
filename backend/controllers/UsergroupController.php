@@ -35,12 +35,15 @@ class UsergroupController extends Controller
      */
     public function actionIndex()
     {
+        $pageSize = \Yii::$app->request->post("perpage");
         $searchModel = new UsergroupSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize = $pageSize;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'perpage' => $pageSize,
         ]);
     }
 
@@ -66,8 +69,14 @@ class UsergroupController extends Controller
     {
         $model = new Usergroup();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) ) {
+               $model->status = 1;
+            if($model->save()){
+                $session = Yii::$app->session;
+                $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                return $this->redirect(['index']);
+            }
+
         }
 
         return $this->render('create', [
@@ -87,7 +96,9 @@ class UsergroupController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $session = Yii::$app->session;
+            $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+            return $this->redirect(['index']);
         }
 
         return $this->render('update', [

@@ -46,7 +46,7 @@ class Usergroup extends \common\models\UserGroup
 		        ],
 		    ];
 		 }
-		  public function findGroupname($id){
+		  public function findName($id){
 		 	$model = Usergroup::find()->where(['id'=>$id])->one();
 		 	return count($model)>0?$model->name:'';
 		 }
