@@ -58,16 +58,7 @@ Yii::$app->name = "Octopus";
                 <div class="clearfix"></div>
 
                 <!-- menu prile quick info -->
-                <div class="profile">
-                    <div class="profile_pic">
-                        <?=Html::img('@web/uploads/img/admin.jpg',['class'=>'img-circle profile_img'])?>
-                       <!--  <img src="../web/uplaods/img/admin.jpg" alt="..." class="img-circle profile_img"> -->
-                    </div>
-                    <div class="profile_info">
-                        <span>Welcome,</span>
-                        <h2><?=!Yii::$app->user->isGuest?Yii::$app->user->identity->username:'';?></h2>
-                    </div>
-                </div>
+
                 <!-- /menu prile quick info -->
 
                 <br />

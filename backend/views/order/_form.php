@@ -118,7 +118,10 @@ use kartik\date\DatePicker;
                     echo FileInput::widget([
                         'model' => $modelfile,
                         'attribute' => 'file_photo',
-                        'options' => ['multiple' => true]
+                        'options' => [
+                                'multiple' => true ,
+                                'accept' => 'image/*',
+                        ]
                     ]);
                     ?>
                 </div>

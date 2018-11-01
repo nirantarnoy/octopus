@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\Modelfile;
+use yii\web\UploadedFile;
 
 /**
  * OrderController implements the CRUD actions for Order model.
@@ -71,10 +72,13 @@ class OrderController extends Controller
         $model = new Order();
         $modelfile = new Modelfile();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $session = Yii::$app->session;
-            $session->setFlash('msg','บันทึกรายการเรียบร้อย');
-            return $this->redirect(['index']);
+        if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
+
+            if($model->save()){
+                $session = Yii::$app->session;
+                $session->setFlash('msg','บันทึกรายการเรียบร้อย');
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('create', [
