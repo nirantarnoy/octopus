@@ -29,7 +29,8 @@
         "kartik-v/yii2-mpdf": "*",
         "yii2mod/yii2-sweet-alert": "*",
         "lavrentiev/yii2-toastr": "~2.0.0",
-        "yiister/yii2-gentelella": "~1.0"
+        "yiister/yii2-gentelella": "~1.0",
+        "2amigos/yii2-gallery-widget": "~1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

@@ -138,7 +138,7 @@ class OrderController extends Controller
             $uploadfile = UploadedFile::getInstances($modelfile,'file');
             $uploadimage = UploadedFile::getInstances($modelfile,'file_photo');
 
-            $model->status = 1;
+
             if($model->save()){
 
                 if(!empty($uploadfile)){

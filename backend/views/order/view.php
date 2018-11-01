@@ -143,9 +143,11 @@ $this->registerCss('
                   </tr>
                 </thead>
                 <tbody>
+                <?php $i = 0;?>
                 <?php foreach ($orderfile as $value):?>
+                <?php $i +=1;?>
                      <tr>
-                         <td></td>
+                         <td><?=$i?></td>
                          <td>
                              <a href="#"><?=$value->name?></a>
                          </td>
@@ -168,21 +170,40 @@ $this->registerCss('
             <div class="row">
                 <div class="col-lg-12">
                     <?php if(1): ?>
-                        <div class="panel panel-body">  <div class="row">
+                        <?php $list = [];?>
                                 <?php foreach ($orderimage as $value):?>
+                                  <?php array_push($list,
+                                    [
+                                        'url' => '../web/uploads/images/'.$value->name,
+                                        'src' => '../web/uploads/images/'.$value->name,
+                                        'options' =>[
+                                                'title' => 'ทดสอบรูปภาพ',
+                                                'style' => ['width'=>20]
+                                        ]
+                                    ]
+                                );?>
+                                <?php endforeach;?>
 
-                                    <div class="col-xs-6 col-md-3">
-                                        <a href="#" class="thumbnail">
-                                            <img src="../../backend/web/uploads/images/<?=$value->name?>" alt="">
-                                        </a>
-                                        <div class="btn btn-danger" data-var="<?=$value->id?>" onclick="removepic($(this));">ลบ</div>
-                                    </div>
-
-                                    <?php //echo Html::img("../../frontend/web/img/screenshots/".$value->filename,['width'=>'10%','class'=>'thumbnail']) ?>
-                                <?php endforeach;?></div>
-                        </div>
                     <?php endif;?>
+                    <?php $items = [
+                        [
+                            'url' => 'http://farm8.static.flickr.com/7429/9478294690_51ae7eb6c9_b.jpg',
+                            'src' => 'http://farm8.static.flickr.com/7429/9478294690_51ae7eb6c9_s.jpg',
+                            'options' => array('title' => 'Camposanto monumentale (inside)')
+                        ],
+                        [
+                            'url' => 'http://farm4.static.flickr.com/3825/9476606873_42ed88704d_b.jpg',
+                            'src' => 'http://farm4.static.flickr.com/3825/9476606873_42ed88704d_s.jpg',
+                            'options' => array('title' => 'Sail us to the Moon')
+                        ],
+                        [
+                            'url' => 'http://farm4.static.flickr.com/3749/9480072539_e3a1d70d39_b.jpg',
+                            'src' => 'http://farm4.static.flickr.com/3749/9480072539_e3a1d70d39_s.jpg',
+                            'options' => array('title' => 'Sail us to the Moon')
+                        ],
 
+                    ];?>
+                    <?= dosamigos\gallery\Gallery::widget(['items' => $items]);?>
                 </div>
             </div>
         </div>
