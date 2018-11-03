@@ -6,7 +6,7 @@ use kartik\select2\Select2;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
 use kartik\file\FileInput;
-use kartik\date\DatePicker;
+use kartik\datetime\DateTimePicker;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\Order */
@@ -64,7 +64,7 @@ use kartik\date\DatePicker;
                 <?= $form->field($model, 'contact_info')->textarea(['maxlength' => true]) ?>
             </div>
             <div class="col-lg-4">
-                <?= $form->field($model, 'appointment_date')->widget(DatePicker::className(),[
+                <?= $form->field($model, 'appointment_date')->widget(DateTimePicker::className(),[
                         'value' => date('d-m-Y'),
 
                 ]) ?>
@@ -73,14 +73,15 @@ use kartik\date\DatePicker;
 
 
     <div class="row">
-        <div class="col-lg-4">
+<!--        <div class="col-lg-4">-->
             <?php //echo $form->field($model, 'payment_type')->widget(Select2::className(),[
 //                'data'=>ArrayHelper::map(\backend\helpers\PaymentType::asArrayObject(),'id','name'),
 //                'options'=>[
 //                    'placeholder'=>'เลือกประเภท'
 //                ]
 //            ]) ?>
-        </div>
+<!--        </div>-->
+
         <div class="col-lg-4">
             <?= $form->field($model, 'delivery_type')->widget(Select2::className(),[
                 'data'=>ArrayHelper::map(\backend\models\Delivertype::find()->all(),'id','name'),
@@ -92,8 +93,6 @@ use kartik\date\DatePicker;
         <div class="col-lg-4">
             <?= $form->field($model, 'delivery_name')->textInput(['maxlength' => true]) ?>
         </div>
-    </div>
-    <div class="row">
         <div class="col-lg-4">
             <?= $form->field($model, 'order_status')->widget(Select2::className(),[
                 'data'=>ArrayHelper::map(\backend\helpers\PaymentStatus::asArrayObject(),'id','name'),
@@ -102,6 +101,9 @@ use kartik\date\DatePicker;
                 ]
             ]) ?>
         </div>
+    </div>
+    <div class="row">
+
     </div>
             <div class="row">
                 <div class="col-lg-6">
