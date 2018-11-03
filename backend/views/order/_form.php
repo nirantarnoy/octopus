@@ -74,12 +74,12 @@ use kartik\date\DatePicker;
 
     <div class="row">
         <div class="col-lg-4">
-            <?= $form->field($model, 'payment_type')->widget(Select2::className(),[
-                'data'=>ArrayHelper::map(\backend\helpers\PaymentType::asArrayObject(),'id','name'),
-                'options'=>[
-                    'placeholder'=>'เลือกประเภท'
-                ]
-            ]) ?>
+            <?php //echo $form->field($model, 'payment_type')->widget(Select2::className(),[
+//                'data'=>ArrayHelper::map(\backend\helpers\PaymentType::asArrayObject(),'id','name'),
+//                'options'=>[
+//                    'placeholder'=>'เลือกประเภท'
+//                ]
+//            ]) ?>
         </div>
         <div class="col-lg-4">
             <?= $form->field($model, 'delivery_type')->widget(Select2::className(),[

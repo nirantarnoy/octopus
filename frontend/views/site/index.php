@@ -10,7 +10,7 @@ $this->title = 'octopus';
         <div class="row">
             <div class="col-lg-12">
                 <div class="input-group">
-                    <input type="text" class="form-control" style="height: 60px;font-size: 24px;" placeholder="กรอกเลขที่ใบสั่งงาน">
+                    <input type="text" class="form-control" style="height: 60px;font-size: 24px;" placeholder="กรอกเลขที่ QT และ (อีเมล หรือ เบอรโทร)">
                     <span class="input-group-btn">
                         <button class="btn btn-info" type="button">ตรวจสอบสถานะ</button>
                     </span>

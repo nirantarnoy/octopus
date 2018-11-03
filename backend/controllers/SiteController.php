@@ -116,4 +116,29 @@ class SiteController extends Controller
             'model'=>$model
         ]);
     }
+    public function actionSendnotify(){
+
+        $message = 'ทดสอบส่งข้อความจากระบบตรวจสอบสถานะใบสั่งผลิต';
+
+        $line_api = 'https://notify-api.line.me/api/notify';
+        $line_token = 'qy65Mp76Uar44cybVMXvprCiSW61zJjbRQdpJwh48CM'; // octopus
+
+        header('Content-Type: text/html; charset=utf-8');
+
+        $queryData = array('message' => $message);
+        $queryData = http_build_query($queryData, '', '&');
+        $headerOptions = array(
+            'http' => array(
+                'method' => 'POST',
+                'header' => "Content-Type: application/x-www-form-urlencoded\r\n"
+                    . "Authorization: Bearer " . $line_token . "\r\n"
+                    . "Content-Length: " . strlen($queryData) . "\r\n",
+                'content' => $queryData
+            )
+        );
+        $context = stream_context_create($headerOptions);
+        $result = file_get_contents($line_api, FALSE, $context);
+        $res = json_decode($result);
+        return $res;
+    }
 }

@@ -14,12 +14,14 @@ class PaymentStatus
         1 => 'ชำระแล้ว',
         2 => 'วางบิล',
         3 => 'ค้างชำระ,รอโอน',
+        4 => 'ชำระบางส่วน',
     ];
 
     private static $dataobj = [
         ['id'=>1,'name' => 'ชำระแล้ว'],
         ['id'=>2,'name' => 'วางบิล'],
         ['id'=>3,'name' => 'ค้างชำระ,รอโอน'],
+        ['id'=>4,'name' => 'ชำระบางส่วน'],
     ];
     public static function asArray()
     {
