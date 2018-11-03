@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
+use toxor88\switchery\Switchery;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\User */
@@ -28,7 +29,7 @@ use kartik\select2\Select2;
                     'data'=>ArrayHelper::map(\backend\models\Usergroup::find()->all(),'id','name')
             ]) ?>
 
-            <?= $form->field($model, 'status')->textInput() ?>
+            <?php echo $form->field($model, 'status')->widget(Switchery::className(),['options'=>['label'=>'','class'=>'form-control']])->label() ?>
 
                 <div class="form-group">
                     <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>

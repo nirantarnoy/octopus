@@ -79,8 +79,8 @@ class SiteController extends Controller
             return $this->goBack();
         } else {
             $model->password = '';
-
-            return $this->render('login', [
+            $this->layout = false;
+            return $this->render('_login', [
                 'model' => $model,
             ]);
         }
