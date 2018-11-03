@@ -61,7 +61,7 @@ class Order extends \yii\db\ActiveRecord
             'quotation_no' => Yii::t('app', 'ใบเสนอราคา'),
             'customer_name' => Yii::t('app', 'ชื่อลูกค้า'),
             'customer_type' => Yii::t('app', 'ประเภทลูกค้า'),
-            'contact_name' => Yii::t('app', 'ชื่อผู้ติดต่อ'),
+            'contact_name' => Yii::t('app', 'Facebook/Line'),
             'contact_info' => Yii::t('app', 'ข้อมูลติดต่อ'),
             'payment_type' => Yii::t('app', 'ประเภทชำระเงิน'),
             'delivery_type' => Yii::t('app', 'ประเภทการจัดส่ง'),
