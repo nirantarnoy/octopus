@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f271db706f5bf036254ba53d04dc6ed1",
+    "content-hash": "34b583744c666c807a4f324d784a0f1b",
     "packages": [
         {
             "name": "2amigos/yii2-gallery-widget",
@@ -555,6 +555,60 @@
             "time": "2018-10-30T13:37:51+00:00"
         },
         {
+            "name": "kartik-v/yii2-date-range",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-date-range.git",
+                "reference": "3cec83d6f2882b8fec85d3f532cd711aea5ad339"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-date-range/zipball/3cec83d6f2882b8fec85d3f532cd711aea5ad339",
+                "reference": "3cec83d6f2882b8fec85d3f532cd711aea5ad339",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-krajee-base": ">=2.0.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.7.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\daterange\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "An advanced Yii 2 date range picker input for based on bootstrap-daterangepicker plugin.",
+            "homepage": "https://github.com/kartik-v/yii2-date-range",
+            "keywords": [
+                "bootstrap",
+                "bootstrap 3",
+                "date",
+                "date-range",
+                "extension",
+                "range",
+                "time",
+                "widget",
+                "yii2"
+            ],
+            "time": "2018-10-09T12:34:51+00:00"
+        },
+        {
             "name": "kartik-v/yii2-dialog",
             "version": "dev-master",
             "source": {
@@ -611,12 +665,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-grid.git",
-                "reference": "c9bfdb2bd7133e4d1e78bcb2b4557003f4de0015"
+                "reference": "233fcf68fc6197e9451c95117ea45be153db1a8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/c9bfdb2bd7133e4d1e78bcb2b4557003f4de0015",
-                "reference": "c9bfdb2bd7133e4d1e78bcb2b4557003f4de0015",
+                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/233fcf68fc6197e9451c95117ea45be153db1a8e",
+                "reference": "233fcf68fc6197e9451c95117ea45be153db1a8e",
                 "shasum": ""
             },
             "require": {
@@ -655,7 +709,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2018-10-27T06:52:39+00:00"
+            "time": "2018-11-03T18:08:29+00:00"
         },
         {
             "name": "kartik-v/yii2-krajee-base",
@@ -1539,12 +1593,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "2a25cd5efe7fc9c9255354228a1b8decacbd3c3f"
+                "reference": "98e5b3bad2358b0837c91ae474f013926127dbbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/2a25cd5efe7fc9c9255354228a1b8decacbd3c3f",
-                "reference": "2a25cd5efe7fc9c9255354228a1b8decacbd3c3f",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/98e5b3bad2358b0837c91ae474f013926127dbbe",
+                "reference": "98e5b3bad2358b0837c91ae474f013926127dbbe",
                 "shasum": ""
             },
             "require": {
@@ -1631,7 +1685,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2018-11-02T09:20:28+00:00"
+            "time": "2018-11-03T08:19:27+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -4329,7 +4383,8 @@
         "kartik-v/yii2-widget-datepicker": 20,
         "kartik-v/yii2-widget-select2": 20,
         "kartik-v/bootstrap-fileinput": 20,
-        "kartik-v/yii2-widget-datetimepicker": 20
+        "kartik-v/yii2-widget-datetimepicker": 20,
+        "kartik-v/yii2-date-range": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

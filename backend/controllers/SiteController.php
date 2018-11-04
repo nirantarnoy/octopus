@@ -60,7 +60,13 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index_2');
+        $from_date = '';
+        $to_date = '';
+        return $this->render('index_2',[
+                'from_date' => $from_date,
+                'to_date' => $to_date,
+            ]
+            );
     }
 
     /**

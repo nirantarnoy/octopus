@@ -1,7 +1,38 @@
 <?php
+use kartik\daterange\DateRangePicker;
+use yii\helpers\Url;
+
+$dateval = date('d-m-Y').' ถึง '.date('d-m-Y');
+if($from_date !='' && $to_date != ''){
+    $dateval = $from_date.' ถึง '.$to_date;
+}
 
 ?>
-
+<div class="row">
+    <div class="col-lg-6">
+        <p class="panel-subtitle">เลือกช่วงข้อมูลที่ต้องการดูรายละเอียด</p>
+        <div class="row">
+            <div class="col-lg-5">
+                <form id="form_date" action="<?=Url::to(['site/index'],true)?>">
+                    <?php
+                    echo DateRangePicker::widget([
+                        'name'=>'date_select',
+                        'value' => $dateval,
+                        'options' => ['class'=>'date_select'],
+                        'presetDropdown' => true,
+                        'hideInput' => true,
+                        'convertFormat' => true,
+                        'pluginOptions' => [
+                            'locale'=>['format'=>'d-m-Y','separator'=>' ถึง ']
+                        ]
+                    ]);
+                    ?>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
 <div class="">
     <div class="row top_tiles">
         <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
