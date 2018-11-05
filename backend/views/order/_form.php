@@ -11,6 +11,8 @@ use kartik\datetime\DateTimePicker;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Order */
 /* @var $form yii\widgets\ActiveForm */
+$cur_type = 0;
+
 ?>
 
 <div class="order-form">
@@ -28,7 +30,10 @@ use kartik\datetime\DateTimePicker;
             <?= $form->field($model, 'order_type')->widget(Select2::className(),[
                 'data'=>ArrayHelper::map(\backend\helpers\OrderType::asArrayObject(),'id','name'),
                 'options'=>[
-                    'placeholder'=>'เลือกประเภท'
+                    'placeholder'=>'เลือกประเภท',
+                    'onchange'=>'
+                      "'.$cur_type.'" = $(this).val();
+                    '
                 ]
             ]) ?>
         </div>
@@ -94,8 +99,9 @@ use kartik\datetime\DateTimePicker;
             <?= $form->field($model, 'delivery_name')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-lg-4">
+            <?php echo $cur_type;?>
             <?= $form->field($model, 'order_status')->widget(Select2::className(),[
-                'data'=>ArrayHelper::map(\backend\helpers\PaymentStatus::asArrayObject(),'id','name'),
+                'data'=>ArrayHelper::map(\backend\helpers\Orderstatus::asArrayObject(1),'id','name'),
                 'options'=>[
                     'placeholder'=>'เลือกประเภท'
                 ]

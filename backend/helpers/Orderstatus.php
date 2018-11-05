@@ -60,11 +60,20 @@ class Orderstatus
     ];
     public static function asArray($type)
     {
-        return self::$data;
+        if($type == 1){
+            return self::$data;
+        }else{
+            return self::$data2;
+        }
+
     }
     public static function asArrayObject($type)
     {
-        return self::$dataobj;
+        if($type == 1){
+            return self::$dataobj;
+        }else {
+            return self::$dataobj2;
+        }
     }
     public static function getTypeById($idx)
     {
