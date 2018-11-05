@@ -39,6 +39,13 @@ class OrderController extends Controller
      */
     public function actionIndex()
     {
+//        $model = \backend\helpers\Orderstatus::asArrayObject(1);
+//        for($i=0;$i<=count($model)-1;$i++){
+//            $id = $model[$i]['id'];
+//            $name = $model[$i]['name'];
+//            echo "<option value='" . $id . "'>$name</option>";
+//        }
+//        return;
         $pageSize = \Yii::$app->request->post("perpage");
         $searchModel = new OrderSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -229,6 +236,21 @@ class OrderController extends Controller
             }
 
             return true;
+        }
+    }
+    public function actionShowstatus($id){
+        $model = \backend\helpers\Orderstatus::asArrayObject($id);
+
+        if (count($model) > 0) {
+            for($i=0;$i<=count($model)-1;$i++) {
+
+                $id = $model[$i]['id'];
+                $name = $model[$i]['name'];
+                echo "<option value='" . $id . "'>$name</option>";
+
+            }
+        } else {
+            echo "<option>เลือกประเภท</option>";
         }
     }
 }

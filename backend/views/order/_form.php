@@ -32,7 +32,10 @@ $cur_type = 0;
                 'options'=>[
                     'placeholder'=>'เลือกประเภท',
                     'onchange'=>'
-                      "'.$cur_type.'" = $(this).val();
+                       $.post("'.Url::to(['order/showstatus'],true).'"+"&id="+$(this).val(),function(data){
+                                          $("select#orderstatus").html(data);
+                                        
+                       });
                     '
                 ]
             ]) ?>
@@ -99,10 +102,10 @@ $cur_type = 0;
             <?= $form->field($model, 'delivery_name')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-lg-4">
-            <?php echo $cur_type;?>
             <?= $form->field($model, 'order_status')->widget(Select2::className(),[
                 'data'=>ArrayHelper::map(\backend\helpers\Orderstatus::asArrayObject(1),'id','name'),
                 'options'=>[
+                        'id'=>'orderstatus',
                     'placeholder'=>'เลือกประเภท'
                 ]
             ]) ?>
