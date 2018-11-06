@@ -125,7 +125,7 @@ if ($session->getFlash('msg')): ?>
                     return "<div class='label label-warning'>".\backend\helpers\Orderstatus::getTypeById($data->order_status)."</div>";
 
                 },
-                'filter'=>ArrayHelper::map(\backend\helpers\PaymentStatus::asArrayObject(), 'id', 'name'),
+                'filter'=>ArrayHelper::map(\backend\helpers\Orderstatus::asArrayObject(1), 'id', 'name'),
             ],
             //'customer_type',
             //'contact_name',
