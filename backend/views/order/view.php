@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\helpers\Url;
 
+
 /* @var $this yii\web\View */
 /* @var $model backend\models\Order */
 
@@ -175,7 +176,7 @@ $this->registerCss('
                                   <?php array_push($list,
                                     [
                                         'url' => '../web/uploads/images/'.$value->name,
-                                        'src' => '../web/uploads/images/'.$value->name,
+                                        'src' => '../web/uploads/thumpnail/'.$value->name,
                                         'options' =>[
                                                 'title' => 'ทดสอบรูปภาพ',
                                                 'style' => ['width'=>20]
@@ -203,7 +204,7 @@ $this->registerCss('
                         ],
 
                     ];?>
-                    <?= dosamigos\gallery\Gallery::widget(['items' => $items]);?>
+                    <?= dosamigos\gallery\Gallery::widget(['items' => $list]);?>
                 </div>
             </div>
         </div>

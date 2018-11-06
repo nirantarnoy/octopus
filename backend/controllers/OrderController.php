@@ -11,6 +11,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use backend\models\Modelfile;
 use yii\web\UploadedFile;
+use yii\imagine\Image;
 
 /**
  * OrderController implements the CRUD actions for Order model.
@@ -90,6 +91,7 @@ class OrderController extends Controller
             $uploadfile = UploadedFile::getInstances($modelfile,'file');
             $uploadimage = UploadedFile::getInstances($modelfile,'file_photo');
 
+
             if($model->save()){
 
                 if(!empty($uploadfile)){
@@ -104,7 +106,14 @@ class OrderController extends Controller
                 }
                 if(!empty($uploadimage)){
                     foreach($uploadimage as $file){
+
+
                         $file->saveAs(Yii::getAlias('@backend') .'/web/uploads/images/'.$file);
+                        Image::thumbnail(Yii::getAlias('@backend') .'/web/uploads/images/'.$file, 100, 70)
+                            ->rotate(0)
+                            ->save(Yii::getAlias('@backend') .'/web/uploads/thumpnail/'.$file, ['jpeg_quality' => 100]);
+
+
                         $modelfile = new \common\models\OrderFile();
                         $modelfile->order_id = $model->id;
                         $modelfile->file_type = 2; // 2 = รูปภาพ
@@ -252,5 +261,10 @@ class OrderController extends Controller
         } else {
             echo "<option>เลือกประเภท</option>";
         }
+    }
+    public function actionPrint($id){
+        return $this->render("_print",[
+
+        ]);
     }
 }

@@ -119,7 +119,7 @@ $cur_type = 0;
                     <?php echo '<label class="control-label">แนบไฟล์งาน</label>';
                     echo FileInput::widget([
                         'model' => $modelfile,
-                        'attribute' => 'file',
+                        'attribute' => 'file[]',
                         'options' => ['multiple' => true]
                     ]);
                     ?>
@@ -128,7 +128,7 @@ $cur_type = 0;
                     <?php echo '<label class="control-label">แนบไฟล์รูปงาน</label>';
                     echo FileInput::widget([
                         'model' => $modelfile,
-                        'attribute' => 'file_photo',
+                        'attribute' => 'file_photo[]',
                         'options' => [
                                 'multiple' => true ,
                                 'accept' => 'image/*',

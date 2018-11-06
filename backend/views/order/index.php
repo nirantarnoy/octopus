@@ -137,11 +137,68 @@ if ($session->getFlash('msg')): ?>
             //'updated_at',
             //'updated_by',
 
+//            [
+//                    'class' => 'yii\grid\ActionColumn',
+//                    'options'=>['style'=>'width:120px;'],
+//                    'buttonOptions'=>['class'=>'btn btn-default'],
+//                    'template'=>'<div class="btn-group btn-group-sm text-center" role="group"> {view} {print} {update} {delete} </div>',
+//            ],
             [
-                    'class' => 'yii\grid\ActionColumn',
-                    'options'=>['style'=>'width:120px;'],
-                    'buttonOptions'=>['class'=>'btn btn-default'],
-                    'template'=>'<div class="btn-group btn-group-sm text-center" role="group"> {view} {update} {delete} </div>',
+
+                'header' => '',
+                'headerOptions' => ['style' => 'text-align:center;','class' => 'activity-view-link',],
+                'class' => 'yii\grid\ActionColumn',
+                'contentOptions' => ['style' => 'text-align: right','vertical-align: middle'],
+                'template'=>'<div class="btn-group btn-group-lg text-center" role="group"> {view} {print} {update} {delete} </div>',
+                'buttons' => [
+                    'view' => function($url, $data, $index) {
+                        $options = [
+                            'title' => Yii::t('yii', 'View'),
+                            'aria-label' => Yii::t('yii', 'View'),
+                            'data-pjax' => '0',
+                        ];
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-eye-open btn btn-xs btn-default"></span>', $url, $options);
+                    },
+                    'print' => function($url, $data, $index) {
+                        $options = [
+                            'title' => Yii::t('yii', 'Print'),
+                            'aria-label' => Yii::t('yii', 'Print'),
+                            'data-pjax' => '0',
+                        ];
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-print btn btn-xs btn-default"></span>', $url, $options);
+                    },
+                    'update' => function($url, $data, $index) {
+                        $options = array_merge([
+                            'title' => Yii::t('yii', 'Update'),
+                            'aria-label' => Yii::t('yii', 'Update'),
+                            'data-pjax' => '0',
+                            'id'=>'modaledit',
+                        ]);
+                        return $data->order_status == 1? Html::a(
+                            '<span class="glyphicon glyphicon-pencil btn btn-xs btn-default"></span>', $url, [
+                            'id' => 'activity-view-link',
+                            //'data-toggle' => 'modal',
+                            // 'data-target' => '#modal',
+                            'data-id' => $index,
+                            'data-pjax' => '0',
+                            // 'style'=>['float'=>'rigth'],
+                        ]):'';
+                    },
+                    'delete' => function($url, $data, $index) {
+                        $options = array_merge([
+                            'title' => Yii::t('yii', 'Delete'),
+                            'aria-label' => Yii::t('yii', 'Delete'),
+                            //'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                            //'data-method' => 'post',
+                            //'data-pjax' => '0',
+                            'data-url'=>$url,
+                            'onclick'=>'recDelete($(this));'
+                        ]);
+                        return Html::a('<span class="glyphicon glyphicon-trash btn btn-xs btn-default"></span>', 'javascript:void(0)', $options);
+                    }
+                ]
             ],
         ],
     ]); ?>

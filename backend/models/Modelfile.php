@@ -14,7 +14,7 @@ class Modelfile extends Model
     public function rules()
     {
         return [
-            [['file','file_photo','file_product','file_vendor'],'string'],
+            [['file[]','file_photo[]','file_product','file_vendor'],'string'],
             [['filecategory'],'integer'],
         ];
     }
