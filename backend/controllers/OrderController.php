@@ -28,7 +28,7 @@ class OrderController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['POST','GET'],
                 ],
             ],
         ];
@@ -146,6 +146,7 @@ class OrderController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelpic = \common\models\OrderFile::find()->where(['order_id'=>$id,'file_type'=>2])->all();
         $modelfile = new Modelfile();
         $orderfile = \common\models\OrderFile::find()->where(['order_id'=>$id,'file_type'=>1])->all();
         $orderimage = \common\models\OrderFile::find()->where(['order_id'=>$id,'file_type'=>2])->all();
@@ -189,6 +190,7 @@ class OrderController extends Controller
             'modelfile' => $modelfile,
             'orderfile' => $orderfile,
             'orderimage' => $orderimage,
+            'modelpic' => $modelpic,
         ]);
     }
 
@@ -201,9 +203,34 @@ class OrderController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if($this->findModel($id)->delete()){
 
-        return $this->redirect(['index']);
+            $modelfile = \common\models\OrderFile::find()->where(['order_id'=>$id])->all();
+            if($modelfile){
+                foreach ($modelfile as $val){
+                    if($val->file_type == 1){
+                        if(file_exists(Yii::getAlias('@backend') .'/web/uploads/files/'.$val->name)){
+                            unlink(Yii::getAlias('@backend') .'/web/uploads/files/'.$val->name);
+                        }
+
+                    }else{
+
+                        if(file_exists(Yii::getAlias('@backend') .'/web/uploads/images/'.$val->name)){
+                            unlink(Yii::getAlias('@backend') .'/web/uploads/images/'.$val->name);
+                        }
+                        if(file_exists(Yii::getAlias('@backend') .'/web/uploads/thumpnail/'.$val->name)){
+                            unlink(Yii::getAlias('@backend') .'/web/uploads/thumpnail/'.$val->name);
+                        }
+                    }
+                }
+            }
+
+
+            $session = Yii::$app->session;
+            $session->setFlash('msg','ลบรายการเรียบร้อย');
+            return $this->redirect(['index']);
+        }
+
     }
 
     /**
@@ -267,4 +294,21 @@ class OrderController extends Controller
 
         ]);
     }
+    public function actionDeletepic(){
+        //$id = \Yii::$app->request->post("product_id");
+        $picid = \Yii::$app->request->post("pic_id");
+        if($picid){
+            $model = \common\models\OrderFile::find()->where(['id'=>$picid])->one();
+            if($model){
+
+                if(\common\models\OrderFile::deleteAll(['id'=>$picid])){
+                    unlink(Yii::getAlias('@backend') .'/web/uploads/images/'.$model->name);
+                    unlink(Yii::getAlias('@backend') .'/web/uploads/thumpnail/'.$model->name);
+                }
+            }
+
+            return true;
+        }
+    }
+
 }

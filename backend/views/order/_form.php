@@ -112,7 +112,29 @@ $cur_type = 0;
         </div>
     </div>
     <div class="row">
+       <col-lg-6>
 
+       </col-lg-6>
+        <div class="col-lg-6">
+
+                <?php if(!$model->isNewRecord): ?>
+                    <div class="panel panel-body">  <div class="row">
+                            <?php foreach ($modelpic as $value):?>
+
+                                <div class="col-xs-6 col-md-3">
+                                    <a href="#" class="thumbnail">
+                                        <img src="../../backend/web/uploads/images/<?=$value->name?>" alt="">
+                                    </a>
+                                    <div class="btn btn-default" data-var="<?=$value->id?>" onclick="removepic($(this));">ลบ</div>
+                                </div>
+
+                                <?php //echo Html::img("../../frontend/web/img/screenshots/".$value->filename,['width'=>'10%','class'=>'thumbnail']) ?>
+                            <?php endforeach;?></div>
+                    </div>
+                <?php endif;?>
+
+
+        </div>
     </div>
             <div class="row">
                 <div class="col-lg-6">
@@ -147,3 +169,26 @@ $cur_type = 0;
 </div>
     </div>
 </div>
+<?php
+$url_to_del_pic = Url::to(['order/deletepic'],true);
+$js =<<<JS
+ 
+  function removepic(e){
+   // alert(e.attr("data-var"));return;
+    if(confirm("ต้องการลบรูปภาพนี้ใช่หรือไม่")){
+        $.ajax({
+           'type':'post',
+           'dataType':'html',
+           'url':"$url_to_del_pic",
+           'data': {'pic_id':e.attr("data-var")},
+           'success': function(data) {
+             location.reload();
+           }
+        });
+    }
+  }
+JS;
+
+$this->registerJs($js,static::POS_END);
+
+?>
