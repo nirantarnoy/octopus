@@ -120,8 +120,10 @@ if ($session->getFlash('msg')): ?>
             ],
             [
                 'attribute' => 'order_status',
+                'format' => 'raw',
                 'value'=>function($data){
-                    return $data->order_status;
+                    return "<div class='label label-warning'>".\backend\helpers\Orderstatus::getTypeById($data->order_status)."</div>";
+
                 },
                 'filter'=>ArrayHelper::map(\backend\helpers\PaymentStatus::asArrayObject(), 'id', 'name'),
             ],
