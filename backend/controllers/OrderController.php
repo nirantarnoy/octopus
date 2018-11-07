@@ -12,6 +12,7 @@ use yii\filters\VerbFilter;
 use backend\models\Modelfile;
 use yii\web\UploadedFile;
 use yii\imagine\Image;
+use kartik\mpdf\Pdf;
 
 /**
  * OrderController implements the CRUD actions for Order model.
@@ -289,10 +290,35 @@ class OrderController extends Controller
             echo "<option>เลือกประเภท</option>";
         }
     }
-    public function actionPrint($id){
-        return $this->render("_print",[
+    public function actionPrint(){
+        $order_id = Yii::$app->request->post('order_line_id');
+        $papersize = Yii::$app->request->post('paper_size');
+        //$papersize = 1;
+        $pdf = new Pdf([
+            'mode' => Pdf::MODE_ASIAN, // leaner size using standard fonts
+            //  'format' => [150,236], //manaul
+            'format' => $papersize ==1? Pdf::FORMAT_A4:[100,200],
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            'content' => $this->renderPartial('_print',[
+
+            ]),
+            //'content' => "nira",
+            'defaultFont' => '@backend/web/fonts/config.php',
+            'cssFile' => '@backend/web/css/pdf.css',
+            'options' => [
+                'title' => 'รายงานระหัสินค้า',
+                'subject' => ''
+            ],
+            'methods' => [
+                //  'SetHeader' => ['รายงานรหัสสินค้า||Generated On: ' . date("r")],
+                //  'SetFooter' => ['|Page {PAGENO}|'],
+                //'SetFooter'=>'niran',
+            ],
 
         ]);
+        //return $this->redirect(['genbill']);
+        return $pdf->render();
     }
     public function actionDeletepic(){
         //$id = \Yii::$app->request->post("product_id");
@@ -310,5 +336,6 @@ class OrderController extends Controller
             return true;
         }
     }
+
 
 }

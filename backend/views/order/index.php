@@ -167,9 +167,13 @@ if ($session->getFlash('msg')): ?>
                             'title' => Yii::t('yii', 'Print'),
                             'aria-label' => Yii::t('yii', 'Print'),
                             'data-pjax' => '0',
+                            'data-url' => $url,
+                            'onclick'=>'
+                                showprint($(this));
+                            '
                         ];
                         return Html::a(
-                            '<span class="glyphicon glyphicon-print btn btn-xs btn-default"></span>', $url, $options);
+                            '<span class="glyphicon glyphicon-print btn btn-xs btn-default"></span>', 'javascript:void(0)', $options);
                     },
                     'update' => function($url, $data, $index) {
                         $options = array_merge([
@@ -208,6 +212,37 @@ if ($session->getFlash('msg')): ?>
 </div>
     </div>
 </div>
+<div id="printModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-print"></i> พิมพ์ใบเสร็จ <small id="items"> </small></h4>
+            </div>
+            <div class="modal-body">
+                <form id="form-modal-bill" action="<?=Url::to(['order/print'],true)?>" method="post" target="_blank">
+                    <br>
+                    <input type="hidden" name="id" value="" class="order_line_id">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            ขนาดกระดาษที่ต้องการ
+                            <select name="paper_size" id="paper-size">
+                                <option value="1">A4</option>
+                                <option value="2">A5</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-print-bill">พิมพ์</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 <?php
 $this->registerJsFile( '@web/js/sweetalert.min.js',['depends' => [\yii\web\JqueryAsset::className()]],static::POS_END);
 $this->registerCssFile( '@web/css/sweetalert.css');
@@ -217,8 +252,16 @@ $this->registerJs('
         $("#perpage").change(function(){
             $("#form-perpage").submit();
         });
+         $(".btn-print-bill").click(function(){
+            $("#form-modal-bill").submit();
+            $("#printModal").modal("hide");
+      
+        });
     });
-
+   function showprint(e){
+     var ids = e.parents("tr").data("key");
+     $("#printModal").modal("show").find(".order_line_id").val(ids);
+   }
    function recDelete(e){
         //e.preventDefault();
         var url = e.attr("data-url");
