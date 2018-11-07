@@ -122,3 +122,8 @@ body{
     height:200px;
     border:1px solid blue;
 }
+.status-label{
+    display:block;
+    padding: 5px;
+    background-color: #1ABB9C;
+}

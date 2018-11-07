@@ -298,17 +298,20 @@ class OrderController extends Controller
         $model = \backend\models\Order::find()->where(['id'=>$order_id])->one();
         if($model){
             $pdf = new Pdf([
-                'mode' => Pdf::MODE_ASIAN, // leaner size using standard fonts
+
+                //'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
                 //  'format' => [150,236], //manaul
-                'format' => $papersize ==1? Pdf::FORMAT_A4:[140,210],
+                'mode'=> 's',
+                'format' => $papersize ==1? Pdf::FORMAT_A4:[150,236],
                 'orientation' => $papersize ==1?Pdf::ORIENT_PORTRAIT:Pdf::ORIENT_LANDSCAPE,
                 'destination' => Pdf::DEST_BROWSER,
                 'content' => $this->renderPartial('_print',[
                     'model'=>$model
                 ]),
                 //'content' => "nira",
-                'defaultFont' => '@backend/web/fonts/config.php',
-                'cssFile' => '@backend/web/css/pdf.css',
+                //'defaultFont' => '@backend/web/fonts/config.php',
+                //'cssFile' => '@backend/web/css/pdf.css',
+                //'cssFile' => '@vendor/kartik-v/yii2-mpdf/src/assets/kv-mpdf-bootstrap.min.css',
                 'options' => [
                     'title' => 'รายงานระหัสินค้า',
                     'subject' => ''
