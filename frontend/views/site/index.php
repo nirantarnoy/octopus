@@ -55,13 +55,15 @@ $this->title = 'octopus';
 <!--        </div>-->
 <!---->
 <!--    </div>-->
-    <div class="row">
+    <div class="result">
+       <div class="row">
         <div class="col-lg-12">
             <div class="page-header">
                 <h1>เลขที่ใบสั่งงาน <small>ABC18-000001</small></h1>
             </div>
         </div>
     </div>
+
     <?php
     $wizard_config = [
         'id' => 'stepwizard',
@@ -70,20 +72,21 @@ $this->title = 'octopus';
                 'title' => 'Step 1',
                 'icon' => 'glyphicon glyphicon-cloud-download',
                 'content' => '<h3>ขั้นตอนที่ 1 เปิดใบสั่งงาน</h3>เปิดใบสั่งงาน',
-//                'buttons' => [
-//                    'next' => [
-//                        'title' => 'Forward',
-//                        'options' => [
-//                            'class' => 'disabled'
-//                        ],
-//                    ],
-//                ],
+                'buttons' => [
+                    'next' => [
+                        'title' => 'Forward',
+                        'options' => [
+                            'class' => 'disabled'
+                        ],
+                    ],
+                ],
             ],
             2 => [
                 'title' => 'Step 2',
                 'icon' => 'glyphicon glyphicon-cloud-upload',
                 'content' => '<h3>Step 2</h3>This is step 2',
                 'skippable' => true,
+                'buttons'=>null,
             ],
             3 => [
                 'title' => 'Step 3',
@@ -129,9 +132,100 @@ $this->title = 'octopus';
         'complete_content' => "You are done!", // Optional final screen
         'start_step' => 2, // Optional, start with a specific step
 
+
     ];
     ?>
 
-    <?= \drsdre\wizardwidget\WizardWidget::widget($wizard_config); ?>
+    <?php //echo \drsdre\wizardwidget\WizardWidget::widget($wizard_config); ?>
+
+
+        <div class="container-x">
+            <ul class="progressbar">
+                <?php for($i=1;$i<=count(\backend\helpers\Orderstatus::asArray(1));$i++):?>
+                <?php
+                    $isactive = '';
+                    if($i<=4){
+                        $isactive = 'active';
+                    }
+                ?>
+
+                <li class="<?=$isactive?>"><?=\backend\helpers\Orderstatus::asArray(1)[$i]?></li>
+                <?php endfor;?>
+<!--                <li class="active">step 2</li>-->
+<!--                <li>step 3</li>-->
+<!--                <li>step 4</li>-->
+<!--                <li>step 5</li>-->
+<!--                <li>step 6</li>-->
+<!--                <li>step 7</li>-->
+<!--                <li>step 8</li>-->
+<!--                <li>step 9</li>-->
+<!--                <li>step 10</li>-->
+<!--                <li>step 11</li>-->
+
+            </ul>
+        </div>
+</div>
 
 </div>
+<?php
+$css =<<<CSS
+   .container-x{
+    width: 100%;
+   }
+   .progressbar{
+     counter-reset: step;
+     display: table;
+     table-layout: fixed;
+     width: 100%;
+     margin: 0 auto;
+   }
+   .progressbar li {
+     list-style-type: none;
+     display: table-cell;
+     width: 9%;
+     float: left;
+     position: relative;
+     text-align: center;
+   }
+   .progressbar li:before{
+    content: counter(step);
+    counter-increment: step;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border: 2px solid #ddd;
+    display: block;
+    text-align: center;
+    margin: 0 auto 10px auto;
+    border-radius: 50%;
+    background-color: white;
+   }
+   .progressbar li:after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #ddd;
+    top: 25px;
+    left: -50%;
+    z-index: -1;
+   }
+   .progressbar li:first-child:after{
+    content: none;
+   }
+   .progressbar li.active{
+     color: orange;
+   }
+   .progressbar li.active:before{
+    border-color: orange;
+   }
+   .progressbar li.active + li:after{
+     background-color: orange;
+   }
+
+
+
+
+CSS;
+$this->registerCss($css);
+?>
