@@ -92,7 +92,7 @@ $this->registerCss('
                                 'attribute'=>'delivery_type',
                                 'format' => 'html',
                                 'value'=>function($data){
-                                    return \backend\models\DeliverType::findName($data->delivery_type);
+                                    return \backend\models\Delivertype::findName($data->delivery_type);
                                 }
                             ],
                             'delivery_name',
