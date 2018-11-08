@@ -182,7 +182,7 @@ if ($session->getFlash('msg')): ?>
                             'data-pjax' => '0',
                             'id'=>'modaledit',
                         ]);
-                        return $data->order_status == 1? Html::a(
+                        return Html::a(
                             '<span class="glyphicon glyphicon-pencil btn btn-xs btn-default"></span>', $url, [
                             'id' => 'activity-view-link',
                             //'data-toggle' => 'modal',
@@ -190,7 +190,7 @@ if ($session->getFlash('msg')): ?>
                             'data-id' => $index,
                             'data-pjax' => '0',
                             // 'style'=>['float'=>'rigth'],
-                        ]):'';
+                        ]);
                     },
                     'delete' => function($url, $data, $index) {
                         $options = array_merge([

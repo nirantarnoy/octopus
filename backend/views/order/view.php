@@ -35,6 +35,7 @@ $this->registerCss('
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::a(Yii::t('app', 'พิมพ์'), ['print', 'id' => $model->id], ['class' => 'btn btn-default']) ?>
     </p>
     <div class="x_panel">
         <div class="x_title">

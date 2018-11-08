@@ -122,6 +122,9 @@ class SiteController extends Controller
             'model'=>$model
         ]);
     }
+    public function calOrder(){
+
+    }
     public function actionSendnotify(){
 
         $message = 'ทดสอบส่งข้อความจากระบบตรวจสอบสถานะใบสั่งผลิต';
