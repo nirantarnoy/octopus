@@ -27,22 +27,22 @@ class AuthitemController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            'access'=>[
-                'class'=>AccessControl::className(),
-                'rules'=>[
-                    [
-                        'allow'=>true,
-                        'actions'=>['index','create','update','view','resetpassword','managerule'],
-                        'roles'=>['@'],
-                    ],
-                    [
-                        'allow'=>true,
-                        'actions'=>['delete'],
-                        'roles'=>['System Administrator'],
-                    ]
-
-                ]
-            ]
+//            'access'=>[
+//                'class'=>AccessControl::className(),
+//                'rules'=>[
+//                    [
+//                        'allow'=>true,
+//                        'actions'=>['index','create','update','view','resetpassword','managerule'],
+//                        'roles'=>['@'],
+//                    ],
+//                    [
+//                        'allow'=>true,
+//                        'actions'=>['delete'],
+//                        'roles'=>['System Administrator'],
+//                    ]
+//
+//                ]
+//            ]
         ];
     }
 
@@ -229,41 +229,6 @@ class AuthitemController extends Controller
 //        $auth->add($suplier);
 //        $auth->addChild($suplier,$site_permission);
 
-        // plan_module
-        $plant_index = $auth->createPermission('plant/index');
-        $auth->add($plant_index);
-        $plant_update = $auth->createPermission('plant/update');
-        $auth->add($plant_update);
-        $plant_delete = $auth->createPermission('plant/delete');
-        $auth->add($plant_delete);
-        $plant_view = $auth->createPermission('plant/view');
-        $auth->add($plant_view);
-        $plant_create = $auth->createPermission('plant/create');
-        $auth->add($plant_create);
-        $plant_showcity = $auth->createPermission('plant/showcity');
-        $auth->add($plant_showcity);
-        $plant_showdistrict = $auth->createPermission('plant/showdistrict');
-        $auth->add($plant_showdistrict);
-        $plant_showzipcode = $auth->createPermission('plant/showzipcode');
-        $auth->add($plant_showzipcode);
-
-        $plant_permission = $auth->createPermission('plantmodule');
-        $plant_permission->description = "สิทธิ์ใช้งานโมดูล Plant";
-        $auth->add($plant_permission);
-
-        $auth->addChild($plant_permission,$plant_index);
-        $auth->addChild($plant_permission,$plant_view);
-        $auth->addChild($plant_permission,$plant_update);
-        $auth->addChild($plant_permission,$plant_delete);
-        $auth->addChild($plant_permission,$plant_create);
-        $auth->addChild($plant_permission,$plant_showcity);
-        $auth->addChild($plant_permission,$plant_showdistrict);
-        $auth->addChild($plant_permission,$plant_showzipcode);
-
-        $manage_plant = $auth->createRole('Manage Plant');
-        $manage_plant->description = "Manage plant";
-        $auth->add($manage_plant);
-        $auth->addChild($manage_plant,$plant_permission);
 
         // user_module
         $user_index = $auth->createPermission('user/index');
@@ -320,268 +285,36 @@ class AuthitemController extends Controller
         $auth->addChild($manage_usergroup,$usergroup_permission);
 
         // product module
-        $product_index = $auth->createPermission('product/index');
-        $auth->add($product_index);
-        $product_update = $auth->createPermission('product/update');
-        $auth->add($product_update);
-        $product_delete = $auth->createPermission('product/delete');
-        $auth->add($product_delete);
-        $product_view = $auth->createPermission('product/view');
-        $auth->add($product_view);
-        $product_create = $auth->createPermission('product/create');
-        $auth->add($product_create);
+        $order_index = $auth->createPermission('order/index');
+        $auth->add($order_index);
+        $order_update = $auth->createPermission('order/update');
+        $auth->add($order_update);
+        $order_delete = $auth->createPermission('order/delete');
+        $auth->add($order_delete);
+        $order_view = $auth->createPermission('order/view');
+        $auth->add($order_view);
+        $order_create = $auth->createPermission('order/create');
+        $auth->add($order_create);
 
 
-        $product_permission = $auth->createPermission('productmodule');
-        $product_permission->description = "สิทธิ์ใช้งานโมดูล product";
-        $auth->add($product_permission);
+        $order_permission = $auth->createPermission('ordermodule');
+        $order_permission->description = "สิทธิ์ใช้งานโมดูล Order";
+        $auth->add($order_permission);
 
-        $auth->addChild($product_permission,$product_index);
-        $auth->addChild($product_permission,$product_view);
-        $auth->addChild($product_permission,$product_update);
-        $auth->addChild($product_permission,$product_delete);
-        $auth->addChild($product_permission,$product_create);
-
-
-        $manage_product = $auth->createRole('Manage product');
-        $manage_product->description = "Manage Product";
-        $auth->add($manage_product);
-        $auth->addChild($manage_product,$product_permission);
+        $auth->addChild($order_permission,$order_index);
+        $auth->addChild($order_permission,$order_view);
+        $auth->addChild($order_permission,$order_update);
+        $auth->addChild($order_permission,$order_delete);
+        $auth->addChild($order_permission,$order_create);
 
 
+        $manage_order = $auth->createRole('Manage order');
+        $manage_order->description = "Manage Order";
+        $auth->add($manage_order);
+        $auth->addChild($manage_order,$order_permission);
 
-        // purchase module
-        $purch_index = $auth->createPermission('purch/index');
-        $auth->add($purch_index);
-        $purch_update = $auth->createPermission('purch/update');
-        $auth->add($purch_update);
-        $purch_delete = $auth->createPermission('purch/delete');
-        $auth->add($purch_delete);
-        $purch_view = $auth->createPermission('purch/view');
-        $auth->add($purch_view);
-        $purch_bill = $auth->createPermission('purch/bill');
-        $auth->add($purch_bill);
-        $purch_create = $auth->createPermission('purch/create');
-        $auth->add($purch_create);
-        $purch_cancelqc = $auth->createPermission('purch/cancelqc');
-        $auth->add($purch_cancelqc);
-        $purch_createinv = $auth->createPermission('purch/createinv');
-        $auth->add($purch_createinv);
-        $purch_finditem = $auth->createPermission('purch/finditem');
-        $auth->add($purch_finditem);
-        $purch_finditemfull = $auth->createPermission('purch/finditemfull');
-        $auth->add($purch_finditemfull);
-        $purch_getlist = $auth->createPermission('purch/getlist');
-        $auth->add($purch_getlist);
-        $purch_purchrec = $auth->createPermission('purch/purchrec');
-        $auth->add($purch_purchrec);
+        // message
 
-        $purch_permission = $auth->createPermission('purchmodule');
-        $purch_permission->description = "สิทธิ์ใช้งานโมดูล purch";
-        $auth->add($purch_permission);
-
-        $auth->addChild($purch_permission,$purch_index);
-        $auth->addChild($purch_permission,$purch_view);
-        $auth->addChild($purch_permission,$purch_update);
-        $auth->addChild($purch_permission,$purch_delete);
-        $auth->addChild($purch_permission,$purch_bill);
-        $auth->addChild($purch_permission,$purch_create);
-        $auth->addChild($purch_permission,$purch_cancelqc);
-        $auth->addChild($purch_permission,$purch_createinv);
-        $auth->addChild($purch_permission,$purch_finditem);
-        $auth->addChild($purch_permission,$purch_getlist);
-        $auth->addChild($purch_permission,$purch_purchrec);
-        $auth->addChild($purch_permission,$purch_finditemfull);
-
-        $manage_purch = $auth->createRole('Manage purch');
-        $manage_purch->description = "Manage product received";
-        $auth->add($manage_purch);
-        $auth->addChild($manage_purch,$purch_permission);
-
-
-        // loan module
-        $loan_index = $auth->createPermission('loan/index');
-        $auth->add($loan_index);
-        $loan_update = $auth->createPermission('loan/update');
-        $auth->add($loan_update);
-        $loan_delete = $auth->createPermission('loan/delete');
-        $auth->add($loan_delete);
-        $loan_view = $auth->createPermission('loan/view');
-        $auth->add($loan_view);
-        $loan_payment = $auth->createPermission('loan/payment');
-        $auth->add($loan_payment);
-        $loan_paymentsubmit = $auth->createPermission('loan/paymentsubmit');
-        $auth->add($loan_paymentsubmit);
-        $loan_postpone = $auth->createPermission('loan/postpone');
-        $auth->add($loan_postpone);
-
-        $loan_permission = $auth->createPermission('loanmodule');
-        $loan_permission->description = "สิทธิ์ใช้งานโมดูล loan";
-        $auth->add($loan_permission);
-
-        $auth->addChild($loan_permission,$loan_index);
-        $auth->addChild($loan_permission,$loan_view);
-        $auth->addChild($loan_permission,$loan_update);
-        $auth->addChild($loan_permission,$loan_delete);
-        $auth->addChild($loan_permission,$loan_payment);
-        $auth->addChild($loan_permission,$loan_paymentsubmit);
-        $auth->addChild($loan_permission,$loan_postpone);
-
-        $manage_loan = $auth->createRole('Manage loan');
-        $manage_loan->description = "Manage product received";
-        $auth->add($manage_loan);
-        $auth->addChild($manage_loan,$loan_permission);
-
-
-        //prodissue module
-        $sale_index = $auth->createPermission('sale/index');
-        $auth->add($sale_index);
-        $sale_update = $auth->createPermission('sale/update');
-        $auth->add($sale_update);
-        $sale_delete = $auth->createPermission('sale/delete');
-        $auth->add($sale_delete);
-        $sale_view = $auth->createPermission('sale/view');
-        $auth->add($sale_view);
-        $sale_create = $auth->createPermission('sale/create');
-        $auth->add($sale_create);
-        $sale_showemp = $auth->createPermission('sale/showemp');
-        $auth->add($sale_showemp);
-        $sale_getzoneinfo = $auth->createPermission('sale/getzoneinfo');
-        $auth->add($sale_getzoneinfo);
-        $sale_cancel = $auth->createPermission('sale/cancel');
-        $auth->add($sale_cancel);
-        $sale_confirm = $auth->createPermission('sale/confirmsale');
-        $auth->add($sale_confirm);
-        $sale_finditem = $auth->createPermission('sale/finditem');
-        $auth->add($sale_finditem);
-        $sale_printbill = $auth->createPermission('sale/printbill');
-        $auth->add($sale_printbill);
-        $sale_maxprice = $auth->createPermission('sale/findmaxprice');
-        $auth->add($sale_maxprice);
-
-        $sale_permission = $auth->createPermission('salemodule');
-        $sale_permission->description = "สิทธิ์ใช้งานโมดูล sale";
-        $auth->add($sale_permission);
-
-        $sale_clerk_permission = $auth->createPermission('sale_clerk');
-        $sale_clerk_permission->description = "สิทธิ์ใช้งานโมดูล sale clerk";
-        $auth->add($sale_clerk_permission);
-
-
-        $auth->addChild($sale_permission,$sale_index);
-        $auth->addChild($sale_permission,$sale_view);
-        $auth->addChild($sale_permission,$sale_update);
-        $auth->addChild($sale_permission,$sale_delete);
-        $auth->addChild($sale_permission,$sale_create);
-        $auth->addChild($sale_permission,$sale_showemp);
-        $auth->addChild($sale_permission,$sale_getzoneinfo);
-        $auth->addChild($sale_permission,$sale_cancel);
-        $auth->addChild($sale_permission,$sale_confirm);
-        $auth->addChild($sale_permission,$sale_finditem);
-        $auth->addChild($sale_permission,$sale_printbill);
-        $auth->addChild($sale_permission,$sale_maxprice);
-
-        $auth->addChild($sale_clerk_permission,$sale_index);
-        $auth->addChild($sale_clerk_permission,$sale_view);
-        $auth->addChild($sale_clerk_permission,$sale_update);
-        $auth->addChild($sale_clerk_permission,$sale_delete);
-        $auth->addChild($sale_clerk_permission,$sale_create);
-        $auth->addChild($sale_clerk_permission,$sale_showemp);
-        $auth->addChild($sale_clerk_permission,$sale_getzoneinfo);
-        $auth->addChild($sale_clerk_permission,$sale_cancel);
-        $auth->addChild($sale_clerk_permission,$sale_finditem);
-        $auth->addChild($sale_clerk_permission,$sale_printbill);
-        $auth->addChild($sale_clerk_permission,$sale_maxprice);
-
-        $manage_sale = $auth->createRole('Manage sale');
-        $manage_sale->description = "Manage product issue";
-        $auth->add($manage_sale);
-        $auth->addChild($manage_sale,$sale_permission);
-
-        $manage_sale_operator = $auth->createRole('Sale operator');
-        $manage_sale_operator->description = "Sale operator";
-        $auth->add($manage_sale_operator);
-        $auth->addChild($manage_sale_operator,$sale_clerk_permission);
-
-
-        //employee module
-//        $employee_index = $auth->createPermission('employee/index');
-//        $auth->add($employee_index);
-//        $employee_update = $auth->createPermission('employee/update');
-//        $auth->add($employee_update);
-//        $employee_delete = $auth->createPermission('employee/delete');
-//        $auth->add($employee_delete);
-//        $employee_view = $auth->createPermission('employee/view');
-//        $auth->add($employee_view);
-//        $employee_create = $auth->createPermission('employee/create');
-//        $auth->add($employee_create);
-//
-//        $employee_permission = $auth->createPermission('employeemodule');
-//        $employee_permission->description = "สิทธิ์ใช้งานโมดูล employee";
-//        $auth->add($employee_permission);
-//
-//        $auth->addChild($employee_permission,$employee_index);
-//        $auth->addChild($employee_permission,$employee_view);
-//        $auth->addChild($employee_permission,$employee_update);
-//        $auth->addChild($employee_permission,$employee_delete);
-//        $auth->addChild($employee_permission,$employee_create);
-//
-//        $manage_employee = $auth->createRole('Manage employee');
-//        $manage_employee->description = "Manage invoice";
-//        $auth->add($manage_employee);
-//        $auth->addChild($manage_employee,$employee_permission);
-
-        //claim module
-        $claim_index = $auth->createPermission('claim/index');
-        $auth->add($claim_index);
-        $claim_update = $auth->createPermission('claim/update');
-        $auth->add($claim_update);
-        $claim_delete = $auth->createPermission('claim/delete');
-        $auth->add($claim_delete);
-        $claim_view = $auth->createPermission('claim/view');
-        $auth->add($claim_view);
-        $claim_create = $auth->createPermission('claim/create');
-        $auth->add($claim_create);
-        $claim_findso = $auth->createPermission('claim/findso');
-        $auth->add($claim_findso);
-        $claim_confirm = $auth->createPermission('claim/confirmclaim');
-        $auth->add($claim_confirm);
-
-        $claim_permission = $auth->createPermission('claimmodule');
-        $claim_permission->description = "สิทธิ์ใช้งานโมดูล claim";
-        $auth->add($claim_permission);
-
-        $auth->addChild($claim_permission,$claim_index);
-        $auth->addChild($claim_permission,$claim_view);
-        $auth->addChild($claim_permission,$claim_update);
-        $auth->addChild($claim_permission,$claim_delete);
-        $auth->addChild($claim_permission,$claim_create);
-        $auth->addChild($claim_permission,$claim_findso);
-        $auth->addChild($claim_permission,$claim_confirm);
-
-        $manage_claim = $auth->createRole('Manage claim');
-        $manage_claim->description = "Manage claim";
-        $auth->add($manage_claim);
-        $auth->addChild($manage_claim,$claim_permission);
-
-        $claim_operator_permission = $auth->createPermission('claim operator task');
-        $claim_operator_permission->description = "สิทธิ์ใช้งานโมดูล claim ทั่วไป";
-        $auth->add($claim_operator_permission);
-
-        $auth->addChild($claim_operator_permission,$claim_index);
-        $auth->addChild($claim_operator_permission,$claim_view);
-        $auth->addChild($claim_operator_permission,$claim_update);
-        $auth->addChild($claim_operator_permission,$claim_delete);
-        $auth->addChild($claim_operator_permission,$claim_create);
-        $auth->addChild($claim_operator_permission,$claim_findso);
-
-        $manage_claim_operator = $auth->createRole('Claim operator');
-        $manage_claim_operator->description = "Claim operator";
-        $auth->add($manage_claim_operator);
-        $auth->addChild($manage_claim_operator,$claim_operator_permission);
-
-
-        //message module
         $message_index = $auth->createPermission('message/index');
         $auth->add($message_index);
         $message_update = $auth->createPermission('message/update');
@@ -593,6 +326,7 @@ class AuthitemController extends Controller
         $message_create = $auth->createPermission('message/create');
         $auth->add($message_create);
 
+
         $message_permission = $auth->createPermission('messagemodule');
         $message_permission->description = "สิทธิ์ใช้งานโมดูล message";
         $auth->add($message_permission);
@@ -603,62 +337,11 @@ class AuthitemController extends Controller
         $auth->addChild($message_permission,$message_delete);
         $auth->addChild($message_permission,$message_create);
 
+
         $manage_message = $auth->createRole('Manage message');
         $manage_message->description = "Manage message";
         $auth->add($manage_message);
         $auth->addChild($manage_message,$message_permission);
-
-        //warehouse module
-        $warehouse_index = $auth->createPermission('warehouse/index');
-        $auth->add($warehouse_index);
-        $warehouse_update = $auth->createPermission('warehouse/update');
-        $auth->add($warehouse_update);
-        $warehouse_delete = $auth->createPermission('warehouse/delete');
-        $auth->add($warehouse_delete);
-        $warehouse_view = $auth->createPermission('warehouse/view');
-        $auth->add($warehouse_view);
-         $warehouse_create = $auth->createPermission('warehouse/create');
-        $auth->add($warehouse_create);
-
-        $warehouse_permission = $auth->createPermission('warehousemodule');
-        $warehouse_permission->description = "สิทธิ์ใช้งานโมดูล warehouse";
-        $auth->add($warehouse_permission);
-
-        $auth->addChild($warehouse_permission,$warehouse_index);
-        $auth->addChild($warehouse_permission,$warehouse_view);
-        $auth->addChild($warehouse_permission,$warehouse_update);
-        $auth->addChild($warehouse_permission,$warehouse_delete);
-        $auth->addChild($warehouse_permission,$warehouse_create);
-
-        $manage_warehouse = $auth->createRole('Manage warehouse');
-        $manage_warehouse->description = "Manage message";
-        $auth->add($manage_warehouse);
-        $auth->addChild($manage_warehouse,$warehouse_permission);
-
-        //report module
-        $report_index = $auth->createPermission('report/index');
-        $auth->add($report_index);
-//        $warehouse_update = $auth->createPermission('warehouse/update');
-//        $auth->add($warehouse_update);
-//        $warehouse_delete = $auth->createPermission('warehouse/delete');
-//        $auth->add($warehouse_delete);
-//        $warehouse_view = $auth->createPermission('warehouse/view');
-//        $auth->add($warehouse_view);
-//        $warehouse_create = $auth->createPermission('warehouse/create');
-//        $auth->add($warehouse_create);
-
-        $report_permission = $auth->createPermission('report module');
-        $report_permission->description = "สิทธิ์ใช้งานโมดูล warehouse";
-        $auth->add($report_permission);
-
-        $auth->addChild($warehouse_permission,$report_index);
-
-
-        $manage_report = $auth->createRole('Manage report');
-        $manage_report->description = "Manage report";
-        $auth->add($manage_report);
-        $auth->addChild($manage_report,$report_permission);
-
 
 
 
@@ -667,18 +350,10 @@ class AuthitemController extends Controller
         $admin_role->description = "ผู้ดูแลระบบ";
         $auth->add($admin_role);
 
-        $auth->addChild($admin_role,$manage_plant);
         $auth->addChild($admin_role,$manage_user);
         $auth->addChild($admin_role,$manage_usergroup);
-        $auth->addChild($admin_role,$manage_product);
-        $auth->addChild($admin_role,$manage_purch);
-        $auth->addChild($admin_role,$manage_loan);
-        $auth->addChild($admin_role,$manage_sale);
-        //$auth->addChild($admin_role,$manage_employee);
-        $auth->addChild($admin_role,$manage_message);
-        $auth->addChild($admin_role,$manage_warehouse);
-        $auth->addChild($admin_role,$manage_claim);
-        $auth->addChild($admin_role,$manage_report);
+        //$auth->addChild($admin_role,$manage_order);
+
 
 
         $user_role = $auth->createRole('System User');
@@ -686,15 +361,16 @@ class AuthitemController extends Controller
         $auth->add($user_role);
 
 
-        $auth->addChild($user_role,$manage_product);
-        $auth->addChild($user_role,$manage_purch);
-        $auth->addChild($user_role,$manage_sale_operator);
-        $auth->addChild($user_role,$manage_claim_operator);
+        $auth->addChild($user_role,$manage_order);
+        $auth->addChild($user_role,$manage_message);
+
+        $auth->addChild($admin_role,$user_role);
 
 
 
-        $auth->assign($admin_role,1);
-        $auth->assign($user_role,2);
+
+        $auth->assign($admin_role,2);
+       // $auth->assign($user_role,2);
 
 
 

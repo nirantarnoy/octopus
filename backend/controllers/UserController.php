@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -72,6 +73,11 @@ class UserController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
           //  $model->status = 1;
+            $auth = Yii::$app->authManager;
+
+            $user_role = $auth->getRole('System User');
+            $auth->assign($user_role,$model->id);
+
             if($model->save()){
                 $session = Yii::$app->session;
                 $session->setFlash('msg','บันทึกรายการเรียบร้อย');
@@ -94,8 +100,10 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->getRoleByUser();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->assignment();
             $session = Yii::$app->session;
             $session->setFlash('msg','บันทึกรายการเรียบร้อย');
             return $this->redirect(['index']);

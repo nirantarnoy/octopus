@@ -14,6 +14,8 @@ AppAsset::register($this);
 $bundle = yiister\gentelella\assets\Asset::register($this);
 Yii::$app->name = "Octopus";
 
+$last_message = \backend\models\Message::find()->where(['status'=>1])->limit(6)->orderBy(['created_at'=>SORT_DESC])->all();
+
 ?>
 <?php $this->beginPage(); ?>
 <!DOCTYPE html>
@@ -173,73 +175,34 @@ Yii::$app->name = "Octopus";
                         <li role="presentation" class="dropdown">
                             <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-bell-o"></i>
-                                <span class="badge bg-green">6</span>
+                                <span class="badge bg-green"><?=count($last_message)?></span>
                             </a>
                             <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                                <li>
-                                    <a>
-                      <span class="image">
-                                        <img src="http://placehold.it/128x128" alt="Profile Image" />
-                                    </span>
-                      <span>
-                                        <span>John Smith</span>
-                      <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                                    </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                      <span class="image">
-                                        <img src="http://placehold.it/128x128" alt="Profile Image" />
-                                    </span>
-                      <span>
-                                        <span>John Smith</span>
-                      <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                                    </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                      <span class="image">
-                                        <img src="http://placehold.it/128x128" alt="Profile Image" />
-                                    </span>
-                      <span>
-                                        <span>John Smith</span>
-                      <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                                    </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                      <span class="image">
-                                        <img src="http://placehold.it/128x128" alt="Profile Image" />
-                                    </span>
-                      <span>
-                                        <span>John Smith</span>
-                      <span class="time">3 mins ago</span>
-                      </span>
-                      <span class="message">
-                                        Film festivals used to be do-or-die moments for movie makers. They were where...
-                                    </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <div class="text-center">
-                                        <a href="/">
-                                            <strong>See All Alerts</strong>
-                                            <i class="fa fa-angle-right"></i>
-                                        </a>
-                                    </div>
-                                </li>
+
+                                <?php if(count($last_message)>0):?>
+
+                                        <?php foreach ($last_message as $data):?>
+                                        <li>
+                                            <a href="<?=Url::to(['message/view','id'=>$data->id],true)?>">
+                                                <span class="image">
+                                                    <img src="http://placehold.it/128x128" alt="Profile Image" />
+                                                </span>
+                                                <span>
+                                                    <span><?=$data->title?></span>
+                                                    <span class="time">3 mins ago</span>
+                                                </span>
+                                                <span class="message">
+                                                     <?=$data->title?>
+                                                </span>
+                                            </a>
+                                        </li>
+
+                                        <?php endforeach;?>
+                                        <?php if(count($last_message)>5):?>
+                                            <li><a href="<?=Url::to(['message/index'],true)?>" class="more">ดูข้อความทั้งหมด</a></li>
+                                        <?php endif;?>
+
+                                <?php endif;?>
                             </ul>
                         </li>
 
