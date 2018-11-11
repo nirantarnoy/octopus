@@ -224,6 +224,7 @@ class OrderController extends Controller
                         }
                     }
                 }
+                \backend\models\Orderstatus::deleteAll(['order_id'=>$id]);
             }
 
 
@@ -346,7 +347,7 @@ class OrderController extends Controller
     }
    public function updateorderstatus($id,$status){
         if($id){
-            $modelstatus = \backend\models\Orderstatus::find()->where(['order_id'=>$id,'status'>$status])->one();
+            $modelstatus = \backend\models\Orderstatus::find()->where(['order_id'=>$id,'status'=>$status])->one();
             if($modelstatus){
                 $modelstatus->status = $status;
                 $modelstatus->note = "";
