@@ -55,7 +55,7 @@ $this->title = 'octopus';
 <!--        </div>-->
 <!---->
 <!--    </div>-->
-    <div class="result">
+    <div class="result" style="display: none">
        <div class="row">
         <div class="col-lg-12">
             <div class="page-header">
@@ -63,81 +63,6 @@ $this->title = 'octopus';
             </div>
         </div>
     </div>
-
-    <?php
-    $wizard_config = [
-        'id' => 'stepwizard',
-        'steps' => [
-            1 => [
-                'title' => 'Step 1',
-                'icon' => 'glyphicon glyphicon-cloud-download',
-                'content' => '<h3>ขั้นตอนที่ 1 เปิดใบสั่งงาน</h3>เปิดใบสั่งงาน',
-                'buttons' => [
-                    'next' => [
-                        'title' => 'Forward',
-                        'options' => [
-                            'class' => 'disabled'
-                        ],
-                    ],
-                ],
-            ],
-            2 => [
-                'title' => 'Step 2',
-                'icon' => 'glyphicon glyphicon-cloud-upload',
-                'content' => '<h3>Step 2</h3>This is step 2',
-                'skippable' => true,
-                'buttons'=>null,
-            ],
-            3 => [
-                'title' => 'Step 3',
-                'icon' => 'glyphicon glyphicon-transfer',
-                'content' => '<h3>Step 3</h3>This is step 3',
-            ],
-            4 => [
-                'title' => 'Step 3',
-                'icon' => 'glyphicon glyphicon-transfer',
-                'content' => '<h3>Step 3</h3>This is step 3',
-            ],
-            5 => [
-                'title' => 'Step 3',
-                'icon' => 'glyphicon glyphicon-transfer',
-                'content' => '<h3>Step 3</h3>This is step 3',
-            ],
-            6 => [
-                'title' => 'Step 3',
-                'icon' => 'glyphicon glyphicon-transfer',
-                'content' => '<h3>Step 3</h3>This is step 3',
-            ],
-            7 => [
-                'title' => 'Step 3',
-                'icon' => 'glyphicon glyphicon-transfer',
-                'content' => '<h3>Step 3</h3>This is step 3',
-            ],
-            8 => [
-                'title' => 'Step 3',
-                'icon' => 'glyphicon glyphicon-transfer',
-                'content' => '<h3>Step 3</h3>This is step 3',
-            ],
-            9 => [
-                'title' => 'Step 3',
-                'icon' => 'glyphicon glyphicon-transfer',
-                'content' => '<h3>Step 3</h3>This is step 3',
-            ],
-            10 => [
-                'title' => 'Step 3',
-                'icon' => 'glyphicon glyphicon-transfer',
-                'content' => '<h3>Step 3</h3>This is step 3',
-            ],
-        ],
-        'complete_content' => "You are done!", // Optional final screen
-        'start_step' => 2, // Optional, start with a specific step
-
-
-    ];
-    ?>
-
-    <?php //echo \drsdre\wizardwidget\WizardWidget::widget($wizard_config); ?>
-
 
         <div class="container-x">
             <ul class="progressbar">
@@ -149,7 +74,7 @@ $this->title = 'octopus';
                     }
                 ?>
                 <?php if($i >=3 && $i <=4):?>
-                    
+
                 <?php else:?>
                         <li class="<?=$isactive?>"><?=\backend\helpers\Orderstatus::asArray(1)[$i]?></li>
                 <?php endif;?>
