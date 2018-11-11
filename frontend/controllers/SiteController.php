@@ -18,28 +18,29 @@ use frontend\models\ContactForm;
  */
 class SiteController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
      * {@inheritdoc}
      */
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
-                'rules' => [
-                    [
-                        'actions' => ['signup'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
+//            'access' => [
+//                'class' => AccessControl::className(),
+//                'only' => ['logout', 'signup'],
+//                'rules' => [
+//                    [
+//                        'actions' => ['signup'],
+//                        'allow' => true,
+//                        'roles' => ['?'],
+//                    ],
+//                    [
+//                        'actions' => ['logout'],
+//                        'allow' => true,
+//                        'roles' => ['@'],
+//                    ],
+//                ],
+//            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -211,5 +212,17 @@ class SiteController extends Controller
         return $this->render('resetPassword', [
             'model' => $model,
         ]);
+    }
+    public function actionFind(){
+        $quo = Yii::$app->request->post('quotation_no');
+        if($quo !=''){
+            $model = \backend\models\Order::find()->where(['quotation_no'=>$quo])->one();
+            if($model){
+                return "1";
+            }else{
+                return "0";
+            }
+        }
+        return "0";
     }
 }

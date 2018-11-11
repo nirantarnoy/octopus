@@ -10,17 +10,30 @@ use yii\helpers\Url;
 <div class="site-index">
 
     <div class="jumbotron">
+
         <div class="row">
             <div class="col-lg-12">
-                <form action="<?=Url::to(['site/find'],true)?>">
+                <form id="form-search" action="<?=Url::to(['site/find'],true)?>">
                 <div class="input-group">
-                    <input type="text" class="form-control" style="height: 60px;font-size: 24px;" placeholder="กรอกเลขที่ QT และ (อีเมล หรือ เบอรโทร)" required>
+                    <input type="text" class="form-control quo-fill" style="height: 60px;font-size: 24px;" placeholder="กรอกเลขที่ QT และ (อีเมล หรือ เบอรโทร)" required>
                     <span class="input-group-btn">
-                        <input type="submit" class="btn btn-info" value="ตกลง">
+<!--                        <input type="submit" class="btn btn-info" value="ตกลง">-->
+                        <input type="button" id="btn-submit" class="btn btn-info" value="ok" />
                     </span>
                 </div>
                 </form>
             </div>
+        </div>
+        <br>
+        <div class="alert alert-danger alert-not-fill" style="display: none" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            กรุณากรอกข้อมูลใบเสนอราคา
+        </div>
+        <div class="alert alert-danger alert-not-found" style="display: none" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            ไม่พบข้อมูลที่ต้องการค้นหา กรุณาลองใหม่อีกครั้ง
         </div>
     </div>
 
@@ -162,4 +175,32 @@ $css =<<<CSS
 
 CSS;
 $this->registerCss($css);
+
+$url_to_find = Url::to(['site/find'],true);
+
+$js =<<<JS
+  $(function() {
+     $("#btn-submit").click(function(){
+         if($(".quo-fill").val()==''){
+             $(".alert-not-fill").show();
+         }else{
+             $(".alert-not-fill").hide();
+         }
+         
+         $.ajax({
+           'type': 'post',
+           'dataType': 'html',
+           'url': "'.$url_to_find.'",
+           'data': {'quotation_no': $(".quo-fill").val()},
+           'success': function(data){
+               alert(data);
+           }
+         });
+         
+         //$("#form-search").submit();
+     });
+  });
+JS;
+$this->registerJs($js);
+
 ?>
