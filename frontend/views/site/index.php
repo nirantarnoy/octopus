@@ -176,13 +176,14 @@ $css =<<<CSS
 CSS;
 $this->registerCss($css);
 
-$url_to_find = Url::to(['site/find'],true);
+$url_to_find = Url::to(['find'],true);
 
 $js =<<<JS
   $(function() {
      $("#btn-submit").click(function(){
          if($(".quo-fill").val()==''){
              $(".alert-not-fill").show();
+             return;
          }else{
              $(".alert-not-fill").hide();
          }
@@ -190,10 +191,15 @@ $js =<<<JS
          $.ajax({
            'type': 'post',
            'dataType': 'html',
-           'url': "'.$url_to_find.'",
+           'url': "$url_to_find",
            'data': {'quotation_no': $(".quo-fill").val()},
            'success': function(data){
-               alert(data);
+               if(data == "1"){
+                    $(".alert-not-found").hide();
+                    $(".result").show();
+               }else{
+                    $(".alert-not-found").show();
+               }
            }
          });
          
