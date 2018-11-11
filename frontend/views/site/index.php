@@ -148,8 +148,12 @@ $this->title = 'octopus';
                         $isactive = 'active';
                     }
                 ?>
+                <?php if($i >=3 && $i <=4):?>
+                    
+                <?php else:?>
+                        <li class="<?=$isactive?>"><?=\backend\helpers\Orderstatus::asArray(1)[$i]?></li>
+                <?php endif;?>
 
-                <li class="<?=$isactive?>"><?=\backend\helpers\Orderstatus::asArray(1)[$i]?></li>
                 <?php endfor;?>
 <!--                <li class="active">step 2</li>-->
 <!--                <li>step 3</li>-->
