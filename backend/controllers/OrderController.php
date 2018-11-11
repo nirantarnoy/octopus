@@ -158,7 +158,7 @@ class OrderController extends Controller
 
 
             if($model->save()){
-
+                $this->updateorderstatus($id,$model->order_status);
                 if(!empty($uploadfile)){
                     foreach($uploadfile as $file){
                         $file->saveAs(Yii::getAlias('@backend') .'/web/uploads/files/'.$file);
@@ -344,6 +344,21 @@ class OrderController extends Controller
             return true;
         }
     }
-
+   public function updateorderstatus($id,$status){
+        if($id){
+            $modelstatus = \backend\models\Orderstatus::find()->where(['order_id'=>$id,'status'>$status])->one();
+            if($modelstatus){
+                $modelstatus->status = $status;
+                $modelstatus->note = "";
+                $modelstatus->save(false);
+            }else{
+                $model = new \backend\models\Orderstatus();
+                $model->order_id = $id;
+                $model->status = $status;
+                $model->note = "";
+                $model->save(false);
+            }
+        }
+   }
 
 }
