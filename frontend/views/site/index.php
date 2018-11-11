@@ -3,18 +3,23 @@
 /* @var $this yii\web\View */
 
 $this->title = 'octopus';
+use yii\widgets\ActiveForm;
+use yii\helpers\Url;
+
 ?>
 <div class="site-index">
 
     <div class="jumbotron">
         <div class="row">
             <div class="col-lg-12">
+                <form action="<?=Url::to(['site/find'],true)?>">
                 <div class="input-group">
-                    <input type="text" class="form-control" style="height: 60px;font-size: 24px;" placeholder="กรอกเลขที่ QT และ (อีเมล หรือ เบอรโทร)">
+                    <input type="text" class="form-control" style="height: 60px;font-size: 24px;" placeholder="กรอกเลขที่ QT และ (อีเมล หรือ เบอรโทร)" required>
                     <span class="input-group-btn">
-                        <button class="btn btn-info" type="button">ตรวจสอบสถานะ</button>
+                        <input type="submit" class="btn btn-info" value="ตกลง">
                     </span>
                 </div>
+                </form>
             </div>
         </div>
     </div>
