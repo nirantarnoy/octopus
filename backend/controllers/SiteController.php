@@ -62,6 +62,7 @@ class SiteController extends Controller
     {
         $from_date = '';
         $to_date = '';
+        $this->calOrder();
         return $this->render('index_2',[
                 'from_date' => $from_date,
                 'to_date' => $to_date,
@@ -123,9 +124,19 @@ class SiteController extends Controller
         ]);
     }
     public function calOrder(){
-
+      $model = \backend\models\Order::find()->all();
+      $list = [];
+      if($model){
+          foreach($model as $value){
+              array_push($list,['order_no'=>$value->order_no,'req_date'=>$value->appoinment_date]);
+          }
+      }
+      if(count($list)>0){
+          $this->sendnotify($list);
+          $this->createMessage($list);
+      }
     }
-    public function actionSendnotify(){
+    public function sendnotify($list){
 
         $message = 'ทดสอบส่งข้อความจากระบบตรวจสอบสถานะใบสั่งผลิต';
 
@@ -149,5 +160,14 @@ class SiteController extends Controller
         $result = file_get_contents($line_api, FALSE, $context);
         $res = json_decode($result);
         return $res;
+    }
+    public function createMessage($list){
+        if(count($list)>0){
+            $model = new \backend\models\Message();
+            $model->title = "แจ้งเตือน";
+            $model->message_type = 0;
+            $model->detail = $list[0]['order_no'];
+            $model->save(false);
+        }
     }
 }

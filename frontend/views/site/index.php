@@ -59,7 +59,7 @@ $this->title = 'octopus';
        <div class="row">
         <div class="col-lg-12">
             <div class="page-header">
-                <h1>เลขที่ใบสั่งงาน <small>ABC18-000001</small></h1>
+                <h1>เลขที่ใบสั่งงาน <small>D622</small></h1>
             </div>
         </div>
     </div>
