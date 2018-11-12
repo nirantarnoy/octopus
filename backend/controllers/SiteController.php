@@ -63,11 +63,32 @@ class SiteController extends Controller
         $from_date = '';
         $to_date = '';
 
-        $this->calOrder();
-        $order_all = \backend\models\Order::find()->all();
-        $order_late = \backend\models\Order::find()->where(['>','appointment_date',strtotime(date('d-m-Y'))])->all();
-        $order_process = \backend\models\Order::find()->where(['>','order_status',2])->all();
-        $order_will_complete = \backend\models\Order::find()->where(['>','order_status',9])->all();
+        $find_date = null;
+        if(Yii::$app->request->isGet){
+            $find_date = explode(' ถึง ',Yii::$app->request->get('date_select'));
+        }
+        if(count($find_date)>0 && Yii::$app->request->get('date_select') != null) {
+            $from_date = $find_date[0];
+            $to_date = $find_date[1];
+
+         //   $received_amt = \backend\models\Prodrecline::find()->where(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->sum('qty * price');
+
+            $this->calOrder();
+            $order_all = \backend\models\Order::find()->where(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
+            $order_late = \backend\models\Order::find()->where(['>','appointment_date',strtotime(date('d-m-Y'))])->all();
+            $order_process = \backend\models\Order::find()->where(['>','order_status',2])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
+            $order_will_complete = \backend\models\Order::find()->where(['>','order_status',9])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
+
+        }else{
+            $this->calOrder();
+            $order_all = \backend\models\Order::find()->all();
+            $order_late = \backend\models\Order::find()->where(['>','appointment_date',strtotime(date('d-m-Y'))])->all();
+            $order_process = \backend\models\Order::find()->where(['>','order_status',2])->all();
+            $order_will_complete = \backend\models\Order::find()->where(['>','order_status',9])->all();
+        }
+
+
+
         return $this->render('index_2',[
                 'from_date' => $from_date,
                 'to_date' => $to_date,

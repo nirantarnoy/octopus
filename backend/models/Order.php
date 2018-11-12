@@ -67,7 +67,7 @@ class Order extends \common\models\Order
         $model = \backend\models\Order::find()->where(['order_type'=>$trans_type])->MAX('order_no');
 //        $pre = \backend\models\Sequence::find()->where(['module_id'=>$trans_type])->one();
         if($model){
-            $prefix = substr(date("Y"),2,2);
+            $prefix = $trans_type==1?'D':'S';// substr(date("Y"),2,2);
             $cnum = substr((string)$model,strlen($prefix),strlen($model));
             $len = strlen($cnum);
             $clen = strlen($cnum + 1);
@@ -78,8 +78,8 @@ class Order extends \common\models\Order
             $prefix.=$cnum + 1;
             return $prefix;
         }else{
-            $prefix =substr(date("Y"),2,2);
-            return $prefix.'000001';
+            $prefix = $trans_type==1?'D':'S';//substr(date("Y"),2,2);
+            return $prefix.'0001';
         }
     }
 }

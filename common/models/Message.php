@@ -48,7 +48,7 @@ class Message extends \yii\db\ActiveRecord
             'message_type' => Yii::t('app', 'ประเภทแจ้งเตือน'),
             'title' => Yii::t('app', 'หัวข้อ'),
             'detail' => Yii::t('app', 'รายละเอียด'),
-            'status' => Yii::t('app', 'สถาณะ'),
+            'status' => Yii::t('app', 'สถานะ'),
             'created_at' => Yii::t('app', 'สร้างเมื่อ'),
             'updated_at' => Yii::t('app', 'แก้ไขเมื่อ'),
             'created_by' => Yii::t('app', 'สร้างโดย'),

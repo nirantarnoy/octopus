@@ -83,3 +83,11 @@ $this->title = 'ภาพรวมระบบ';
         </div>
     </div>
 </div>
+<?php
+$js =<<<JS
+  $(".date_select").change(function() {
+      $("form#form_date").submit();
+    });
+JS;
+$this->registerJs($js,static::POS_END);
+?>

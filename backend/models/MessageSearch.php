@@ -18,7 +18,7 @@ class MessageSearch extends Message
     public function rules()
     {
         return [
-            [['id', 'message_type', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['id', 'message_type','created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['title', 'detail'], 'safe'],
             [['globalSearch'],'string'],
         ];
@@ -62,7 +62,7 @@ class MessageSearch extends Message
         $query->andFilterWhere([
             'id' => $this->id,
             'message_type' => $this->message_type,
-            'status' => $this->status,
+            //'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,

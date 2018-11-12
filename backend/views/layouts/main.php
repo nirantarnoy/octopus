@@ -81,6 +81,7 @@ $last_message = \backend\models\Message::find()->where(['status'=>1])->limit(6)-
                                         "label" => "ผู้ใช้งาน",
                                         "icon" => "users",
                                         "url" => "#",
+                                        "visible"=> Yii::$app->user->can("user/index")?true:false,
                                         "items" => [
                                             ["label" => "กลุ่มผู้ใช้งาน", "url" => ["usergroup/index"]],
                                             ["label" => "ผู้ใช้งาน", "url" => ["user/index"]],
@@ -93,10 +94,21 @@ $last_message = \backend\models\Message::find()->where(['status'=>1])->limit(6)-
                                         "label" => "ข้อมูลใบสั่งผลิต",
                                         "icon" => "shopping-cart",
                                         "url" => ["order/index"],
+                                        "visible"=> Yii::$app->user->can("order/index")?true:false,
 
                                     ],
-                                    ["label" => "ประเภทการจัดส่ง", "url" => ["delivertype/index"], "icon" => "truck"],
-                                    ["label" => "แจ้งเตือน", "url" => ["message/index"], "icon" => "commenting"],
+                                    [
+                                        "label" => "ประเภทการจัดส่ง",
+                                        "url" => ["delivertype/index"],
+                                        "icon" => "truck",
+                                        "visible"=> Yii::$app->user->can("delivertype/index")?true:false,
+                                    ],
+                                    [
+                                        "label" => "แจ้งเตือน",
+                                        "url" => ["message/index"],
+                                        "icon" => "commenting",
+                                        "visible"=> Yii::$app->user->can("message/index")?true:false,
+                                    ],
 
 
                                 ],
