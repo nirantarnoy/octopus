@@ -36,10 +36,10 @@ use kartik\spinner\Spinner;
             <span class="sr-only">Error:</span>
             ไม่พบข้อมูลที่ต้องการค้นหา กรุณาลองใหม่อีกครั้ง
         </div>
-        <div class="row" class="spin-wait" style="display: none;">
+        <div class="row spin-wait" style="display: none;">
             <div class="col-lg-12">
                 <?php echo '<div class="border border-secondary p-3 rounded">';
-                echo Spinner::widget(['preset' => 'medium', 'align' => 'center', 'color' => 'blue']);
+                echo Spinner::widget(['preset' => 'medium', 'align' => 'center', 'color' => 'blue', 'caption' => 'กำลังค้นหาข้อมูล &hellip;']);
                 echo '<div class="clearfix"></div>';
                 echo '</div>';
                 ?>
@@ -153,6 +153,7 @@ $js =<<<JS
              return;
          }else{
              $(".alert-not-fill").hide();
+             $(".spin-wait").show();
              $.ajax({
            'type': 'post',
            'dataType': 'html',
@@ -161,9 +162,10 @@ $js =<<<JS
            'success': function(data){
                if(data == "1"){
                     $(".alert-not-found").hide();
-                    $(".result").show();
+                    setTimeout(function(){ $(".result").show();$(".spin-wait").hide(); }, 3000);
+                    //$(".")
                }else{
-                    $(".alert-not-found").show();
+                    setTimeout(function(){ $(".alert-not-found").show();;$(".spin-wait").hide(); }, 3000);
                     $(".result").hide();
                }
            }
