@@ -5,6 +5,7 @@
 $this->title = 'octopus';
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
+use kartik\spinner\Spinner;
 
 ?>
 <div class="site-index">
@@ -35,83 +36,48 @@ use yii\helpers\Url;
             <span class="sr-only">Error:</span>
             ไม่พบข้อมูลที่ต้องการค้นหา กรุณาลองใหม่อีกครั้ง
         </div>
-    </div>
-
-<!--    <div class="body-content">-->
-<!---->
-<!--        <div class="row">-->
-<!--            <div class="col-lg-4">-->
-<!--                <h2>Heading</h2>-->
-<!---->
-<!--                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et-->
-<!--                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip-->
-<!--                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu-->
-<!--                    fugiat nulla pariatur.</p>-->
-<!---->
-<!--                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>-->
-<!--            </div>-->
-<!--            <div class="col-lg-4">-->
-<!--                <h2>Heading</h2>-->
-<!---->
-<!--                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et-->
-<!--                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip-->
-<!--                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu-->
-<!--                    fugiat nulla pariatur.</p>-->
-<!---->
-<!--                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>-->
-<!--            </div>-->
-<!--            <div class="col-lg-4">-->
-<!--                <h2>Heading</h2>-->
-<!---->
-<!--                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et-->
-<!--                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip-->
-<!--                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu-->
-<!--                    fugiat nulla pariatur.</p>-->
-<!---->
-<!--                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>-->
-<!--            </div>-->
-<!--        </div>-->
-<!---->
-<!--    </div>-->
-    <div class="result" style="display: none">
-       <div class="row">
-        <div class="col-lg-12">
-            <div class="page-header">
-                <h1>เลขที่ใบสั่งงาน <small>D622</small></h1>
+        <div class="row" class="spin-wait" style="display: none;">
+            <div class="col-lg-12">
+                <?php echo '<div class="border border-secondary p-3 rounded">';
+                echo Spinner::widget(['preset' => 'medium', 'align' => 'center', 'color' => 'blue']);
+                echo '<div class="clearfix"></div>';
+                echo '</div>';
+                ?>
             </div>
         </div>
+        <div class="result" style="display: none">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="page-header">
+                        <h1>เลขที่ใบสั่งงาน <small>D622</small></h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-x">
+                <ul class="progressbar">
+                    <?php for($i=1;$i<=count(\backend\helpers\Orderstatus::asArray(1));$i++):?>
+                        <?php
+                        $isactive = '';
+                        if($i<=4){
+                            $isactive = 'active';
+                        }
+                        ?>
+                        <?php if($i >=3 && $i <=4):?>
+
+                        <?php else:?>
+                            <li class="<?=$isactive?>"><?=\backend\helpers\Orderstatus::asArray(1)[$i]?></li>
+                        <?php endif;?>
+
+                    <?php endfor;?>
+                </ul>
+            </div>
+        </div>
+
     </div>
 
-        <div class="container-x">
-            <ul class="progressbar">
-                <?php for($i=1;$i<=count(\backend\helpers\Orderstatus::asArray(1));$i++):?>
-                <?php
-                    $isactive = '';
-                    if($i<=4){
-                        $isactive = 'active';
-                    }
-                ?>
-                <?php if($i >=3 && $i <=4):?>
 
-                <?php else:?>
-                        <li class="<?=$isactive?>"><?=\backend\helpers\Orderstatus::asArray(1)[$i]?></li>
-                <?php endif;?>
-
-                <?php endfor;?>
-<!--                <li class="active">step 2</li>-->
-<!--                <li>step 3</li>-->
-<!--                <li>step 4</li>-->
-<!--                <li>step 5</li>-->
-<!--                <li>step 6</li>-->
-<!--                <li>step 7</li>-->
-<!--                <li>step 8</li>-->
-<!--                <li>step 9</li>-->
-<!--                <li>step 10</li>-->
-<!--                <li>step 11</li>-->
-
-            </ul>
-        </div>
-</div>
 
 </div>
 <?php
@@ -183,12 +149,11 @@ $js =<<<JS
      $("#btn-submit").click(function(){
          if($(".quo-fill").val()==''){
              $(".alert-not-fill").show();
+             $(".alert-not-found").hide();
              return;
          }else{
              $(".alert-not-fill").hide();
-         }
-         
-         $.ajax({
+             $.ajax({
            'type': 'post',
            'dataType': 'html',
            'url': "$url_to_find",
@@ -199,9 +164,14 @@ $js =<<<JS
                     $(".result").show();
                }else{
                     $(".alert-not-found").show();
+                    $(".result").hide();
                }
            }
          });
+             
+         }
+         
+         
          
          //$("#form-search").submit();
      });

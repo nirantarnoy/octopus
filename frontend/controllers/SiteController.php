@@ -218,6 +218,7 @@ class SiteController extends Controller
         if($quo !=''){
             $model = \backend\models\Order::find()->where(['quotation_no'=>$quo])->one();
             if($model){
+              //  $model_status = \backend\models\Orderstatus::find()->where(['order_id'=>8])->all();
                 return "1";
             }else{
                 return "0";
