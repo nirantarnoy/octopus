@@ -226,25 +226,40 @@ $js =<<<JS
                         var i = 0;
                         $(".progressbar >li").each(function(){
                             i+=1;
-                            if(i<=data[0]['order_status']){
-                                
+                            // for(var x =1;x <= data[0]['order_status'];x++){
+                            //     if(x == 3 || x ==4){
+                            //         continue;
+                            //     }
+                            //     if(i == 1){
+                            //         $(this).addClass("active");
+                            //         continue;
+                            //     }else if(i==2 ){
+                            //         $(this).text(data[0]['confirm_status']);
+                            //         $(this).addClass("active");
+                            //         continue;
+                            //     }else if(i >= x){
+                            //       continue;  
+                            //     }else{
+                            //         $(this).addClass("active");
+                            //         continue;
+                            //     }
+                            // }
+                            if(i <= data[0]['order_status']){
+                               console.log(i);
                                 //alert("Ok");
                                 if(i == 1){
                                      $(this).addClass("active");
                                 }
                                 else if(i == 2){
-                                    if(data[0]['max_confirm']){
                                          $(this).text(data[0]['confirm_status']);
                                          $(this).addClass("active");
-                                    }
-                                    
+                  
                                 }else if(i == 3 && data[0]['order_status'] >4){
                                     $(this).addClass("active");
-                                }else{
-                                     $(this).addClass("active");
                                 }
-                                
-                               
+                              
+                            }else{
+                                return false;
                             }
                         });
                     
