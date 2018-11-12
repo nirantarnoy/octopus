@@ -62,10 +62,19 @@ class SiteController extends Controller
     {
         $from_date = '';
         $to_date = '';
+
         $this->calOrder();
+        $order_all = \backend\models\Order::find()->all();
+        $order_late = \backend\models\Order::find()->where(['>','appointment_date',strtotime(date('d-m-Y'))])->all();
+        $order_process = \backend\models\Order::find()->where(['>','order_status',2])->all();
+        $order_will_complete = \backend\models\Order::find()->where(['>','order_status',9])->all();
         return $this->render('index_2',[
                 'from_date' => $from_date,
                 'to_date' => $to_date,
+                'order_all' => $order_all,
+                'order_late' => $order_late,
+                'order_process' => $order_process,
+                'order_will_complete'=>$order_will_complete,
             ]
             );
     }
