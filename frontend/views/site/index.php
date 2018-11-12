@@ -11,7 +11,11 @@ use kartik\spinner\Spinner;
 <div class="site-index">
 
     <div class="jumbotron">
-
+        <div class="alert alert-success" role="alert" style="text-align: left;">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            กรอกเลขที่ใบเสนอราคาและอีเมลหรือเบอร์โทรเพื่อตรวจสอบสถานะ
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <form id="form-search" action="<?=Url::to(['site/find'],true)?>">

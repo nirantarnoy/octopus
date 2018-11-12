@@ -217,7 +217,7 @@ class SiteController extends Controller
         $quo = Yii::$app->request->post('quotation_no');
         $contact = Yii::$app->request->post('contact');
         if($quo !='' && $contact !=''){
-            $model = \backend\models\Order::find()->where(['quotation_no'=>$quo])->one();
+            $model = \backend\models\Order::find()->where(['quotation_no'=>$quo])->andFilterWhere(['like','contact_name',$contact])->one();
             if($model){
               //  $model_status = \backend\models\Orderstatus::find()->where(['order_id'=>8])->all();
                 return "1";
