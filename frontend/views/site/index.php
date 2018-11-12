@@ -64,7 +64,7 @@ use kartik\spinner\Spinner;
             <div class="row">
                 <div class="col-lg-12">
                     <div class="page-header">
-                        <h1>เลขที่ใบสั่งงาน <small>D622</small></h1>
+                        <h1>เลขที่ใบสั่งงาน <small class="order_text">D622</small></h1>
                     </div>
                 </div>
             </div>
@@ -192,6 +192,7 @@ $url_to_find = Url::to(['find'],true);
 $js =<<<JS
   $(function() {
      $("#btn-submit").click(function(){
+         $(".result").hide();
          if($(".quo-fill").val()==''){
              $(".alert-not-fill").show();
              $(".alert-not-found").hide();
@@ -210,13 +211,18 @@ $js =<<<JS
              $(".spin-wait").show();
              $.ajax({
            'type': 'post',
-           'dataType': 'html',
+           'dataType': 'json',
            'url': "$url_to_find",
            'data': {'quotation_no': $(".quo-fill").val(),'contact':$(".confirm-fill").val()},
            'success': function(data){
-               if(data == "1"){
+               if(data.length >0){
                     $(".alert-not-found").hide();
-                    setTimeout(function(){ $(".result").show();$(".spin-wait").hide(); }, 2000);
+                    //alert(data[0]['order_no']);
+                    setTimeout(function(){
+                        $(".result").show();
+                        $(".order_text").text(data[0]['order_no']);
+                        $(".spin-wait").hide(); 
+                        }, 2000);
                     //$(".")
                }else{
                     setTimeout(function(){ $(".alert-not-found").show();;$(".spin-wait").hide(); }, 2000);

@@ -12,6 +12,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\helpers\Json;
 
 /**
  * Site controller
@@ -216,16 +217,20 @@ class SiteController extends Controller
     public function actionFind(){
         $quo = Yii::$app->request->post('quotation_no');
         $contact = Yii::$app->request->post('contact');
+        $result = [];
         if($quo !='' && $contact !=''){
+
             $model = \backend\models\Order::find()->where(['quotation_no'=>$quo])
                                                   ->andFilterWhere(['or',['like','phone',$contact],['like','email',$contact]])->one();
             if($model){
-              //  $model_status = \backend\models\Orderstatus::find()->where(['order_id'=>8])->all();
-                return "1";
+
+                $max_status = \backend\models\Orderstatus::find()->where(['order_id'=>$model->id])->max('status');
+                array_push($result,['order_no'=>$model->order_no,'order_status'=>$max_status]);
+                return Json::encode($result);
             }else{
-                return "0";
+                return Json::encode($result);
             }
         }
-        return "0";
+        return Json::encode($result);
     }
 }
