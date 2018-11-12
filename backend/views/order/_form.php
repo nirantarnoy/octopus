@@ -72,12 +72,22 @@ $cur_type = 0;
                 <?= $form->field($model, 'contact_info')->textarea(['maxlength' => true]) ?>
             </div>
             <div class="col-lg-4">
-                <?= $form->field($model, 'appointment_date')->widget(DateTimePicker::className(),[
-                        'value' => date('d-m-Y'),
-
-                ]) ?>
+                <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
             </div>
         </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
+                </div>
+
+                <div class="col-lg-4">
+                    <?= $form->field($model, 'appointment_date')->widget(DateTimePicker::className(),[
+                        'value' => date('d-m-Y'),
+
+                    ]) ?>
+                </div>
+                <div class="col-lg-4"></div>
+            </div>
 
 
     <div class="row">
