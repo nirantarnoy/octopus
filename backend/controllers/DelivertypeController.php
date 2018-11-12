@@ -7,6 +7,8 @@ use backend\models\Delivertype;
 use backend\models\DelivertypeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 
 /**
@@ -26,6 +28,29 @@ class DelivertypeController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access'=>[
+                'class'=>AccessControl::className(),
+                'denyCallback' => function ($rule, $action) {
+                    throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+                },
+                'rules'=>[
+//                    [
+//                        'allow'=>true,
+//                        'actions'=>['index','create','update','delete','view'],
+//                        'roles'=>['@'],
+//                    ]
+                    [
+                        'allow'=>true,
+                        'roles'=>['@'],
+                        'matchCallback'=>function($rule,$action){
+                            $currentRoute = Yii::$app->controller->getRoute();
+                            if(Yii::$app->user->can($currentRoute)){
+                                return true;
+                            }
+                        }
+                    ]
+                ]
+            ]
         ];
     }
 

@@ -6,7 +6,8 @@ use Yii;
 use backend\models\User;
 use backend\models\UserSearch;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
 use yii\filters\VerbFilter;
 
 
@@ -27,6 +28,29 @@ class UserController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access'=>[
+                'class'=>AccessControl::className(),
+                'denyCallback' => function ($rule, $action) {
+                    throw new ForbiddenHttpException('คุณไม่ได้รับอนุญาติให้เข้าใช้งาน!');
+                },
+                'rules'=>[
+//                    [
+//                        'allow'=>true,
+//                        'actions'=>['index','create','update','delete','view'],
+//                        'roles'=>['@'],
+//                    ]
+                    [
+                        'allow'=>true,
+                        'roles'=>['@'],
+                        'matchCallback'=>function($rule,$action){
+                            $currentRoute = Yii::$app->controller->getRoute();
+                            if(Yii::$app->user->can($currentRoute)){
+                                return true;
+                            }
+                        }
+                    ]
+                ]
+            ]
         ];
     }
 
@@ -73,16 +97,19 @@ class UserController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
           //  $model->status = 1;
-            $auth = Yii::$app->authManager;
-
-            $user_role = $auth->getRole('System User');
-            $auth->assign($user_role,$model->id);
-
+//            $auth = Yii::$app->authManager;
+//            $user_role = $auth->getRole('System User');
+//            $auth->assign($user_role,$model->id);
+            $model->setPassword('123456');
+            $model->email = $model->username.'@octopus.com';
+            $model->generateAuthKey();
             if($model->save()){
+                $model->assignment();
                 $session = Yii::$app->session;
                 $session->setFlash('msg','บันทึกรายการเรียบร้อย');
                 return $this->redirect(['index']);
             }
+
         }
 
         return $this->render('create', [

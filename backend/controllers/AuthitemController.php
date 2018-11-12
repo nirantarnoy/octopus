@@ -343,6 +343,36 @@ class AuthitemController extends Controller
         $auth->add($manage_message);
         $auth->addChild($manage_message,$message_permission);
 
+        // delivery
+
+        $delivertype_index = $auth->createPermission('delivertype/index');
+        $auth->add($delivertype_index);
+        $delivertype_update = $auth->createPermission('delivertype/update');
+        $auth->add($delivertype_update);
+        $delivertype_delete = $auth->createPermission('delivertype/delete');
+        $auth->add($delivertype_delete);
+        $delivertype_view = $auth->createPermission('delivertype/view');
+        $auth->add($delivertype_view);
+        $delivertype_create = $auth->createPermission('delivertype/create');
+        $auth->add($delivertype_create);
+
+
+        $delivertype_permission = $auth->createPermission('delivertypemodule');
+        $delivertype_permission->description = "สิทธิ์ใช้งานโมดูล delivertype";
+        $auth->add($delivertype_permission);
+
+        $auth->addChild($delivertype_permission,$delivertype_index);
+        $auth->addChild($delivertype_permission,$delivertype_view);
+        $auth->addChild($delivertype_permission,$delivertype_update);
+        $auth->addChild($delivertype_permission,$delivertype_delete);
+        $auth->addChild($delivertype_permission,$delivertype_create);
+
+
+        $manage_delivertype = $auth->createRole('Manage delivertype');
+        $manage_delivertype->description = "Manage delivertype";
+        $auth->add($manage_delivertype);
+        $auth->addChild($manage_delivertype,$delivertype_permission);
+
 
 
 
@@ -363,6 +393,7 @@ class AuthitemController extends Controller
 
         $auth->addChild($user_role,$manage_order);
         $auth->addChild($user_role,$manage_message);
+        $auth->addChild($user_role,$manage_delivertype);
 
         $auth->addChild($admin_role,$user_role);
 
