@@ -81,7 +81,7 @@ use kartik\spinner\Spinner;
                         <?php if($i >=3 && $i <=4):?>
 
                         <?php else:?>
-                            <li class="<?=$isactive?>"><?=\backend\helpers\Orderstatus::asArray(1)[$i]?></li>
+                            <li class="step_no"><?=\backend\helpers\Orderstatus::asArray(1)[$i]?></li>
                         <?php endif;?>
 
                     <?php endfor;?>
@@ -217,12 +217,38 @@ $js =<<<JS
            'success': function(data){
                if(data.length >0){
                     $(".alert-not-found").hide();
-                    //alert(data[0]['order_no']);
+                   // alert(data[0]['order_status']);
                     setTimeout(function(){
                         $(".result").show();
                         $(".order_text").text(data[0]['order_no']);
                         $(".spin-wait").hide(); 
                         }, 2000);
+                        var i = 0;
+                        $(".progressbar >li").each(function(){
+                            i+=1;
+                            if(i<=data[0]['order_status']){
+                                
+                                //alert("Ok");
+                                if(i == 1){
+                                     $(this).addClass("active");
+                                }
+                                else if(i == 2){
+                                    if(data[0]['max_confirm']){
+                                         $(this).text(data[0]['confirm_status']);
+                                         $(this).addClass("active");
+                                    }
+                                    
+                                }else if(i == 3 && data[0]['order_status'] >4){
+                                    $(this).addClass("active");
+                                }else{
+                                     $(this).addClass("active");
+                                }
+                                
+                               
+                            }
+                        });
+                    
+                    
                     //$(".")
                }else{
                     setTimeout(function(){ $(".alert-not-found").show();;$(".spin-wait").hide(); }, 2000);

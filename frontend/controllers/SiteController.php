@@ -223,9 +223,18 @@ class SiteController extends Controller
             $model = \backend\models\Order::find()->where(['quotation_no'=>$quo])
                                                   ->andFilterWhere(['or',['like','phone',$contact],['like','email',$contact]])->one();
             if($model){
-
+                $confirm_name = '';
                 $max_status = \backend\models\Orderstatus::find()->where(['order_id'=>$model->id])->max('status');
-                array_push($result,['order_no'=>$model->order_no,'order_status'=>$max_status]);
+                $max_confirm = \backend\models\Orderstatus::find()->where(['order_id'=>$model->id])
+                    ->andFilterWhere(['in','status',[2,3,4]])->max('status');
+                if($max_confirm){
+                    $confirm_name = \backend\helpers\Orderstatus::getTypeById($max_confirm);
+                }
+
+                if($max_status){
+                    array_push($result,['order_no'=>$model->order_no,'order_status'=>$max_status,'max_confirm'=>$max_confirm,'confirm_status'=>$confirm_name]);
+                }
+
                 return Json::encode($result);
             }else{
                 return Json::encode($result);

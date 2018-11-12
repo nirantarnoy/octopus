@@ -119,7 +119,7 @@ class OrderController extends Controller
 
 
             if($model->save()){
-
+                $this->updateorderstatus($model->id,$model->order_status);
                 if(!empty($uploadfile)){
                     foreach($uploadfile as $file){
                         $file->saveAs(Yii::getAlias('@backend') .'/web/uploads/files/'.$file);
