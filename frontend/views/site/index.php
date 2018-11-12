@@ -15,13 +15,23 @@ use kartik\spinner\Spinner;
         <div class="row">
             <div class="col-lg-12">
                 <form id="form-search" action="<?=Url::to(['site/find'],true)?>">
-                <div class="input-group">
-                    <input type="text" class="form-control quo-fill" style="height: 60px;font-size: 24px;" placeholder="กรอกเลขที่ QT และ (อีเมล หรือ เบอรโทร)" required>
-                    <span class="input-group-btn">
+                    <div class="row">
+                        <div class="col-lg-6">
+
+                                <input type="text" class="form-control quo-fill" style="height: 60px;font-size: 24px;" placeholder="เลขที่ใบเสนอราคา" required>
+
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control confirm-fill" style="height: 60px;font-size: 24px;" placeholder="อีเมล หรือ เบอร์โทร" required>
+                                <span class="input-group-btn">
 <!--                        <input type="submit" class="btn btn-info" value="ตกลง">-->
-                        <input type="button" id="btn-submit" class="btn btn-info" value="ok" />
-                    </span>
-                </div>
+                                <input type="button" id="btn-submit" class="btn btn-info" value="ตกลง" />
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
                 </form>
             </div>
         </div>
@@ -29,7 +39,7 @@ use kartik\spinner\Spinner;
         <div class="alert alert-danger alert-not-fill" style="display: none" role="alert">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <span class="sr-only">Error:</span>
-            กรุณากรอกข้อมูลใบเสนอราคา
+            <span class="error-text"></span>
         </div>
         <div class="alert alert-danger alert-not-found" style="display: none" role="alert">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -79,6 +89,37 @@ use kartik\spinner\Spinner;
 
 
 
+</div>
+<div id="billxModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-print"></i> พิมพ์ใบเสร็จ <small id="items"> </small></h4>
+            </div>
+            <div class="modal-body">
+                <form id="form-modal-bill" action="<?=Url::to(['sale/printbill'],true)?>" method="post" target="_blank">
+                    <br>
+                    <input type="hidden" name="id" value="" class="sale_line_id">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            ขนาดกระดาษที่ต้องการ
+                            <select name="paper_size" id="paper-size">
+                                <option value="1">A4</option>
+                                <option value="2">A5</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-print-bill">พิมพ์</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+            </div>
+        </div>
+
+    </div>
 </div>
 <?php
 $css =<<<CSS
@@ -150,22 +191,31 @@ $js =<<<JS
          if($(".quo-fill").val()==''){
              $(".alert-not-fill").show();
              $(".alert-not-found").hide();
+             $(".error-text").text("กรุณากรอกเลขที่ใบเสนอราคา");
+             $(".quo-fill").focus();
+             return;
+         }else if($(".confirm-fill").val()==''){
+             $(".alert-not-fill").show();
+             $(".alert-not-found").hide();
+              $(".error-text").text("กรุณากรอกอีเมลหรือเบอร์โทรศัพท์");
+             $(".confirm-fill").focus();
              return;
          }else{
              $(".alert-not-fill").hide();
+              $(".alert-not-found").hide();
              $(".spin-wait").show();
              $.ajax({
            'type': 'post',
            'dataType': 'html',
            'url': "$url_to_find",
-           'data': {'quotation_no': $(".quo-fill").val()},
+           'data': {'quotation_no': $(".quo-fill").val(),'contact':$(".confirm-fill").val()},
            'success': function(data){
                if(data == "1"){
                     $(".alert-not-found").hide();
-                    setTimeout(function(){ $(".result").show();$(".spin-wait").hide(); }, 3000);
+                    setTimeout(function(){ $(".result").show();$(".spin-wait").hide(); }, 2000);
                     //$(".")
                }else{
-                    setTimeout(function(){ $(".alert-not-found").show();;$(".spin-wait").hide(); }, 3000);
+                    setTimeout(function(){ $(".alert-not-found").show();;$(".spin-wait").hide(); }, 2000);
                     $(".result").hide();
                }
            }
