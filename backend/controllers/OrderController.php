@@ -113,7 +113,7 @@ class OrderController extends Controller
         $modelfile = new Modelfile();
 
         if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
-
+            echo $model->order_status;return;
             $uploadfile = UploadedFile::getInstances($modelfile,'file');
             $uploadimage = UploadedFile::getInstances($modelfile,'file_photo');
             $model->order_admin = Yii::$app->user->id;

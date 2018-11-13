@@ -75,11 +75,18 @@ class Orderstatus
             return self::$dataobj2;
         }
     }
-    public static function getTypeById($idx)
+    public static function getTypeById($idx,$type)
     {
-        if (isset(self::$data[$idx])) {
-            return self::$data[$idx];
+        if($type == 1){
+            if (isset(self::$data[$idx])) {
+                return self::$data[$idx];
+            }
+        }else{
+            if (isset(self::$data2[$idx])) {
+                return self::$data2[$idx];
+            }
         }
+
 
         return 'Unknown Type';
     }

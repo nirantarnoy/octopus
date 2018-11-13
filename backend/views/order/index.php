@@ -126,7 +126,7 @@ if ($session->getFlash('msg')): ?>
                 'attribute' => 'order_status',
                 'format' => 'raw',
                 'value'=>function($data){
-                    return "<div class='label label-warning'>".\backend\helpers\Orderstatus::getTypeById($data->order_status)."</div>";
+                    return "<div class='label label-warning'>".\backend\helpers\Orderstatus::getTypeById($data->order_status,$data->order_type)."</div>";
 
                 },
                 'filter'=>ArrayHelper::map(\backend\helpers\Orderstatus::asArrayObject(1), 'id', 'name'),
