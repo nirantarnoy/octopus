@@ -42,11 +42,11 @@
         <td></td>
     </tr>
     <tr>
-        <td><h4 style="font-family: Garuda">ผู้ดูแล : <small><?=$model->order_admin?></small></h4></td>
+        <td><h4 style="font-family: Garuda">ผู้ดูแล : <small><?=\backend\models\User::findName($model->order_admin)?></small></h4></td>
         <td></td>
     </tr>
     <tr>
-        <td><h4 style="font-family: Garuda;">สถานะ : <small style="background-color: #bf800c;padding-left: 15px;"><?=\backend\helpers\Orderstatus::getTypeById($model->order_status)?></small></h4></td>
+        <td><h4 style="font-family: Garuda;">สถานะ : <small style="background-color: #bf800c;padding-left: 15px;"><?=\backend\helpers\Orderstatus::getTypeById($model->order_status,$model->order_type)?></small></h4></td>
         <td></td>
     </tr>
 </table>
