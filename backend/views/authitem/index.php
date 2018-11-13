@@ -20,6 +20,8 @@ $this->registerJsFile(
     ['depends' => [\yii\web\JqueryAsset::className()]],
     static::POS_END
 );
+$this->registerJsFile( '@web/js/sweetalert.min.js?V=001',['depends' => [\yii\web\JqueryAsset::className()]],static::POS_END);
+$this->registerCssFile( '@web/css/sweetalert.css');
 
 
 ?>
@@ -202,8 +204,7 @@ $this->registerJsFile(
 </div>
 <?php
 
-$this->registerJsFile( '@web/js/sweetalert.min.js',['depends' => [\yii\web\JqueryAsset::className()]],static::POS_END);
-$this->registerCssFile( '@web/css/sweetalert.css');
+
 
 $url_to_delete =  Url::to(['product/bulkdelete'],true);
 $this->registerJs('

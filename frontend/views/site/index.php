@@ -224,6 +224,18 @@ $js =<<<JS
                         $(".spin-wait").hide(); 
                         }, 2000);
                         var i = 0;
+                        var looporder = 0;
+                        
+                        if(data[0]['order_status'] == 3){
+                            looporder = data[0]['order_status']-1;
+                        }
+                       
+                         if(data[0]['order_status'] >= 4){
+                            looporder = data[0]['order_status']-2;
+                        }else{
+                             looporder = data[0]['order_status'];
+                        }
+                        
                         $(".progressbar >li").each(function(){
                             i+=1;
                             // for(var x =1;x <= data[0]['order_status'];x++){
@@ -244,19 +256,42 @@ $js =<<<JS
                             //         continue;
                             //     }
                             // }
-                            if(i <= data[0]['order_status']){
-                               console.log(i);
+                            
+                            if(i <= looporder){
+                               //console.log(i);
                                 //alert("Ok");
                                 if(i == 1){
                                      $(this).addClass("active");
                                 }
                                 else if(i == 2){
-                                         $(this).text(data[0]['confirm_status']);
-                                         $(this).addClass("active");
+                                    $(this).text(data[0]['confirm_status']);
+                                    $(this).addClass("active");
                   
-                                }else if(i == 3 && data[0]['order_status'] >4){
+                                }else if(i==3){
+                                    if(data[0]['order_status'] > 4){
+                                        $(this).addClass("active");
+                                    }
+                                }else{
                                     $(this).addClass("active");
                                 }
+                                // if(i==4 && data[0]['order_status']>=5){
+                                //     $(this).addClass("active");
+                                // }
+                                //  if(i==5 && data[0]['order_status']>4){
+                                //     $(this).addClass("active");
+                                // }
+                                // if(i==6 && data[0]['order_status']>4){
+                                //     $(this).addClass("active");
+                                // }
+                                // if(i==7 && data[0]['order_status']>4){
+                                //     $(this).addClass("active");
+                                // }
+                                // if(i==8 && data[0]['order_status']>4){
+                                //     $(this).addClass("active");
+                                // }
+                                // if(i==9 && data[0]['order_status']>4){
+                                //     $(this).addClass("active");
+                                // }
                               
                             }else{
                                 return false;

@@ -105,8 +105,6 @@ class AuthitemController extends Controller
                 }
             }
 
-
-
                 $session = Yii::$app->session;
                 $session->setFlash('msg','บันทึกรายการเรียบร้อย');
                 return $this->redirect(['index']);
@@ -295,6 +293,8 @@ class AuthitemController extends Controller
         $auth->add($order_view);
         $order_create = $auth->createPermission('order/create');
         $auth->add($order_create);
+        $order_print = $auth->createPermission('order/print');
+        $auth->add($order_print);
 
 
         $order_permission = $auth->createPermission('ordermodule');
@@ -306,6 +306,7 @@ class AuthitemController extends Controller
         $auth->addChild($order_permission,$order_update);
         $auth->addChild($order_permission,$order_delete);
         $auth->addChild($order_permission,$order_create);
+        $auth->addChild($order_permission,$order_print);
 
 
         $manage_order = $auth->createRole('Manage order');
