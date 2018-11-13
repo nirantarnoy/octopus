@@ -396,7 +396,9 @@ class OrderController extends Controller
     }
     public function actionUpdatestatus(){
         $id = Yii::$app->request->post('id');
-        $status = Yii::$app->request->post('status');
+        $status1 = Yii::$app->request->post('status1');
+        $status2 = Yii::$app->request->post('status1');
+        $status = $status1 == ""?$status2:$status1;
         if($id){
             $modelorder = \backend\models\Order::find()->where(['id'=>$id])->one();
             if($modelorder){
@@ -416,10 +418,21 @@ class OrderController extends Controller
                     }
                 }
                 $session = Yii::$app->session;
-                $session->setFlash('msg','ลบรายการเรียบร้อย');
+                $session->setFlash('msg',' ทำรายการเรียบร้อย');
                 return $this->redirect(['index']);
             }
 
+        }
+    }
+    public function actionFindtype(){
+        $id = Yii::$app->request->post("id");
+        if($id){
+            $model = \backend\models\Order::find()->where(['id'=>$id])->one();
+            if($model){
+                return $model->order_type;
+            }else{
+                return 0;
+            }
         }
     }
 

@@ -301,6 +301,8 @@ class AuthitemController extends Controller
         $auth->add($order_getno);
         $order_updatestatus = $auth->createPermission('order/updatestatus');
         $auth->add($order_updatestatus);
+        $order_findtype = $auth->createPermission('order/findtype');
+        $auth->add($order_findtype);
 
 
         $order_permission = $auth->createPermission('ordermodule');
@@ -316,6 +318,7 @@ class AuthitemController extends Controller
         $auth->addChild($order_permission,$order_showstatus);
         $auth->addChild($order_permission,$order_getno);
         $auth->addChild($order_permission,$order_updatestatus);
+        $auth->addChild($order_permission,$order_findtype);
 
 
         $manage_order = $auth->createRole('Manage order');

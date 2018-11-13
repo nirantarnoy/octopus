@@ -204,12 +204,15 @@ if ($session->getFlash('msg')): ?>
                             'id'=>'update_order_status',
                         ]);
                         return Html::a(
-                            '<span class="glyphicon glyphicon-cog btn btn-xs btn-default"></span>', $url, [
+                            '<span class="glyphicon glyphicon-cog btn btn-xs btn-default"></span>', 'javascript:void(0)', [
                             'id' => 'activity-view-link',
                             //'data-toggle' => 'modal',
                             // 'data-target' => '#modal',
                             'data-id' => $index,
                             'data-pjax' => '0',
+                            'onclick'=>'
+                                showstatus($(this));
+                            '
                             // 'style'=>['float'=>'rigth'],
                         ]);
                     },
@@ -264,10 +267,54 @@ if ($session->getFlash('msg')): ?>
 
     </div>
 </div>
+<div id="statusModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-primary"><i class="fa fa-bolt"></i> เปลี่ยนสถานะใบสั่งผลิต <small id="items"> </small></h4>
+            </div>
+            <div class="modal-body">
+                <form id="form-status" action="<?=Url::to(['order/updatestatus'],true)?>" method="post" >
+                    <br>
+                    <input type="hidden" name="id" value="" class="order_line_id">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            สถานะ
+                            <select name="status1" id="order-status1" class="form-control" style="display: none;">
+
+                                <?php
+                                $status = \backend\helpers\Orderstatus::asArrayObject(1);
+                                for($i=0;$i<=count($status)-1;$i++): ?>
+                                <option value="<?=$status[$i]['id']?>"><?=$status[$i]['name']?></option>
+                                <?php endfor;?>
+                            </select>
+                            <select name="status2" id="order-status2" class="form-control" style="display: none;">
+
+                                <?php
+                                $status = \backend\helpers\Orderstatus::asArrayObject(2);
+                                for($i=0;$i<=count($status)-1;$i++): ?>
+                                    <option value="<?=$status[$i]['id']?>"><?=$status[$i]['name']?></option>
+                                <?php endfor;?>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-change-status">ตกลง</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 <?php
 $this->registerJsFile( '@web/js/sweetalert.min.js',['depends' => [\yii\web\JqueryAsset::className()]],static::POS_END);
 $this->registerCssFile( '@web/css/sweetalert.css');
 //$url_to_delete =  Url::to(['product/bulkdelete'],true);
+$url_to_find_type = Url::to(['order/findtype'],true);
 $this->registerJs('
     $(function(){
         $("#perpage").change(function(){
@@ -278,10 +325,37 @@ $this->registerJs('
             $("#printModal").modal("hide");
       
         });
+        $(".btn-change-status").click(function(){
+            $("#form-status").submit();
+            $("#statusModal").modal("hide");
+      
+        });
     });
    function showprint(e){
      var ids = e.parents("tr").data("key");
      $("#printModal").modal("show").find(".order_line_id").val(ids);
+   }
+   function showstatus(e){
+     var ids = e.parents("tr").data("key");
+     $("#statusModal").modal("show").find(".order_line_id").val(ids);
+     
+     $.ajax({
+         type: "post",
+         dataType: "html",
+         url:"'.$url_to_find_type.'",
+         data: {"id": ids},
+         success: function(data){
+            if(data == 1){
+              $("#order-status1").show();
+              $("#order-status2").hide();
+            }else{
+              $("#order-status2").show();
+              $("#order-status1").hide();
+            }
+         }
+         
+     });
+     
    }
    function recDelete(e){
         //e.preventDefault();
