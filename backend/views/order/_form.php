@@ -50,35 +50,38 @@ $cur_type = 0;
     </div>
             <div class="row">
                 <div class="col-lg-4">
+                    <?= $form->field($model, 'quotation_no')->textInput(['maxlength' => true]) ?>
+                </div>
+                <div class="col-lg-4">
                     <?= $form->field($model, 'customer_name')->textInput(['maxlength' => true]) ?>
                 </div>
+<!--                <div class="col-lg-4">-->
+  <?php //echo $form->field($model, 'customer_type')->widget(Select2::className(),[
+//                        'data'=>ArrayHelper::map(\backend\helpers\CustomerType::asArrayObject(),'id','name'),
+//                        'options'=>[
+//                            'placeholder'=>'เลือกประเภท'
+//                        ]
+//                   ]) ?>
+<!--                </div>-->
+
                 <div class="col-lg-4">
-                    <?= $form->field($model, 'customer_type')->widget(Select2::className(),[
-                        'data'=>ArrayHelper::map(\backend\helpers\CustomerType::asArrayObject(),'id','name'),
-                        'options'=>[
-                            'placeholder'=>'เลือกประเภท'
-                        ]
-                    ]) ?>
-                </div>
-                <div class="col-lg-4">
-                    <?= $form->field($model, 'quotation_no')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'contact_name')->textInput(['maxlength' => true]) ?>
                 </div>
             </div>
         <div class="row">
-            <div class="col-lg-4">
-                <?= $form->field($model, 'contact_name')->textInput(['maxlength' => true]) ?>
-            </div>
+
             <div class="col-lg-4">
                 <?= $form->field($model, 'contact_info')->textarea(['maxlength' => true]) ?>
             </div>
             <div class="col-lg-4">
                 <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
             </div>
+            <div class="col-lg-4">
+                <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
+            </div>
         </div>
             <div class="row">
-                <div class="col-lg-4">
-                    <?= $form->field($model, 'phone')->textInput(['maxlength' => true]) ?>
-                </div>
+
 
                 <div class="col-lg-4">
                     <?= $form->field($model, 'appointment_date')->widget(DateTimePicker::className(),[
@@ -86,7 +89,18 @@ $cur_type = 0;
 
                     ]) ?>
                 </div>
-                <div class="col-lg-4"></div>
+                <div class="col-lg-4">
+                    <?= $form->field($model, 'delivery_type')->widget(Select2::className(),[
+                        'data'=>ArrayHelper::map(\backend\models\Delivertype::find()->all(),'id','name'),
+                        'options'=>[
+                            'placeholder'=>'เลือกประเภท'
+                        ]
+                    ]) ?>
+                </div>
+
+                <div class="col-lg-4">
+                    <?= $form->field($model, 'delivery_name')->textarea(['maxlength' => true]) ?>
+                </div>
             </div>
 
 
@@ -100,17 +114,7 @@ $cur_type = 0;
 //            ]) ?>
 <!--        </div>-->
 
-        <div class="col-lg-4">
-            <?= $form->field($model, 'delivery_type')->widget(Select2::className(),[
-                'data'=>ArrayHelper::map(\backend\models\Delivertype::find()->all(),'id','name'),
-                'options'=>[
-                    'placeholder'=>'เลือกประเภท'
-                ]
-            ]) ?>
-        </div>
-        <div class="col-lg-4">
-            <?= $form->field($model, 'delivery_name')->textInput(['maxlength' => true]) ?>
-        </div>
+
         <div class="col-lg-4">
             <?= $form->field($model, 'order_status')->widget(Select2::className(),[
                 'data'=>ArrayHelper::map(\backend\helpers\Orderstatus::asArrayObject(1),'id','name'),
@@ -182,7 +186,7 @@ $cur_type = 0;
 <?php
 $url_to_del_pic = Url::to(['order/deletepic'],true);
 $js =<<<JS
- 
+
   function removepic(e){
    // alert(e.attr("data-var"));return;
     if(confirm("ต้องการลบรูปภาพนี้ใช่หรือไม่")){
