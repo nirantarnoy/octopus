@@ -30,6 +30,7 @@ $cur_type = 0;
             <?= $form->field($model, 'order_type')->widget(Select2::className(),[
                 'data'=>ArrayHelper::map(\backend\helpers\OrderType::asArrayObject(),'id','name'),
                 'options'=>[
+                    'id'=>'select_order_type',
                     'placeholder'=>'เลือกประเภท',
                     'onchange'=>'
                        $.post("'.Url::to(['order/showstatus'],true).'"+"&id="+$(this).val(),function(data){
@@ -41,10 +42,11 @@ $cur_type = 0;
             ]) ?>
         </div>
         <div class="col-lg-4">
-            <?= $form->field($model, 'order_no')->textInput(['maxlength' => true,'readonly'=>'readonly','value'=>$model->isNewRecord?$runno:$model->order_no]) ?>
+            <?= $form->field($model, 'order_no')->textInput(['class'=>'form-control order_no','maxlength' => true,'readonly'=>'readonly','value'=>$model->isNewRecord?$runno:$model->order_no]) ?>
         </div>
         <div class="col-lg-4">
-            <?= $form->field($model, 'order_admin')->textInput(['readonly'=>'readonly']) ?>
+            <input type="hidden" name="admin_id" value="<?=Yii::$app->user->id;?>">
+            <?= $form->field($model, 'admin_name')->textInput(['readonly'=>'readonly','value'=> $model->isNewRecord?\backend\models\User::findName(Yii::$app->user->id):\backend\models\User::findName($model->order_admin)])->label() ?>
         </div>
 
     </div>
@@ -185,8 +187,21 @@ $cur_type = 0;
 </div>
 <?php
 $url_to_del_pic = Url::to(['order/deletepic'],true);
+$url_to_find_runno = Url::to(['order/getrunno']);
 $js =<<<JS
-
+  $(function() {
+    $("#select_order_type").change(function(){
+       $.ajax({
+           'type':'post',
+           'dataType':'html',
+           'url':"$url_to_find_runno",
+           'data': {'order_type': $(this).val()},
+           'success': function(data) {
+             $(".order_no").val(data);
+           }
+        });
+    });
+  });
   function removepic(e){
    // alert(e.attr("data-var"));return;
     if(confirm("ต้องการลบรูปภาพนี้ใช่หรือไม่")){

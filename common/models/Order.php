@@ -26,6 +26,7 @@ use Yii;
  */
 class Order extends \yii\db\ActiveRecord
 {
+    public $admin_name;
     /**
      * {@inheritdoc}
      */
@@ -41,7 +42,7 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             [['order_type','order_no'],'required'],
-            [['quotation_no','phone'],'string'],
+            [['quotation_no','phone','admin_name'],'string'],
             [['appointment_date'],'safe'],
             [['email'],'email'],
             [['order_admin', 'order_type', 'customer_type', 'payment_type', 'delivery_type', 'order_status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
@@ -68,6 +69,7 @@ class Order extends \yii\db\ActiveRecord
             'delivery_type' => Yii::t('app', 'ประเภทการจัดส่ง'),
             'delivery_name' => Yii::t('app', 'ที่อยู่ในการจัดส่ง'),
             'appointment_date' => Yii::t('app', 'วันที่นัดหมาย'),
+            'admin_name' => Yii::t('app', 'ผู้ดูแล'),
             'email' => Yii::t('app', 'อีเมล'),
             'phone' => Yii::t('app', 'เบอร์โทร'),
             'order_status' => Yii::t('app', 'สถานะ'),

@@ -109,8 +109,12 @@ if ($session->getFlash('msg')): ?>
                 },
                 'filter'=>ArrayHelper::map(\backend\helpers\OrderType::asArrayObject(), 'id', 'name'),
             ],
-            'order_admin',
-
+            [
+                'attribute' => 'order_admin',
+                'value'=>function($data){
+                   return \backend\models\User::findName($data->order_admin);
+                }
+            ],
             'customer_name',
             [
                'attribute' => 'created_at',
@@ -151,7 +155,7 @@ if ($session->getFlash('msg')): ?>
                 'headerOptions' => ['style' => 'text-align:center;','class' => 'activity-view-link',],
                 'class' => 'yii\grid\ActionColumn',
                 'contentOptions' => ['style' => 'text-align: right','vertical-align: middle'],
-                'template'=>'<div class="btn-group btn-group-lg text-center" role="group"> {view} {print} {update} {delete} </div>',
+                'template'=>'<div class="btn-group btn-group-lg text-center" role="group"> {view} {print} {updatestatus} {update} {delete} </div>',
                 'buttons' => [
                     'view' => function($url, $data, $index) {
                         $options = [
@@ -184,6 +188,23 @@ if ($session->getFlash('msg')): ?>
                         ]);
                         return Html::a(
                             '<span class="glyphicon glyphicon-pencil btn btn-xs btn-default"></span>', $url, [
+                            'id' => 'activity-view-link',
+                            //'data-toggle' => 'modal',
+                            // 'data-target' => '#modal',
+                            'data-id' => $index,
+                            'data-pjax' => '0',
+                            // 'style'=>['float'=>'rigth'],
+                        ]);
+                    },
+                    'updatestatus' => function($url, $data, $index) {
+                        $options = array_merge([
+                            'title' => Yii::t('yii', 'Update Status'),
+                            'aria-label' => Yii::t('yii', 'Update Status'),
+                            'data-pjax' => '0',
+                            'id'=>'update_order_status',
+                        ]);
+                        return Html::a(
+                            '<span class="glyphicon glyphicon-cog btn btn-xs btn-default"></span>', $url, [
                             'id' => 'activity-view-link',
                             //'data-toggle' => 'modal',
                             // 'data-target' => '#modal',

@@ -116,7 +116,7 @@ class OrderController extends Controller
 
             $uploadfile = UploadedFile::getInstances($modelfile,'file');
             $uploadimage = UploadedFile::getInstances($modelfile,'file_photo');
-
+            $model->order_admin = Yii::$app->user->id;
 
             if($model->save()){
                 $this->updateorderstatus($model->id,$model->order_status);
@@ -386,5 +386,41 @@ class OrderController extends Controller
             }
         }
    }
+    public function actionGetrunno(){
+        $type = Yii::$app->request->post('order_type');
+        $runno = '';
+        if($type){
+            $runno = \backend\models\Order::getLastNo($type);
+        }
+        return $runno;
+    }
+    public function actionUpdatestatus(){
+        $id = Yii::$app->request->post('id');
+        $status = Yii::$app->request->post('status');
+        if($id){
+            $modelorder = \backend\models\Order::find()->where(['id'=>$id])->one();
+            if($modelorder){
+                $modelorder->order_status = $status;
+                if($modelorder->save(false)){
+                    $modelstatus = \backend\models\Orderstatus::find()->where(['order_id'=>$id,'status'=>$status])->one();
+                    if($modelstatus){
+                        $modelstatus->status = $status;
+                        $modelstatus->note = "";
+                        $modelstatus->save(false);
+                    }else{
+                        $model = new \backend\models\Orderstatus();
+                        $model->order_id = $id;
+                        $model->status = $status;
+                        $model->note = "";
+                        $model->save(false);
+                    }
+                }
+                $session = Yii::$app->session;
+                $session->setFlash('msg','ลบรายการเรียบร้อย');
+                return $this->redirect(['index']);
+            }
+
+        }
+    }
 
 }
