@@ -31,7 +31,7 @@ $this->registerJsFile(
 
                 <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+            <?php //echo $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
             <?= $form->field($model, 'group_id')->widget(Select2::className(),[
                     'data'=>ArrayHelper::map(\backend\models\Usergroup::find()->all(),'id','name')
