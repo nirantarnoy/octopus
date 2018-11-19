@@ -210,7 +210,12 @@ class SiteController extends Controller
         $type = Yii::$app->request->post('type');
         $list = [];
         if($type){
-            $model = \backend\models\Order::find()->where(['order_type'=>$type])->asArray()->all();
+            $model = \backend\models\Order::find()->select([
+                'order.id','order.order_no','order.customer_name',
+                'order.appointment_date','order.order_admin','order.order_status',
+                'user.username'
+            ])->leftJoin('user','user.id = order.order_admin')
+                ->where(['order_type'=>$type])->all();
             if($model){
                 return Json::encode($model);
             }else{

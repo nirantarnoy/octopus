@@ -183,6 +183,43 @@ $this->title = 'ภาพรวมระบบ';
         </div>
     </div>
 </div>
+<div id="detailModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"><i class="fa fa-list-alt text-primary"></i> รายการใบสั่งผลิต</h4>
+            </div>
+            <div class="modal-body">
+
+                <table class="table table-striped table-hover table-list">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>เลขที่ใบสั่งผลิต</th>
+                        <th>ประเภท</th>
+                        <th>กำหนดเสร็จ</th>
+                        <th>ลูกค้า</th>
+                        <th>สถานะ</th>
+                        <th>ผู้ดูแล</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <div class="modal-error" style="display: none;">
+                    <i class="fa fa-exclamation-triangle text-danger"> ไม่พบข้อมูล กรุณาลองใหม่อีกครั้ง</i>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-cancel" data-dismiss="modal">ปิดหน้าต่าง</button>
+<!--                <button type="button" class="btn btn-success btn-ok" data-dismiss="modal">ตกลง</button>-->
+            </div>
+        </div>
+    </div>
+</div>
 <?php
 $url_fine_job = Url::to(['site/findjob'],true);
 $js =<<<JS
@@ -191,6 +228,7 @@ $js =<<<JS
     });
 
    function findJob(e,t){
+       $("#detailModal").modal("show");
        $(".content-result").show();
        if(t!=''){
            $.ajax({
@@ -203,12 +241,14 @@ $js =<<<JS
                      var html = '';
                      for(var i=0;i<=data.length-1;i++){
                           html +="<tr><td style='vertical-align: middle;'>"+
-                         i +"</td>" + "<td style='vertical-align: middle;'>"+
+                         (i+1) +"</td>" + "<td style='vertical-align: middle;'>"+
                          data[i]['order_no']+"</td>"+
                           "<td style='vertical-align: middle;'>"+data[i]['order_type']+"<input type='hidden' class='recid' value='"+
                          data[i]['id']+"'/></td>" +
-                          "<td style='vertical-align: middle;'>"+data[i]['customer_id']+"</td>" +
-                          "<td style='vertical-align: middle;'>" +data[i]['order_status']+"</td></tr>"
+                          "<td style='vertical-align: middle;'>"+data[i]['appoinment_date']+"</td>" +
+                          "<td style='vertical-align: middle;'>"+data[i]['customer_name']+"</td>" +
+                          "<td style='vertical-align: middle;'>" +data[i]['order_status']+"</td>" +
+                         "<td style='vertical-align: middle;'>" +data[i]['username']+"</td></tr>"
                      }
                      $(".table-list >tbody").html(html);
                  }
