@@ -34,7 +34,14 @@ $this->params['breadcrumbs'][] = $this->title;
           //  'password_hash',
           //  'password_reset_token',
             'email:email',
-            'status',
+            [
+                'attribute'=>'status',
+                'contentOptions' => ['style' => 'vertical-align: middle'],
+                'format' => 'html',
+                'value'=>function($data){
+                    return $data->status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';
+                }
+            ],
             [
                 'attribute'=>'created_at',
                 'format' => 'html',

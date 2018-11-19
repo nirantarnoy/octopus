@@ -29,15 +29,22 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+          //  'id',
             'message_type',
             'title',
             'detail',
-            'status',
-            'created_at',
-            'updated_at',
-            'created_by',
-            'updated_by',
+            [
+                'attribute'=>'status',
+                'contentOptions' => ['style' => 'vertical-align: middle'],
+                'format' => 'html',
+                'value'=>function($data){
+                    return $data->status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';
+                }
+            ],
+//            'created_at',
+//            'updated_at',
+//            'created_by',
+//            'updated_by',
         ],
     ]) ?>
 
