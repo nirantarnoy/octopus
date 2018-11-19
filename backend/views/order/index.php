@@ -87,7 +87,7 @@ if ($session->getFlash('msg')): ?>
                     </div>
                 </div>
             </div>
-
+  <div class="table-responsive">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -234,6 +234,7 @@ if ($session->getFlash('msg')): ?>
     ]); ?>
     <?php Pjax::end(); ?>
 </div>
+        </div>
     </div>
 </div>
 <div id="printModal" class="modal fade" role="dialog">
