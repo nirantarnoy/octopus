@@ -6,6 +6,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use yii\helpers\Json;
 
 /**
  * Site controller
@@ -203,6 +204,12 @@ class SiteController extends Controller
             $model->message_type = 0;
             $model->detail = $list[0]['order_no'];
             $model->save(false);
+        }
+    }
+    public function actionFindjob(){
+        $type = Yii::$app->request->post('type');
+        if($type){
+            return "niran";
         }
     }
 }
