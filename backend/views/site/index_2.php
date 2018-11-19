@@ -199,7 +199,19 @@ $js =<<<JS
               'url': '$url_fine_job',
               'data': {'type': t},
               'success': function(data) {
-                 alert(data);
+                 if(data.length > 0){
+                     var html = '';
+                     for(var i=0;i<=data.length-1;i++){
+                          html +="<tr><td style='vertical-align: middle;'>"+
+                         i +"</td>" + "<td style='vertical-align: middle;'>"+
+                         data[i]['order_no']+"</td>"+
+                          "<td style='vertical-align: middle;'>"+data[i]['order_type']+"<input type='hidden' class='recid' value='"+
+                         data[i]['id']+"'/></td>" +
+                          "<td style='vertical-align: middle;'>"+data[i]['customer_id']+"</td>" +
+                          "<td style='vertical-align: middle;'>" +data[i]['order_status']+"</td></tr>"
+                     }
+                     $(".table-list >tbody").html(html);
+                 }
               }
            });
        }

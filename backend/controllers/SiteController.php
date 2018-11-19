@@ -208,8 +208,15 @@ class SiteController extends Controller
     }
     public function actionFindjob(){
         $type = Yii::$app->request->post('type');
+        $list = [];
         if($type){
-            return "niran";
+            $model = \backend\models\Order::find()->where(['order_type'=>$type])->asArray()->all();
+            if($model){
+                return Json::encode($model);
+            }else{
+                return Json::encode($list);
+            }
         }
+        return Json::encode($list);
     }
 }
