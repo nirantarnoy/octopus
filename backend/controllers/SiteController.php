@@ -61,6 +61,17 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+
+        $model = \backend\models\Order::find()->select([
+            'order.id','order.order_no','order.customer_name','order.order_admin',
+            'order.appointment_date','order.order_admin','order.order_status','order.order_type',
+            'user.username as admin_name'
+        ])
+            ->join('left join','user','user.id = order.order_admin')
+            ->where(['order_type'=>1])->all();
+
+        print_r($model);return;
+
         $from_date = '';
         $to_date = '';
 
@@ -212,9 +223,10 @@ class SiteController extends Controller
         if($type){
             $model = \backend\models\Order::find()->select([
                 'order.id','order.order_no','order.customer_name',
-                'order.appointment_date','order.order_admin','order.order_status',
-                'user.username'
-            ])->leftJoin('user','user.id = order.order_admin')
+                'order.appointment_date','order.order_admin','order.order_status','order.order_type',
+                'user.username as admin_name'
+            ])
+                ->join('LEFT OUTER JOIN','user','order.order_admin = user.id')
                 ->where(['order_type'=>$type])->all();
             if($model){
                 return Json::encode($model);
