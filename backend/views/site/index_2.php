@@ -237,24 +237,32 @@ $js =<<<JS
               'url': '$url_fine_job',
               'data': {'type': t},
               'success': function(data) {
+                  //alert(data);
                  if(data.length > 0){
                      var html = '';
                      var order_type = '';
+                     var link = "<a href='index.php?r=order/view&id=";
+                     
                      for(var i=0;i<=data.length-1;i++){
                          if(data[i]['order_type']==1){
                              order_type ='ประเภทงานผลิตจัดส่ง';
                          }else if(data[i]['order_type']==2){
                              order_type ='ประเภทงานผลิตติดตั้ง';
                          }
+                         link +=data[i]['id']+"'>"+data[i]['order_no']+"</a>";
+                         alert(link);
+                         
+                         
                           html +="<tr><td style='vertical-align: middle;'>"+
                          (i+1) +"</td>" + "<td style='vertical-align: middle;'>"+
-                         data[i]['order_no']+"</td>"+
+                         link+"</td>"+
                           "<td style='vertical-align: middle;'>"+ order_type +"<input type='hidden' class='recid' value='"+
                          data[i]['id']+"'/></td>" +
+                
                           "<td style='vertical-align: middle;'>"+data[i]['appointment_date']+"</td>" +
                           "<td style='vertical-align: middle;'>"+data[i]['customer_name']+"</td>" +
-                          "<td style='vertical-align: middle;'>" +data[i]['order_status']+"</td>" +
-                         "<td style='vertical-align: middle;'>" +data[i]['admin_name']+"</td></tr>"
+                          "<td style='vertical-align: middle;'><label class='label label-primary'>" +data[i]['order_status']+"</label></td>" +
+                         "<td style='vertical-align: middle;'>" +data[i]['username']+"</td></tr>"
                      }
                      $(".table-list >tbody").html(html);
                  }

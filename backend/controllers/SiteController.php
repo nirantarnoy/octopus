@@ -62,15 +62,13 @@ class SiteController extends Controller
     public function actionIndex()
     {
 
-        $model = \backend\models\Order::find()->select([
-            'order.id','order.order_no','order.customer_name','order.order_admin',
-            'order.appointment_date','order.order_admin','order.order_status','order.order_type',
-            'user.username as admin_name'
-        ])
-            ->join('left join','user','user.id = order.order_admin')
-            ->where(['order_type'=>1])->all();
-
-        print_r($model);return;
+//        $sql = "SELECT t1.*,t2.username FROM `order` as t1 inner join `user` as t2 on t2.id = t1.order_admin";
+//        $model = Yii::$app->db->createCommand($sql)->queryAll();
+//
+//        for($i=0;$i<=count($model)-1;$i++){
+//           echo $model[$i]['id'];
+//        }
+//        print_r($model);return;
 
         $from_date = '';
         $to_date = '';
@@ -221,15 +219,22 @@ class SiteController extends Controller
         $type = Yii::$app->request->post('type');
         $list = [];
         if($type){
-            $model = \backend\models\Order::find()->select([
-                'order.id','order.order_no','order.customer_name',
-                'order.appointment_date','order.order_admin','order.order_status','order.order_type',
-                'user.username as admin_name'
-            ])
-                ->join('LEFT OUTER JOIN','user','order.order_admin = user.id')
-                ->where(['order_type'=>$type])->all();
+            $sql = "SELECT t1.*,t2.username FROM `order` as t1 inner join `user` as t2 on t2.id = t1.order_admin where t1.order_type =".$type;
+            $model = Yii::$app->db->createCommand($sql)->queryAll();
+
             if($model){
-                return Json::encode($model);
+                for($i=0;$i<=count($model)-1;$i++){
+                    array_push($list,[
+                       'id'=>$model[$i]['id'],
+                       'order_no'=>$model[$i]['order_no'],
+                       'appointment_date'=>$model[$i]['appointment_date'],
+                       'order_type'=>$model[$i]['order_type'],
+                       'username'=>$model[$i]['username'],
+                       'order_status'=>\backend\helpers\Orderstatus::getTypeById($model[$i]['order_status'],$type),
+                       'customer_name'=>$model[$i]['customer_name'],
+                    ]);
+                }
+                return Json::encode($list);
             }else{
                 return Json::encode($list);
             }
