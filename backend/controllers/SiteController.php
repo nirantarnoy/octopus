@@ -259,13 +259,13 @@ class SiteController extends Controller
     public function actionFindjob(){
 
         $type = Yii::$app->request->post('type');
-
+    
         $list = [];
         if($type){
             if($type == '(0)'){
                 $sql = "SELECT t1.*,t2.username FROM `order` as t1 inner join `user` as t2 on t2.id = t1.order_admin ";
             }else{
-                $sql = "SELECT t1.*,t2.username FROM `order` as t1 inner join `user` as t2 on t2.id = t1.order_admin where t1.order_type in ".$type;
+                $sql = "SELECT t1.*,t2.username FROM `order` as t1 inner join `user` as t2 on t2.id = t1.order_admin where t1.order_status in ".$type;
             }
 
             $model = Yii::$app->db->createCommand($sql)->queryAll();
