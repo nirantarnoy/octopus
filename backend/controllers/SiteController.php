@@ -89,12 +89,41 @@ class SiteController extends Controller
             $order_process = \backend\models\Order::find()->where(['>','order_status',2])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
             $order_will_complete = \backend\models\Order::find()->where(['>','order_status',9])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
 
+            $wait_confirm = \backend\models\Order::find()->where(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->andFilterWhere(['order_status'=>[1,12]])->all();
+            $confirm1 = \backend\models\Order::find()->where(['order_status'=>[2,13]])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
+            $confirm2 = \backend\models\Order::find()->where(['order_status'=>[3,14]])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
+            $confirm3 = \backend\models\Order::find()->where(['order_status'=>[4,15]])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
+            $prepare = \backend\models\Order::find()->where(['order_status'=>[5]])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
+            $produce = \backend\models\Order::find()->where(['order_status'=>[6,16]])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
+            $ass = \backend\models\Order::find()->where(['order_status'=>[7]])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
+            $qc = \backend\models\Order::find()->where(['order_status'=>[8,17]])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
+            $fordel = \backend\models\Order::find()->where(['order_status'=>[9]])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
+            $del = \backend\models\Order::find()->where(['order_status'=>[10]])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
+            $complete = \backend\models\Order::find()->where(['order_status'=>[11,21]])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
+            $appoint = \backend\models\Order::find()->where(['order_status'=>[18]])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
+            $install = \backend\models\Order::find()->where(['order_status'=>[19]])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
+            $installcomplete = \backend\models\Order::find()->where(['order_status'=>[20]])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
         }else{
             $this->calOrder();
             $order_all = \backend\models\Order::find()->all();
             $order_late = \backend\models\Order::find()->where(['>','appointment_date',strtotime(date('d-m-Y'))])->all();
             $order_process = \backend\models\Order::find()->where(['>','order_status',2])->all();
             $order_will_complete = \backend\models\Order::find()->where(['>','order_status',9])->all();
+
+            $wait_confirm = \backend\models\Order::find()->where(['order_status'=>[1,12]])->all();
+            $confirm1 = \backend\models\Order::find()->where(['order_status'=>[2,13]])->all();
+            $confirm2 = \backend\models\Order::find()->where(['order_status'=>[3,14]])->all();
+            $confirm3 = \backend\models\Order::find()->where(['order_status'=>[4,15]])->all();
+            $prepare = \backend\models\Order::find()->where(['order_status'=>[5]])->all();
+            $produce = \backend\models\Order::find()->where(['order_status'=>[6,16]])->all();
+            $ass = \backend\models\Order::find()->where(['order_status'=>[7]])->all();
+            $qc = \backend\models\Order::find()->where(['order_status'=>[8,17]])->all();
+            $fordel = \backend\models\Order::find()->where(['order_status'=>[9]])->all();
+            $del = \backend\models\Order::find()->where(['order_status'=>[10]])->all();
+            $complete = \backend\models\Order::find()->where(['order_status'=>[11,21]])->all();
+            $appoint = \backend\models\Order::find()->where(['order_status'=>[18]])->all();
+            $install = \backend\models\Order::find()->where(['order_status'=>[19]])->all();
+            $installcomplete = \backend\models\Order::find()->where(['order_status'=>[20]])->all();
         }
 
 
@@ -106,6 +135,20 @@ class SiteController extends Controller
                 'order_late' => $order_late,
                 'order_process' => $order_process,
                 'order_will_complete'=>$order_will_complete,
+                'wait_confirm'=>$wait_confirm,
+                'confirm1'=>$confirm1,
+                'confirm2'=>$confirm2,
+                'confirm3'=>$confirm3,
+                'prepare'=>$prepare,
+                'produce'=>$produce,
+                'ass'=>$ass,
+                'qc'=>$qc,
+                'for_del'=>$fordel,
+                'del'=>$del,
+                'complete'=>$complete,
+                'appoint'=>$appoint,
+                'install'=>$install,
+                'installcom'=>$installcomplete
             ]
             );
     }
@@ -219,7 +262,7 @@ class SiteController extends Controller
         $type = Yii::$app->request->post('type');
         $list = [];
         if($type){
-            $sql = "SELECT t1.*,t2.username FROM `order` as t1 inner join `user` as t2 on t2.id = t1.order_admin where t1.order_type =".$type;
+            $sql = "SELECT t1.*,t2.username FROM `order` as t1 inner join `user` as t2 on t2.id = t1.order_admin where t1.order_type in ".$type;
             $model = Yii::$app->db->createCommand($sql)->queryAll();
 
             if($model){
