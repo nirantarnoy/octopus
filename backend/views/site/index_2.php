@@ -257,6 +257,7 @@ $js =<<<JS
    function findJob(e,t){
        $("#detailModal").modal("show");
        $(".content-result").show();
+      
        if(t!=''){
            $.ajax({
               'type':'post',
@@ -293,6 +294,8 @@ $js =<<<JS
                          "<td style='vertical-align: middle;'>" +data[i]['username']+"</td></tr>"
                      }
                      $(".table-list >tbody").html(html);
+                 }else{
+                     $(".table-list >tbody >tr").remove();
                  }
               }
            });

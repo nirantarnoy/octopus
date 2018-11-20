@@ -61,13 +61,11 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-
-//        $sql = "SELECT t1.*,t2.username FROM `order` as t1 inner join `user` as t2 on t2.id = t1.order_admin";
+//        $x = '(4,15)';
+//        $sql = "SELECT t1.*,t2.username FROM `order` as t1 inner join `user` as t2 on t2.id = t1.order_admin WHERE t1.order_status in ".$x;
 //        $model = Yii::$app->db->createCommand($sql)->queryAll();
 //
-//        for($i=0;$i<=count($model)-1;$i++){
-//           echo $model[$i]['id'];
-//        }
+//        echo $sql;
 //        print_r($model);return;
 
         $from_date = '';
@@ -259,7 +257,9 @@ class SiteController extends Controller
         }
     }
     public function actionFindjob(){
+
         $type = Yii::$app->request->post('type');
+
         $list = [];
         if($type){
             if($type == '(0)'){
@@ -278,7 +278,7 @@ class SiteController extends Controller
                        'appointment_date'=>$model[$i]['appointment_date'],
                        'order_type'=>$model[$i]['order_type'],
                        'username'=>$model[$i]['username'],
-                       'order_status'=>\backend\helpers\Orderstatus::getTypeById($model[$i]['order_status'],$type),
+                       'order_status'=>\backend\helpers\Orderstatus::getTypeById($model[$i]['order_status'],$model[$i]['order_type']),
                        'customer_name'=>$model[$i]['customer_name'],
                     ]);
                 }
