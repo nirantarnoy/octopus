@@ -268,7 +268,7 @@ $js =<<<JS
                  if(data.length > 0){
                      var html = '';
                      var order_type = '';
-                     var link = "<a href='index.php?r=order/view&id=";
+                     
                      
                      for(var i=0;i<=data.length-1;i++){
                          if(data[i]['order_type']==1){
@@ -276,6 +276,7 @@ $js =<<<JS
                          }else if(data[i]['order_type']==2){
                              order_type ='ประเภทงานผลิตติดตั้ง';
                          }
+                         var link = "<a href='index.php?r=order/view&id=";
                          link +=data[i]['id']+"'>"+data[i]['order_no']+"</a>";
                        //  alert(link);
                          
