@@ -441,6 +441,7 @@ $js =<<<JS
                         $(".spin-wait").hide(); 
                         }, 2000);
                         var i = 0;
+                        var x = 0;
                         var looporder = 0;
                         
                         if(data[0]['order_status'] == 3){
@@ -499,6 +500,33 @@ $js =<<<JS
                                 return false;
                             }
                         });
+                       }else{ // <700
+                           $(".progress-indicator >.step").each(function(){
+                              x+=1;
+                           
+                            if(x <= looporder){
+                               //console.log(i);
+                                //alert("Ok");
+                                if(x == 1){
+                                     $(this).addClass("active");
+                                }
+                                else if(x == 2){
+                                    $(this).find(".text").text(data[0]['confirm_status']);
+                                    $(this).addClass("active");
+                  
+                                }else if(x==3){
+                                    if(data[0]['order_status'] > 4){
+                                        $(this).addClass("active");
+                                    }
+                                }else{
+                                    $(this).addClass("active");
+                                }
+                                
+                              
+                            }else{
+                                return false;
+                            }
+                           });
                        }
                     
                     //$(".")
