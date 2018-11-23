@@ -1,6 +1,6 @@
 @font-face{
-    font-family: 'Cloud-Light';
-    src: url('../fonts/Cloud-Light.ttf') format('truetype');
+    font-family: 'Pridi-Regular';
+    src: url('../fonts/Pridi/Pridi-Regular.ttf') format('truetype');
     /* src: url('../fonts/thsarabunnew-webfont.eot?#iefix') format('embedded-opentype'),
           url('../fonts/thsarabunnew-webfont.woff') format('woff'),
           url('../fonts/EkkamaiStandard-Light.ttf') format('truetype');*/
@@ -8,8 +8,8 @@
     font-style: normal;
 }
 @font-face{
-    font-family: 'Cloud-Bold';
-    src: url('../fonts/Cloud-Bold.ttf') format('truetype');
+    font-family: 'Athiti-Regular';
+    src: url('../fonts/Athiti/Athiti-Regular.ttf') format('truetype');
     /* src: url('../fonts/thsarabunnew-webfont.eot?#iefix') format('embedded-opentype'),
           url('../fonts/thsarabunnew-webfont.woff') format('woff'),
           url('../fonts/EkkamaiStandard-Light.ttf') format('truetype');*/

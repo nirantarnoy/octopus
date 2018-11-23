@@ -259,7 +259,7 @@ class SiteController extends Controller
     public function actionFindjob(){
 
         $type = Yii::$app->request->post('type');
-    
+
         $list = [];
         if($type){
             if($type == '(0)'){

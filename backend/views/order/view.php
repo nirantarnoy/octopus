@@ -205,7 +205,7 @@ $this->registerCss('
                         ],
 
                     ];?>
-                    <?= dosamigos\gallery\Gallery::widget(['items' => $list]);?>
+                    <?= dosamigos\gallery\Gallery::widget(['items' => $items]);?>
                 </div>
             </div>
         </div>

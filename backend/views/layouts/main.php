@@ -41,9 +41,17 @@ $last_message = \backend\models\Message::find()->where(['status'=>1])->limit(6)-
 
     <![endif]-->
     <style>
+        head {
+            font-family: "Pridi-Regular";
+            /*font-size: 14px;*/
+        }
         body{
-            font-family: "Cloud-Light";
+            /*font-family: "Pridi-Regular";*/
+            font-family: "Athiti-Regular";
             font-size: 14px;
+        }
+        .top-nav{
+            font-family: "Pridi-Regular";
         }
     </style>
 </head>
@@ -52,7 +60,6 @@ $last_message = \backend\models\Message::find()->where(['status'=>1])->limit(6)-
 <div class="container body">
 
     <div class="main_container">
-
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
 
