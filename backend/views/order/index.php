@@ -237,7 +237,7 @@ if ($session->getFlash('msg')): ?>
         </div>
     </div>
 </div>
-<div id="printModal" class="modal fade" role="dialog">
+<div id="printModal" class="modal fade" role="dialog" style="z-index: 9999;">
     <div class="modal-dialog modal-sm">
         <!-- Modal content-->
         <div class="modal-content">
@@ -268,7 +268,7 @@ if ($session->getFlash('msg')): ?>
 
     </div>
 </div>
-<div id="statusModal" class="modal fade" role="dialog">
+<div id="statusModal" class="modal fade" role="dialog" style="z-index: 9999;">
     <div class="modal-dialog modal-md">
         <!-- Modal content-->
         <div class="modal-content">
