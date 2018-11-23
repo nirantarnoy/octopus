@@ -228,7 +228,7 @@ class SiteController extends Controller
                 $max_confirm = \backend\models\Orderstatus::find()->where(['order_id'=>$model->id])
                     ->andFilterWhere(['in','status',[2,3,4]])->max('status');
                 if($max_confirm){
-                    $confirm_name = \backend\helpers\Orderstatus::getTypeById($max_confirm);
+                    $confirm_name = \backend\helpers\Orderstatus::getTypeById($max_confirm,1);
                 }
 
                 if($max_status){
