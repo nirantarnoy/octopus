@@ -100,22 +100,53 @@ use kartik\spinner\Spinner;
             </div>
 
             <div class="container-x">
-                <ul class="progressbar">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="progress-indicator">
+                    <?php $i=0;?>
                     <?php for($i=1;$i<=count(\backend\helpers\Orderstatus::asArray(1));$i++):?>
                         <?php
                         $isactive = '';
+                        $lineactive = 'failed';
                         if($i<=4){
                             $isactive = 'active';
+                            $lineactive = 'done';
                         }
                         ?>
                         <?php if($i >=3 && $i <=4):?>
-
+                        <?php $i+=1;?>
                         <?php else:?>
-                            <li class="step_no"><?=\backend\helpers\Orderstatus::asArray(1)[$i]?></li>
+                            <div class="step <?=$isactive?>">
+                                <div class="circle"><?=$i?></div>
+                                <div class="text"><?=\backend\helpers\Orderstatus::asArray(1)[$i]?></div>
+                            </div>
+
                         <?php endif;?>
 
                     <?php endfor;?>
-                </ul>
+
+
+
+<!--                                <div class="step active">-->
+<!--                                    <div class="circle">2</div>-->
+<!--                                    <div class="text">-->
+<!--                                        Fill Out Listing-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="step">-->
+<!--                                    <div class="circle">3</div>-->
+<!--                                    <div class="text">Bulk Options</div>-->
+<!--                                </div>-->
+<!--                                <div class="step">-->
+<!--                                    <div class="circle">4</div>-->
+<!--                                    <div class="text">More Options</div>-->
+<!--                                </div>-->
+                            </div>
+
+                        </div>
+
+                    </div>
+
             </div>
         </div>
 
@@ -210,8 +241,157 @@ $css =<<<CSS
    .progressbar li.active + li:after{
      background-color: orange;
    }
+   
+   
+   
+.btn.btn-green {
+  background-color: #80b241;
+  color: #ffffff; }
+  .btn.btn-green:hover {
+    background-color: #88bc47; }
 
+.btn.btn-gray-1 {
+  background-color: #595959;
+  color: #e7e5e1; }
+  .btn.btn-gray-1:hover {
+    background-color: #666666; }
 
+.label.label-green {
+  background-color: #80b241;
+  color: #242424; }
+
+.label.label-gray-1 {
+  background-color: #595959;
+  color: #ffffff; }
+
+.btn.btn-green {
+  background-color: #80b241;
+  color: #ffffff; }
+  .btn.btn-green:hover {
+    background-color: #88bc47; }
+
+.btn.btn-gray-1 {
+  background-color: #595959;
+  color: #e7e5e1; }
+  .btn.btn-gray-1:hover {
+    background-color: #666666; }
+
+.label.label-green {
+  background-color: #80b241;
+  color: #242424; }
+
+.label.label-gray-1 {
+  background-color: #595959;
+  color: #ffffff; }
+
+.progress-indicator {
+  margin-bottom: 50px;
+  margin-top: 75px; }
+    .progress-indicator .step {
+    margin-top: 30px;
+    content: "";
+    display: table;
+    clear: both;
+    position: relative; }
+    .progress-indicator .step:before {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      margin-top: 50px;
+      left: 25px;
+      border: 1px solid #ADABA6;
+      background-color: #80b241;
+      height: 65%; }
+      
+     .progress-indicator .step.active:after {
+     
+       content: "";
+      position: absolute;
+      z-index: 1;
+      margin-top: 50px;
+      left: 25px;
+      border: 1px solid orange;
+      background-color: orange;
+      height: 65%; }
+      
+    .progress-indicator .step:first-child {
+      margin-top: 0; }
+    .progress-indicator .step:last-child:before {
+      display: none; }
+    .progress-indicator .step.active div {
+      color: orange; 
+      }
+      .progress-indicator .step.active div.circle {
+        border-color: orange; }
+      .progress-indicator .step.active div a {
+        color: orange; }
+    .progress-indicator .step.complete div {
+      color: #80b241; }
+      .progress-indicator .step.complete div.circle {
+        border-color: #80b241; }
+        .progress-indicator .step.complete div.circle.filled {
+          background-color: #80b241;
+          color: #ffffff; }
+    .progress-indicator .step div {
+      color: #ADABA6;
+      display: table-cell;
+      float: left;
+      padding-top: 2px;
+      font-size: 16px;
+      font-weight: bold;
+      vertical-align: middle; }
+      .progress-indicator .step div.circle {
+        height: 50px;
+        width: 50px;
+        text-align: center;
+        padding-top: 10px;
+        border: 2px solid #ADABA6;
+        border-radius: 50%; }
+      .progress-indicator .step div.text {
+        padding-left: 10px;
+        padding-top: 10px; }
+        .progress-indicator .step div.text ul {
+          margin: 0;
+          margin-top: 15px;
+          padding: 0;
+          list-style-type: none; }
+          .progress-indicator .step div.text ul li a {
+            display: block;
+            margin-top: 10px; }
+            .progress-indicator .step div.text ul li a:first-child {
+              margin-top: 0; }
+
+/*.category-selector {*/
+  /*margin-top: 30px; }*/
+  /*.category-selector .header {*/
+    /*border-bottom: 2px solid #80b241; }*/
+    /*.category-selector .header:before, .category-selector .header:after {*/
+      /*content: " ";*/
+      /*display: table; }*/
+    /*.category-selector .header:after {*/
+      /*clear: both; }*/
+  /*.category-selector .section-container:before, .category-selector .section-container:after {*/
+    /*content: " ";*/
+    /*display: table; }*/
+  /*.category-selector .section-container:after {*/
+    /*clear: both; }*/
+  /*.category-selector .section-container .section {*/
+    /*float: left;*/
+    /*height: 400px;*/
+    /*min-width: 150px;*/
+    /*overflow-y: scroll; }*/
+    /*.category-selector .section-container .section .item {*/
+      /*border-bottom: 1px solid #80b241;*/
+      /*cursor: pointer;*/
+      /*padding: 5px 10px 5px 5px; }*/
+      /*.category-selector .section-container .section .item:last-child {*/
+        /*border: 0; }*/
+      /*.category-selector .section-container .section .item.active {*/
+        /*background-color: #80b241;*/
+        /*color: #ffffff; }*/
+
+    /**/
+    /**/
 
 
 CSS;
@@ -249,7 +429,14 @@ $js =<<<JS
                     $(".alert-not-found").hide();
                    // alert(data[0]['order_status']);
                     setTimeout(function(){
-                        $(".result").show();
+                       
+                         if ($(window).width() < 700){
+                              $(".result").hide();
+                              $(".result-vertical").show();
+                         }else{
+                              $(".result").show();
+                              $(".result-vertical").hide();
+                         }
                         $(".order_text").text(data[0]['order_no']);
                         $(".spin-wait").hide(); 
                         }, 2000);
@@ -265,6 +452,8 @@ $js =<<<JS
                         }else{
                              looporder = data[0]['order_status'];
                         }
+                        
+                       if ($(window).width() > 700){
                         
                         $(".progressbar >li").each(function(){
                             i+=1;
@@ -304,30 +493,13 @@ $js =<<<JS
                                 }else{
                                     $(this).addClass("active");
                                 }
-                                // if(i==4 && data[0]['order_status']>=5){
-                                //     $(this).addClass("active");
-                                // }
-                                //  if(i==5 && data[0]['order_status']>4){
-                                //     $(this).addClass("active");
-                                // }
-                                // if(i==6 && data[0]['order_status']>4){
-                                //     $(this).addClass("active");
-                                // }
-                                // if(i==7 && data[0]['order_status']>4){
-                                //     $(this).addClass("active");
-                                // }
-                                // if(i==8 && data[0]['order_status']>4){
-                                //     $(this).addClass("active");
-                                // }
-                                // if(i==9 && data[0]['order_status']>4){
-                                //     $(this).addClass("active");
-                                // }
+                                
                               
                             }else{
                                 return false;
                             }
                         });
-                    
+                       }
                     
                     //$(".")
                }else{
