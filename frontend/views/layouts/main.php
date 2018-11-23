@@ -17,7 +17,7 @@ Yii::$app->name = "octopus";
 
 $this->registerCss('
      body{
-                font-family: "Cloud-Light";
+               font-family: "Athiti-Regular";
                 font-size: 16px;
             }
    

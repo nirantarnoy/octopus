@@ -89,6 +89,36 @@ use kartik\spinner\Spinner;
             </div>
         </div>
 
+        <div class="result-vertical" style="display: none">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="page-header">
+                        <h1>เลขที่ใบสั่งงาน <small class="order_text">D622</small></h1>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-x">
+                <ul class="progressbar">
+                    <?php for($i=1;$i<=count(\backend\helpers\Orderstatus::asArray(1));$i++):?>
+                        <?php
+                        $isactive = '';
+                        if($i<=4){
+                            $isactive = 'active';
+                        }
+                        ?>
+                        <?php if($i >=3 && $i <=4):?>
+
+                        <?php else:?>
+                            <li class="step_no"><?=\backend\helpers\Orderstatus::asArray(1)[$i]?></li>
+                        <?php endif;?>
+
+                    <?php endfor;?>
+                </ul>
+            </div>
+        </div>
+
     </div>
 
 
