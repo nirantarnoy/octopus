@@ -6,6 +6,8 @@ use yii\widgets\Pjax;
 use yii\helpers\ArrayHelper;
 use lavrentiev\widgets\toastr\Notification;
 use yii\helpers\Url;
+use kartik\mpdf\Pdf;
+
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\OrderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */

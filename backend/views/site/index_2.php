@@ -219,13 +219,13 @@ $this->title = 'ภาพรวมระบบ';
                 <h4 class="modal-title"><i class="fa fa-list-alt text-primary"></i> รายการใบสั่งผลิต</h4>
             </div>
             <div class="modal-body">
-
+              <div class="table-responsive">
                 <table class="table table-striped table-hover table-list">
                     <thead>
                     <tr>
-                        <th>#</th>
+<!--                        <th>#</th>-->
                         <th>เลขที่ใบสั่งผลิต</th>
-                        <th>ประเภท</th>
+<!--                        <th>ประเภท</th>-->
                         <th>กำหนดเสร็จ</th>
                         <th>ลูกค้า</th>
                         <th>สถานะ</th>
@@ -236,6 +236,7 @@ $this->title = 'ภาพรวมระบบ';
 
                     </tbody>
                 </table>
+              </div>
                 <div class="modal-error" style="display: none;">
                     <i class="fa fa-exclamation-triangle text-danger"> ไม่พบข้อมูล กรุณาลองใหม่อีกครั้ง</i>
                 </div>
@@ -282,12 +283,11 @@ $js =<<<JS
                        //  alert(link);
                          
                          
-                          html +="<tr><td style='vertical-align: middle;'>"+
-                         (i+1) +"</td>" + "<td style='vertical-align: middle;'>"+
+                          html +="<tr>"+ "<td style='vertical-align: middle;'>"+
+                          "<input type='hidden' class='recid' value='"+
+                         data[i]['id']+"'/>"+
                          link+"</td>"+
-                          "<td style='vertical-align: middle;'>"+ order_type +"<input type='hidden' class='recid' value='"+
-                         data[i]['id']+"'/></td>" +
-                
+                         
                           "<td style='vertical-align: middle;'>"+data[i]['appointment_date']+"</td>" +
                           "<td style='vertical-align: middle;'>"+data[i]['customer_name']+"</td>" +
                           "<td style='vertical-align: middle;'><label class='label label-primary'>" +data[i]['order_status']+"</label></td>" +
