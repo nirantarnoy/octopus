@@ -1,9 +1,16 @@
 
 body{
     font-family: "Garuda";
-    font-size: 8pt;
+    font-size: 7pt;
     width: 8.5in;
     margin: 0in .1875in;
+}
+.company-title,.customer-info{
+    font-size: 13px;
+    padding-top: 10px ;
+}
+.bill-no{
+    font-size: 13px;
 }
 
 .table_bordered{
@@ -11,15 +18,33 @@ body{
     border-collapse: collapse;
     margin-bottom: 10px;
     margin-top: 10px;
+    font-size: 14px;
+    width: 100%;
+    border-spacing: -1px;
+}
+.table_bordered th{
+    border: 1px solid gray;
+    border-collapse: collapse;
+    border-spacing: -1px;
 }
 .table_bordered td{
     border:0.8px solid #000;
     border-collapse: collapse;
-    padding: 5px;
+    padding: 12px;
 }
 
 .table-striped > tbody > tr:nth-of-type(odd) {
     background-color: #f9f9f9;
+}
+.table_footer{
+    font-size: 13px;
+    position: fixed;
+    margin-bottom: 0;
+    width: 100%;
+}
+.table_footer td{
+    width: 33.33%;
+    text-align: center;
 }
 
 .po-logo{
@@ -122,8 +147,12 @@ body{
     height:200px;
     border:1px solid blue;
 }
-.status-label{
-    display:block;
-    padding: 5px;
-    background-color: #1ABB9C;
+.rent-content{
+    font-size: 13px;
+}
+.rent-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
 }
