@@ -97,12 +97,12 @@ $this->registerCss('
                             ],
                             'delivery_name',
                             [
-                                'attribute'=>'order_status',
-                                'contentOptions' => ['style' => 'vertical-align: middle'],
-                                'format' => 'html',
+                                'attribute' => 'order_status',
+                                'format' => 'raw',
                                 'value'=>function($data){
-                                    return $data->order_status === 1 ? '<div class="label label-success">Active</div>':'<div class="label label-default">Inactive</div>';
-                                }
+                                    return "<div class='label label-warning'>".\backend\helpers\Orderstatus::getTypeById($data->order_status,$data->order_type)."</div>";
+
+                                },
                             ],
                             [
                                 'attribute'=>'created_at',
