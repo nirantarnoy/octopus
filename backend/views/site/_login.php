@@ -13,10 +13,69 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $this->registerCss(
     '
-      .site-login{
-        text-align: center;
-        color: red;
-      }
+     
+
+.login {
+  margin: 20px auto;
+  width: 300px;
+  padding: 30px 25px;
+  background: white;
+  border: 1px solid #c4c4c4;
+}
+
+h1.login-title {
+  margin: -28px -25px 25px;
+  padding: 15px 25px;
+  line-height: 30px;
+  font-size: 25px;
+  font-weight: 300;
+  color: #ADADAD;
+  text-align:center;
+  background: #f7f7f7;
+ 
+}
+
+.login-input {
+  width: 285px;
+  height: 50px;
+  margin-bottom: 25px;
+  padding-left:10px;
+  font-size: 15px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.login-input:focus {
+    border-color:#6e8095;
+    outline: none;
+  }
+.login-button {
+  width: 100%;
+  height: 50px;
+  padding: 0;
+  font-size: 20px;
+  color: #fff;
+  text-align: center;
+  background: #f0776c;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer; 
+  outline:0;
+}
+
+.login-lost
+{
+  text-align:center;
+  margin-bottom:0px;
+}
+
+.login-lost a
+{
+  color:#666;
+  text-decoration:none;
+  font-size:13px;
+}
+      
     '
 );
 
@@ -30,13 +89,17 @@ $this->registerCss(
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <div class="container">
-    <div style=" display: block;margin-left: auto;margin-right: auto;">
+    <div style="margin: 20px auto;
+  width: 300px;
+  padding: 30px 25px;
+  background: white;
+  border: 1px solid #c4c4c4;">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
+    <p>ลงชื่อเข้าใช้งานระบบ</p>
 
     <div class="row" style="justify-content: center">
-        <div class="col-lg-5">
+        <div class="col-lg-12">
             <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
             <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
@@ -53,4 +116,7 @@ $this->registerCss(
         </div>
     </div>
     </div>
+
 </div>
+
+
