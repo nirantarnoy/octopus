@@ -89,32 +89,34 @@ h1.login-title {
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <div class="container">
-    <div style="margin: 20px auto;
-  width: 300px;
-  padding: 30px 25px;
-  background: white;
-  border: 1px solid #c4c4c4;">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="row">
+        <div class="col-lg-4">
 
-    <p>ลงชื่อเข้าใช้งานระบบ</p>
-
-    <div class="row" style="justify-content: center">
-        <div class="col-lg-12">
-            <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
-
-            <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-            <?= $form->field($model, 'password')->passwordInput() ?>
-
-            <?= $form->field($model, 'rememberMe')->checkbox() ?>
-
-            <div class="form-group">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-            </div>
-
-            <?php ActiveForm::end(); ?>
         </div>
-    </div>
+        <div class="col-lg-4">
+            <h1><?= Html::encode($this->title) ?></h1>
+
+            <p>ลงชื่อเข้าใช้งานระบบ</p>
+
+            <div class="row" style="justify-content: center">
+                <div class="col-lg-12">
+                    <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+
+                    <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+
+                    <?= $form->field($model, 'password')->passwordInput() ?>
+
+                    <?= $form->field($model, 'rememberMe')->checkbox() ?>
+
+                    <div class="form-group">
+                        <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                    </div>
+
+                    <?php ActiveForm::end(); ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4"></div>
     </div>
 
 </div>
