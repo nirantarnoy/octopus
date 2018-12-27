@@ -54,6 +54,11 @@
         <td><small style="background-color: #bf800c;padding-left: 15px;"><?=\backend\helpers\Orderstatus::getTypeById($model->order_status,$model->order_type)?></small></td>
     </tr>
 </table>
+
+<?php foreach ($modelpic as $value):?>
+    <img src="<?= \yii\helpers\Url::to('@web/uploads/images/'.$value->name, true) ?>" width="100%" alt="logo" />
+<?php endforeach;?>
+
 </body>
 </html>
 

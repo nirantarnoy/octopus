@@ -323,6 +323,7 @@ class OrderController extends Controller
 
         $model = \backend\models\Order::find()->where(['id'=>$order_id])->one();
         if($model){
+            $modelpic = \common\models\OrderFile::find()->where(['file_type'=>2,'order_id'=>$model->id])->all();
             $pdf = new Pdf([
 
                 //'mode' => Pdf::MODE_UTF8, // leaner size using standard fonts
@@ -332,7 +333,8 @@ class OrderController extends Controller
                 'orientation' => $papersize ==1?Pdf::ORIENT_PORTRAIT:Pdf::ORIENT_LANDSCAPE,
                 'destination' => Pdf::DEST_BROWSER,
                 'content' => $this->renderPartial('_print',[
-                    'model'=>$model
+                    'model'=>$model,
+                    'modelpic'=>$modelpic,
                 ]),
                 //'content' => "nira",
                 //'defaultFont' => '@backend/web/fonts/config.php',
@@ -340,7 +342,8 @@ class OrderController extends Controller
                 //'cssFile' => '@vendor/kartik-v/yii2-mpdf/src/assets/kv-mpdf-bootstrap.min.css',
                 'options' => [
                     'title' => 'รายงานระหัสินค้า',
-                    'subject' => ''
+                    'subject' => '',
+                    'showImageErrors'=>true,
                 ],
                 'methods' => [
                     //  'SetHeader' => ['รายงานรหัสสินค้า||Generated On: ' . date("r")],
