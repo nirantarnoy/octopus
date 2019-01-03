@@ -177,7 +177,7 @@ $this->registerCss('
                                   <?php array_push($list,
                                     [
                                         'url' => '../web/uploads/images/'.$value->name,
-                                        'src' => '../web/uploads/thumpnail/'.$value->name,
+                                        'src' => '../web/uploads/images/'.$value->name,
                                         'options' =>[
                                                 'title' => 'ทดสอบรูปภาพ',
                                                 'style' => ['width'=>20]

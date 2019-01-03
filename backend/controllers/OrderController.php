@@ -282,6 +282,7 @@ class OrderController extends Controller
             $model = \common\models\OrderFile::find()->where(['id'=>$picid])->one();
             if($model){
                 unlink(Yii::getAlias('@backend') .'/web/uploads/images/'.$model->name);
+                unlink(Yii::getAlias('@backend') .'/web/uploads/thumpnail/'.$model->name);
                 \common\models\OrderFile::deleteAll(['id'=>$picid]);
             }
 
