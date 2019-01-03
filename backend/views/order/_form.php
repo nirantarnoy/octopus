@@ -203,7 +203,7 @@ $js =<<<JS
     });
   });
   function removepic(e){
-    alert(e.attr("data-var"));return;
+   // alert(e.attr("data-var"));return;
     if(confirm("ต้องการลบรูปภาพนี้ใช่หรือไม่")){
         $.ajax({
            'type':'post',
