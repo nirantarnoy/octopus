@@ -195,8 +195,15 @@ class OrderController extends Controller
                     }
                 }
                 if(!empty($uploadimage)){
+
+
                     foreach($uploadimage as $file){
+
                         $file->saveAs(Yii::getAlias('@backend') .'/web/uploads/images/'.$file);
+                        Image::thumbnail(Yii::getAlias('@backend') . '/web/uploads/images/' . $file, 100, 70)
+                            ->rotate(0)
+                            ->save(Yii::getAlias('@backend') . '/web/uploads/thumpnail/' . $file, ['jpeg_quality' => 100]);
+
                         $modelfile = new \common\models\OrderFile();
                         $modelfile->order_id = $model->id;
                         $modelfile->file_type = 2; // 2 = รูปภาพ
