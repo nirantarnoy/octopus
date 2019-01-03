@@ -303,6 +303,12 @@ class AuthitemController extends Controller
         $auth->add($order_updatestatus);
         $order_findtype = $auth->createPermission('order/findtype');
         $auth->add($order_findtype);
+        $order_findtype = $auth->createPermission('order/findtype');
+        $auth->add($order_findtype);
+        $order_delpic = $auth->createPermission('order/deletepic');
+        $auth->add($order_delpic);
+        $order_delfile = $auth->createPermission('order/deletefile');
+        $auth->add($order_delfile);
 
 
         $order_permission = $auth->createPermission('ordermodule');
