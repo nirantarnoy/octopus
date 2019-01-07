@@ -119,7 +119,7 @@ $cur_type = 0;
 
         <div class="col-lg-4">
             <?= $form->field($model, 'order_status')->widget(Select2::className(),[
-                'data'=>ArrayHelper::map(\backend\helpers\Orderstatus::asArrayObject(1),'id','name'),
+                'data'=>ArrayHelper::map(\backend\helpers\Orderstatus::asArrayObject($model->order_type),'id','name'),
                 'options'=>[
                         'id'=>'orderstatus',
                     'placeholder'=>'เลือกประเภท'
