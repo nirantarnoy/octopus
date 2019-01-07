@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'แก้ไข');
         'model' => $model,
         'modelfile' => $modelfile,
         'modelpic' => $modelpic,
+        'orderitem' => $orderitem
     ]) ?>
 
 </div>

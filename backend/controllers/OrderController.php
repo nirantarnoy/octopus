@@ -114,11 +114,27 @@ class OrderController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
            // echo $model->order_status;return;
+
+            $items = Yii::$app->request->post('items');
+            $qty = Yii::$app->request->post('qty');
+
             $uploadfile = UploadedFile::getInstances($modelfile,'file');
             $uploadimage = UploadedFile::getInstances($modelfile,'file_photo');
             $model->order_admin = Yii::$app->user->id;
 
             if($model->save()){
+                if(count($items)>0){
+                    \backend\models\Orderitem::deleteAll(['order_id'=>$model->id]);
+                    for($x=0;$x<=count($items)-1;$x++){
+                        if($items[$x] == ''){continue;}
+                        $modelitem = new \backend\models\Orderitem();
+                        $modelitem->order_id = $model->id;
+                        $modelitem->title = $items[$x];
+                        $modelitem->qty = $qty[$x];
+                        $modelitem->save();
+                    }
+                }
+
                 $this->updateorderstatus($model->id,$model->order_status);
                 if(!empty($uploadfile)){
                     foreach($uploadfile as $file){
@@ -176,13 +192,30 @@ class OrderController extends Controller
         $modelfile = new Modelfile();
         $orderfile = \common\models\OrderFile::find()->where(['order_id'=>$id,'file_type'=>1])->all();
         $orderimage = \common\models\OrderFile::find()->where(['order_id'=>$id,'file_type'=>2])->all();
+
+        $orderitem = \backend\models\Orderitem::find()->where(['order_id'=>$id])->all();
+
         if ($model->load(Yii::$app->request->post()) && $modelfile->load(Yii::$app->request->post())) {
+
+            $items = Yii::$app->request->post('items');
+            $qty = Yii::$app->request->post('qty');
 
             $uploadfile = UploadedFile::getInstances($modelfile,'file');
             $uploadimage = UploadedFile::getInstances($modelfile,'file_photo');
 
 
             if($model->save()){
+                if(count($items)>0){
+                    \backend\models\Orderitem::deleteAll(['order_id'=>$model->id]);
+                    for($x=0;$x<=count($items)-1;$x++){
+                        if($items[$x] == ''){continue;}
+                        $modelitem = new \backend\models\Orderitem();
+                        $modelitem->order_id = $model->id;
+                        $modelitem->title = $items[$x];
+                        $modelitem->qty = $qty[$x];
+                        $modelitem->save();
+                    }
+                }
                 $this->updateorderstatus($id,$model->order_status);
                 if(!empty($uploadfile)){
                     foreach($uploadfile as $file){
@@ -224,6 +257,7 @@ class OrderController extends Controller
             'orderfile' => $orderfile,
             'orderimage' => $orderimage,
             'modelpic' => $modelpic,
+            'orderitem' => $orderitem
         ]);
     }
 
@@ -375,6 +409,15 @@ class OrderController extends Controller
                 unlink(Yii::getAlias('@backend') .'/web/uploads/images/'.$model->name);
                 \common\models\OrderFile::deleteAll(['id'=>$picid]);
             }
+
+            return true;
+        }
+    }
+    public function actionDeleteitem(){
+        //$id = \Yii::$app->request->post("product_id");
+        $itemid = \Yii::$app->request->post("item_id");
+        if($itemid){
+            $model = \common\models\Orderitem::deleteAll(['id'=>$itemid]);
 
             return true;
         }

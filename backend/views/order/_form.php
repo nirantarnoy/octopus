@@ -153,6 +153,58 @@ $cur_type = 0;
         </div>
     </div>
             <div class="row">
+                <div class="col-lg-12">
+                    <table class="table table-list">
+                        <thead>
+                        <th width="5%">#</th>
+                        <th width="65%">รายการ</th>
+                        <th width="20%">จำนวน</th>
+                        <th width="10%"> - </th>
+                        </thead>
+                        <tbody>
+                        <?php if($model->isNewRecord):?>
+                        <tr>
+
+                            <td style="vertical-align: middle">1</td>
+                            <td>
+                                <input type="text" name="items[]" class="form-control line_item">
+                            </td>
+                            <td>
+                                <input type="text" name="qty[]" class="form-control line_qty">
+                            </td>
+                            <td>
+                                <div class="btn btn-danger btn-remove" onclick="removeline($(this))"><i class="fa fa-minus"></i></div>
+                            </td>
+                        </tr>
+                        <?php else:?>
+                           <?php $i=0;?>
+                           <?php foreach ($orderitem as $value):?>
+                            <?php $i+=1;?>
+                                <tr data-var="<?=$value->id?>">
+
+                                    <td style="vertical-align: middle">1</td>
+                                    <td>
+                                        <input type="text" name="items[]" class="form-control line_item" value="<?=$value->title?>">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="qty[]" class="form-control line_qty" value="<?=$value->qty?>">
+                                    </td>
+                                    <td>
+                                        <div class="btn btn-danger btn-remove" onclick="removeline($(this))"><i class="fa fa-minus"></i></div>
+                                    </td>
+                                </tr>
+                           <?php endforeach;?>
+                        <?php endif;?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="btn btn-primary btn-add"><i class="fa fa-plus"></i> เพิ่มรายการ</div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-lg-6">
                     <?php echo '<label class="control-label">แนบไฟล์งาน</label>';
                     echo FileInput::widget([
@@ -187,9 +239,30 @@ $cur_type = 0;
 </div>
 <?php
 $url_to_del_pic = Url::to(['order/deletepic'],true);
+$url_to_del_item = Url::to(['order/deleteitem'],true);
 $url_to_find_runno = Url::to(['order/getrunno']);
 $js =<<<JS
   $(function() {
+    $(".btn-add").click(function(){
+          var tr = $(".table-list tbody tr:last");
+          
+          if(tr.closest("tr").find(".line_item").val() == ""){return;}
+          
+          var linenum = 0;
+          var clone = tr.clone();
+          clone.find(":text").val("");
+          clone.attr("data-var","");
+          tr.after(clone);
+          
+           $(".table-list tbody tr").each(function(){
+             linenum+=1;
+             $(this).closest("tr").find("td:eq(0)").text(linenum);
+           });
+    });  
+    $(".line_qty").on("keypress",function(event){
+       $(this).val($(this).val().replace(/[^0-9\.]/g,""));
+       if((event.which != 46 || $(this).val().indexOf(".") != -1) && (event.which <48 || event.which >57)){event.preventDefault();}
+    });
     $("#select_order_type").change(function(){
        $.ajax({
            'type':'post',
@@ -202,6 +275,23 @@ $js =<<<JS
         });
     });
   });
+  function removeline(e) {
+     if(confirm("ต้องการลบรายการนี้ใช่หรือไม่")){
+         
+        if(e.parent().parent().attr('data-var') == ''){
+            e.parent().parent().remove();
+        } 
+        $.ajax({
+           'type':'post',
+           'dataType':'html',
+           'url':"$url_to_del_item",
+           'data': {'item_id':e.attr("data-var")},
+           'success': function(data) {
+             location.reload();
+           }
+        });
+    } 
+  }
   function removepic(e){
    // alert(e.attr("data-var"));return;
     if(confirm("ต้องการลบรูปภาพนี้ใช่หรือไม่")){
