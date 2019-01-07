@@ -178,6 +178,7 @@ $cur_type = 0;
                         </tr>
                         <?php else:?>
                            <?php $i=0;?>
+                           <?php if(count($orderitem)>0):?>
                            <?php foreach ($orderitem as $value):?>
                             <?php $i+=1;?>
                                 <tr data-var="<?=$value->id?>">
@@ -194,6 +195,21 @@ $cur_type = 0;
                                     </td>
                                 </tr>
                            <?php endforeach;?>
+                           <?php else:?>
+                                <tr>
+
+                                    <td style="vertical-align: middle">1</td>
+                                    <td>
+                                        <input type="text" name="items[]" class="form-control line_item">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="qty[]" class="form-control line_qty">
+                                    </td>
+                                    <td>
+                                        <div class="btn btn-danger btn-remove" onclick="removeline($(this))"><i class="fa fa-minus"></i></div>
+                                    </td>
+                                </tr>
+                           <?php endif;?>
                         <?php endif;?>
                         </tbody>
                     </table>
