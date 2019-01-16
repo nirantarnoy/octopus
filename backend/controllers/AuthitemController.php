@@ -307,6 +307,8 @@ class AuthitemController extends Controller
         $auth->add($order_delpic);
         $order_delfile = $auth->createPermission('order/deletefile');
         $auth->add($order_delfile);
+        $order_download = $auth->createPermission('order/download');
+        $auth->add($order_download);
 
 
         $order_permission = $auth->createPermission('ordermodule');
@@ -325,6 +327,7 @@ class AuthitemController extends Controller
         $auth->addChild($order_permission,$order_findtype);
         $auth->addChild($order_permission,$order_delpic);
         $auth->addChild($order_permission,$order_delfile);
+        $auth->addChild($order_permission,$order_download);
 
 
         $manage_order = $auth->createRole('Manage order');
@@ -419,7 +422,7 @@ class AuthitemController extends Controller
 
 
 
-        $auth->assign($admin_role,1);
+        $auth->assign($admin_role,2);
        // $auth->assign($user_role,2);
 
 

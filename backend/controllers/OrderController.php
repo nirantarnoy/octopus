@@ -15,6 +15,7 @@ use yii\imagine\Image;
 use kartik\mpdf\Pdf;
 use yii\filters\AccessControl;
 use yii\web\ForbiddenHttpException;
+use yii\helpers\Url;
 
 /**
  * OrderController implements the CRUD actions for Order model.
@@ -486,6 +487,47 @@ class OrderController extends Controller
                 return 0;
             }
         }
+    }
+    public function actionDownload(){
+        $filename = \Yii::$app->request->post("filename");
+        if($filename != ''){
+          // $path = Yii::getAlias('@web').'/uploads/files/';
+            $path = Url::to('@web/uploads/files/', true);
+            //$path = '@web/uploads/files/';
+           $file = $path.trim($filename);
+           return $file;
+            if (file_exists(Yii::getAlias('@web').'/uploads/files/'.trim($filename))) {
+                return "OK";
+//                ini_set('max_execution_time', 5*60);
+//
+//                header('Content-Description: File Download');
+//
+//                header('Content-Type: application/octet-stream');
+//
+//                //header('Content-Type: '.$mime);
+//
+//                header('Content-Disposition: attachment; filename='.basename($filename));
+//
+//                header('Content-Transfer-Encoding: binary');
+//
+//                header('Expires: 0');
+//
+//                header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+//
+//                header('Pragma: public');
+//
+//                header('Content-Length: ' . filesize($filename));
+//
+//                ob_clean();
+//
+//                flush();
+//
+//                readfile($src);
+//
+//                \Yii::$app->response->xSendFile($file);
+            }
+        }
+        return "";
     }
 
 }

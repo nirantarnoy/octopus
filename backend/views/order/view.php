@@ -149,13 +149,13 @@ $this->registerCss('
                 <?php foreach ($orderfile as $value):?>
                 <?php $i +=1;?>
                      <tr>
-                         <td><?=$i?></td>
-                         <td>
-                             <a href="#"><?=$value->name?></a>
+                         <td style="vertical-align: middle"><?=$i?></td>
+                         <td style="vertical-align: middle">
+                             <a href="../web/uploads/files/<?=$value->name?>" target="_blank"><?=$value->name?></a>
                          </td>
-                         <td>
-                             <div class="btn btn-info"><i class="fa fa-file-o"></i></div>
-                             <div class="btn btn-default"><i class="fa fa-download"></i></div>
+                         <td style="vertical-align: middle">
+<!--                             <div class="btn btn-info"><i class="fa fa-file-o"></i></div>-->
+                             <div class="btn btn-info btn-download" onclick="downloadfile($(this))"><i class="fa fa-download"></i> ดาวน์โหลด</div>
                          </td>
                      </tr>
                  <?php endforeach;?></div>
@@ -214,9 +214,10 @@ $this->registerCss('
 <?php
 $url_to_del_file = Url::to(['order/deletefile'],true);
 $url_to_del_image = Url::to(['order/deleteimage'],true);
+$url_to_download = Url::to(['order/download'],true);
 $js =<<<JS
         $(function() {
-
+          
         });
        function removepic(e){
    // alert(e.attr("data-var"));return;
@@ -231,6 +232,20 @@ $js =<<<JS
                }
             });
         }
+  }
+  function downloadfile(e){
+           var filename = e.closest("tr").find("td:eq(1)").text();
+           alert(filename);
+            $.ajax({
+               'type':'post',
+               'dataType':'html',
+               'url':"$url_to_download",
+               'data': {'filename': filename},
+               'success': function(data) {
+                   alert(data);
+                 //location.reload();
+               }
+            });
   }
 
 JS;
