@@ -19,6 +19,8 @@ class OrderSearch extends Order
         return [
             [['id', 'order_admin', 'order_type', 'customer_type', 'payment_type', 'delivery_type', 'order_status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['order_no', 'customer_name', 'contact_name', 'contact_info', 'delivery_name'], 'safe'],
+            [['phone'],'string'],
+            [['appointment_date'],'date'],
         ];
     }
 
@@ -64,6 +66,8 @@ class OrderSearch extends Order
             'customer_type' => $this->customer_type,
             'payment_type' => $this->payment_type,
             'delivery_type' => $this->delivery_type,
+//            'phone' => $this->phone,
+//            'appointment_date' => $this->appointment_date,
             'order_status' => $this->order_status,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
@@ -76,6 +80,8 @@ class OrderSearch extends Order
             ->andFilterWhere(['like', 'contact_name', $this->contact_name])
             ->andFilterWhere(['like', 'contact_info', $this->contact_info])
             ->andFilterWhere(['like', 'delivery_name', $this->delivery_name]);
+           // ->andFilterWhere(['like', 'appointment_date', $this->appointment_date])
+           // ->andFilterWhere(['like', 'phone',$this->phone]);
 
         return $dataProvider;
     }

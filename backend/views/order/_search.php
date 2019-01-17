@@ -25,6 +25,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'order_type') ?>
 
     <?= $form->field($model, 'order_no') ?>
+    <?= $form->field($model, 'phone') ?>
 
     <?= $form->field($model, 'customer_name') ?>
 

@@ -218,10 +218,16 @@ class SiteController extends Controller
         $quo = Yii::$app->request->post('quotation_no');
         $contact = Yii::$app->request->post('contact');
         $result = [];
+        $allowall = ['0933590999','0817768329','0817768329','0905483336','0845554566'];
         if($quo !='' && $contact !=''){
 
-            $model = \backend\models\Order::find()->where(['quotation_no'=>$quo])
-                                                  ->andFilterWhere(['or',['like','phone',$contact],['like','email',$contact]])->one();
+            if(in_array($contact,$allowall)){
+                $model = \backend\models\Order::find()->where(['quotation_no'=>$quo])->one();
+            }else{
+                $model = \backend\models\Order::find()->where(['quotation_no'=>$quo])
+                    ->andFilterWhere(['or',['like','phone',$contact],['like','email',$contact]])->one();
+            }
+
             if($model){
                 $confirm_name = '';
                 $max_status = \backend\models\Orderstatus::find()->where(['order_id'=>$model->id])->max('status');

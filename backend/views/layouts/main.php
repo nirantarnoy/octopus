@@ -116,6 +116,15 @@ $last_message = \backend\models\Message::find()->where(['status'=>1])->limit(6)-
                                         "icon" => "commenting",
                                         "visible"=> Yii::$app->user->can("message/index")?true:false,
                                     ],
+                                    [
+                                        "label" => "รายงาน",
+                                        "url" => "#",
+                                        "icon" => "list",
+                                        "visible"=> Yii::$app->user->can("message/index")?true:false,
+                                        "items"=>[
+                                            ["label" => "งานติดตั้ง-คิววัดหน้างาน", "url" => ["report/workque"]],
+                                        ]
+                                    ],
 
 
                                 ],
