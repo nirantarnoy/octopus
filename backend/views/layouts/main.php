@@ -48,7 +48,7 @@ $last_message = \backend\models\Message::find()->where(['status'=>1])->limit(6)-
         body{
             /*font-family: "Pridi-Regular";*/
             font-family: "Athiti-Regular";
-            font-size: 14px;
+            font-size: 16px;
         }
         .top-nav{
             font-family: "Pridi-Regular";

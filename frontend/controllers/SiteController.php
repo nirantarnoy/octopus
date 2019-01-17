@@ -218,7 +218,7 @@ class SiteController extends Controller
         $quo = Yii::$app->request->post('quotation_no');
         $contact = Yii::$app->request->post('contact');
         $result = [];
-        $allowall = ['0933590999','0817768329','0817768329','0905483336','0845554566'];
+        $allowall = ['0933590999','0817768329','0817768329','0905483336','0845554566','0613539555'];
         if($quo !='' && $contact !=''){
 
             if(in_array($contact,$allowall)){
