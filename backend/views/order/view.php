@@ -151,11 +151,12 @@ $this->registerCss('
                      <tr>
                          <td style="vertical-align: middle"><?=$i?></td>
                          <td style="vertical-align: middle">
-                             <a href="../web/uploads/files/<?=$value->name?>" target="_blank"><?=$value->name?></a>
+                             <a href="../web/uploads/files/<?=trim($value->name)?>" target="_blank"><?=trim($value->name)?></a>
                          </td>
                          <td style="vertical-align: middle">
 <!--                             <div class="btn btn-info"><i class="fa fa-file-o"></i></div>-->
-                             <div class="btn btn-info btn-download" onclick="downloadfile($(this))"><i class="fa fa-download"></i> ดาวน์โหลด</div>
+                             <a href="<?=Url::to(['order/download','filename'=>$value->name],true)?>" class="btn btn-info"><i class="fa fa-download"></i> ดาวน์โหลด</a>
+<!--                             <div class="btn btn-info btn-download" onclick="downloadfile($(this))"><i class="fa fa-download"></i> ดาวน์โหลด</div>-->
                          </td>
                      </tr>
                  <?php endforeach;?></div>
