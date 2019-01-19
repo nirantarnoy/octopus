@@ -94,8 +94,8 @@ $this->title = 'งานติดตั้ง-คิววัดหน้าง
                 ?>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
+
+            <div class="table-responsive">
                 <?= GridView::widget([
                     'dataProvider' => $dataProvider,
                     'filterModel' => $searchModel,
@@ -175,7 +175,6 @@ $this->title = 'งานติดตั้ง-คิววัดหน้าง
                     ],
                 ]); ?>
             </div>
-        </div>
 <!--        <div class="row">-->
 <!--            <div class="col-lg-12">-->
 <!--                <div class="pull-right">-->
