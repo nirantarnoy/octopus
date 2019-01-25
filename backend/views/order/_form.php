@@ -13,7 +13,9 @@ use kartik\datetime\DateTimePicker;
 /* @var $form yii\widgets\ActiveForm */
 $cur_type = 0;
 
+
 ?>
+
 
 <div class="order-form">
     <div class="x_panel">
@@ -139,6 +141,7 @@ $cur_type = 0;
 
                                 <div class="col-xs-6 col-md-3">
                                     <a href="#" class="thumbnail">
+<!--                                        <img src="../../backend/web/uploads/images/--><?php //echo $value->name?><!--" alt="">-->
                                         <img src="../../backend/web/uploads/images/<?=$value->name?>" alt="">
                                     </a>
                                     <div class="btn btn-default" data-var="<?=$value->id?>" onclick="removepic($(this));">ลบ</div>
@@ -253,6 +256,7 @@ $cur_type = 0;
 </div>
     </div>
 </div>
+<canvas id="output"></canvas>
 <?php
 $url_to_del_pic = Url::to(['order/deletepic'],true);
 $url_to_del_item = Url::to(['order/deleteitem'],true);
@@ -290,6 +294,72 @@ $js =<<<JS
            }
         });
     });
+    
+    
+    $( ".print" ).click(function() {     // evnet click capture icon
+        alert();
+             
+              function crateimage(img, selection){     // function สำหรับจับ event imageselectend
+                  var canvas = document.getElementById('output');
+                  var context = canvas.getContext('2d');
+                  var imageObj = new Image();
+                  var imagename;
+                  
+                  imageObj.onload = function() {
+                     canvas.width = selection.width;
+                     canvas.height = selection.height;
+                     // สร้าง cavans ขึ้นมาให้มตามขนาดที่ user เลือก
+                     context.drawImage(imageObj, selection.x1,selection.y1,selection.width,selection.height,0,0,selection.width,selection.height);
+                     var d = new Date();
+                     // ส่งค่่ารูปให้กับปุ่มบันทึก
+                     $(".saveimg").attr("href",canvas.toDataURL("image/png"));
+                     // กำหนดชื่อไฟล์ตอน save ผมใส่ date เขาไปหลายอันจะได้ไม่ซำกัน
+                     $(".saveimg").attr("download","captue"+d.getDate()+d.getDate()+d.getFullYear()+d.getHours()+d.getMilliseconds());
+                  }    
+                
+                  imageObj.src = img.src;         
+           }
+ 
+           html2canvas($(".screen"), {     // แปลงจาก html เป็น cavans
+                 
+              onrendered: function(canvas) {
+                 
+                 var image = new Image();
+                 var img = '<img id="image_edit" src="'+canvas.toDataURL("image/png")+'">';  // แปลง cavans เป็น image และสร้าง tag img html มาให้ม
+                 var imgselect;
+                 
+                           $(".onscreen").html(img).promise().done(function(){  // ใส่รูปลงใน div class onscreen
+    
+    
+                           
+                               $(".screen").hide();
+                               $(".print").hide();
+                               $(".onscreen").show();
+                               $(".save").show();
+                           
+                               imgselect = $('#image_edit').imgAreaSelect({    // init imgareaselect 
+                                     handles: true,   
+                                     instance: true, 
+                                     show:true,                     
+                                     onSelectEnd: crateimage // จับ event ด้วย function crateimage 
+                           });
+                           
+                           
+                           
+                           $(".save").click(function() {  // จับ event ปุ่ม save ข้อมูล
+                            
+                            imgselect.cancelSelection(); // ล้างค่า img AreaSelect
+                               $(".print").show();
+                               $(".onscreen").hide();
+                               $(".screen").show();
+                               $(this).hide();
+                            }); 
+             });
+            }
+       });
+    });
+    
+    
   });
   function removeline(e) {
      if(confirm("ต้องการลบรายการนี้ใช่หรือไม่")){

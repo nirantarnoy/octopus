@@ -30,16 +30,15 @@ $last_message = \backend\models\Message::find()->where(['status'=>1])->limit(6)-
     <?php $this->head() ?>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!--<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>-->
+    <!--<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>-->
+    <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
+    <!--<link rel="stylesheet" href="/resources/demos/style.css">-->
+    <!--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
+    <!--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
+<!--    <script src="js/html2canvas.js"></script>-->
 
 
-
-    <![endif]-->
     <style>
         head {
             font-family: "Pridi-Regular";
@@ -53,10 +52,171 @@ $last_message = \backend\models\Message::find()->where(['status'=>1])->limit(6)-
         .top-nav{
             font-family: "Pridi-Regular";
         }
+        .screenshotbt{
+
+            background:rgba(0,0,0,.6);
+            width:100%;
+            position: fixed;
+            bottom: 0px;
+            padding:5px;
+            text-align: center;
+            color:#fff;
+            font-size:2em;
+            z-index:2;
+            cursor: pointer;
+
+
+        }
+        .screen{width:100%;}
+        #image_edit{line-height:0;}
+
+        .onscreen{
+
+            background:#fff;
+            width:100%;
+
+            bottom: 0px;
+            text-align: center;
+            color:#fff;
+            overflow-y: auto;
+            height:auto;
+            padding:0;margin:0;
+
+        }
+        #output{
+            display:none;
+        }
+        .save{z-index:99999;}
     </style>
+    <script>
+
+
+        // $(document).ready(function(){
+        //
+        //     $( ".print" ).click(function() {
+        //
+        //         function crateimage(img, selection){
+        //
+        //             //console.log(selection);
+        //             //console.log(img);
+        //
+        //             var canvas = document.getElementById('output');
+        //             var context = canvas.getContext('2d');
+        //             var imageObj = new Image();
+        //             var imagename;
+        //
+        //             //selection.width;
+        //
+        //             imageObj.onload = function() {
+        //
+        //                 canvas.width = selection.width;
+        //                 canvas.height = selection.height;
+        //
+        //                 //alert(selection.width);
+        //                 //alert(selection.height);
+        //                 //alert(selection.x1);
+        //                 //alert(selection.y1);
+        //
+        //                 context.drawImage(imageObj, selection.x1,selection.y1,selection.width,selection.height,0,0,selection.width,selection.height);
+        //
+        //                 console.log(canvas.toDataURL("image/png"));
+        //                 var d = new Date();
+        //                 $(".saveimg").attr("href",canvas.toDataURL("image/png"));
+        //                 $(".saveimg").attr("download","captue"+d.getDate()+d.getDate()+d.getFullYear()+d.getHours()+d.getMilliseconds());
+        //                 //  $("#linkimg").attr("href") = canvas.toDataURL("image/png");
+        //                 //<a id="downloadLnk" download="YourFileName.jpg">Download as image</a>
+        //
+        //             }
+        //
+        //             imageObj.src = img.src;
+        //
+        //
+        //         }
+        //
+        //         html2canvas($(".screen"), {
+        //             onrendered: function(canvas) {
+        //
+        //                 var image = new Image();
+        //                 var img = '<img id="image_edit" src="'+canvas.toDataURL("image/png")+'">';
+        //                 var imgselect;
+        //
+        //                 //console.log(canvas.toDataURL("image/png"));
+        //                 $(".onscreen").html(img).promise().done(function(){
+        //
+        //
+        //
+        //                     $(".screen").hide();
+        //                     $(".print").hide();
+        //                     $(".onscreen").show();
+        //                     $(".save").show();
+        //
+        //                     imgselect = $('#image_edit').imgAreaSelect({
+        //                         handles: true,
+        //                         instance: true,
+        //                         show:true,
+        //                         onSelectEnd: crateimage
+        //                     });
+        //
+        //
+        //                     //imgselect.setSelection(50,50,200,200);
+        //
+        //                     $(".save").click(function() {
+        //
+        //                         imgselect.cancelSelection();
+        //                         $(".print").show();
+        //                         $(".onscreen").hide();
+        //                         $(".screen").show();
+        //                         $(this).hide();
+        //
+        //
+        //
+        //
+        //
+        //                     });
+        //
+        //
+        //
+        //
+        //                 });
+        //
+        //
+        //
+        //
+        //             }
+        //         });
+        //
+        //
+        //     });
+        //
+        //
+        //
+        //
+        //
+        //
+        // });
+
+    </script>
 </head>
 <body class="nav-<?= !empty($_COOKIE['menuIsCollapsed']) && $_COOKIE['menuIsCollapsed'] == 'true' ? 'sm' : 'md' ?>" >
 <?php $this->beginBody(); ?>
+
+<div class="onscreen"></div>
+
+
+
+<div class="screenshotbt print" >
+
+    SCREEN SHOT <span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+
+</div>
+
+<div class="screenshotbt save" style="display:none;">
+    <a class="saveimg" style="color:#fff;display:block;width:100%;" target="_blank">
+        กรุณาลากเมาล์เลืกส่วนที่ต้องการ และ กดบันทึก <span class="	glyphicon glyphicon-save" aria-hidden="true"></span>
+    </a>
+</div>
+
+<div class="screen">
 <div class="container body">
 
     <div class="main_container">
@@ -292,6 +452,9 @@ $last_message = \backend\models\Message::find()->where(['status'=>1])->limit(6)-
 <!--    <div id="notif-group" class="tabbed_notifications"></div>-->
 <!--</div>-->
 <!-- /footer content -->
+</div>
+
+
 <?php $this->endBody(); ?>
 </body>
 </html>
