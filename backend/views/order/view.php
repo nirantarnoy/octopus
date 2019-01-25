@@ -151,7 +151,7 @@ $this->registerCss('
                      <tr>
                          <td style="vertical-align: middle"><?=$i?></td>
                          <td style="vertical-align: middle">
-                             <a href="../web/uploads/files/<?=trim($value->name)?>" target="_blank"><?=trim($value->name)?></a>
+                             <a href="../uploads/files/<?=trim($value->name)?>" target="_blank"><?=trim($value->name)?></a>
                          </td>
                          <td style="vertical-align: middle">
 <!--                             <div class="btn btn-info"><i class="fa fa-file-o"></i></div>-->
