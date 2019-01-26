@@ -278,7 +278,8 @@ class SiteController extends Controller
             $model = new \backend\models\Message();
             $model->title = $title;
             $model->message_type = 0;
-            $model->detail = $message;
+          //  $model->detail = $message;
+            $model->detail_ext = $message;
             $model->status = 0;
             $model->save(false);
         }

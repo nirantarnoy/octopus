@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
           //  'id',
            // 'message_type',
             'title',
-            'detail',
+            'detail_ext',
 //            [
 //                'attribute'=>'status',
 //                'contentOptions' => ['style' => 'vertical-align: middle'],
