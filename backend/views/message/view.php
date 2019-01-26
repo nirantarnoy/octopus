@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             [
                     'attribute'=>'detail_ext',
-                    'format'=>'raw',
+                    'format'=>'html',
                     'value'=> function($data){
                        $arr = explode(':',$data->detail_ext);
                        $ti = '';
