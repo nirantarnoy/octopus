@@ -8,13 +8,14 @@
 use yii\helpers\Html;
 use backend\assets\AppAsset;
 use yii\widgets\Breadcrumbs;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 
 $bundle = yiister\gentelella\assets\Asset::register($this);
 Yii::$app->name = "Octopus";
 
-$last_message = \backend\models\Message::find()->where(['status'=>1])->limit(6)->orderBy(['created_at'=>SORT_DESC])->all();
+$last_message = \backend\models\Message::find()->where(['status'=>0])->limit(6)->orderBy(['created_at'=>SORT_DESC])->all();
 
 ?>
 <?php $this->beginPage(); ?>
@@ -377,11 +378,11 @@ $last_message = \backend\models\Message::find()->where(['status'=>1])->limit(6)-
                                                 </span>
                                                 <span>
                                                     <span><?=$data->title?></span>
-                                                    <span class="time">3 mins ago</span>
+<!--                                                    <span class="time">3 mins ago</span>-->
                                                 </span>
-                                                <span class="message">
-                                                     <?=$data->title?>
-                                                </span>
+<!--                                                <span class="message">-->
+<!--                                                     --><?php //echo $data->title?>
+<!--                                                </span>-->
                                             </a>
                                         </li>
 

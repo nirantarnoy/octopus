@@ -124,6 +124,7 @@ class SiteController extends Controller
             $installcomplete = \backend\models\Order::find()->where(['order_status'=>[20]])->all();
         }
 
+        //$system_message = \backend\models\Message::find()->where(['status'=>0])->all();
 
 
         return $this->render('index_2',[
@@ -146,7 +147,8 @@ class SiteController extends Controller
                 'complete'=>$complete,
                 'appoint'=>$appoint,
                 'install'=>$install,
-                'installcom'=>$installcomplete
+                'installcom'=>$installcomplete,
+              //  'system_message' => $system_message
             ]
             );
     }
@@ -206,24 +208,35 @@ class SiteController extends Controller
         ]);
     }
     public function calOrder(){
-      $model = \backend\models\Order::find()->all();
+      $model = \backend\models\Order::find()->where(['!=','order_status',[11,21]])->all();
       $list = [];
       if($model){
           foreach($model as $value){
-              if(1>1) {
-                  array_push($list, ['order_no' => $value->order_no, 'req_date' => $value->appoinment_date]);
+              $ndate = strtotime(date('d/m/Y'));
+              $sdate = strtotime($value->appointment_date);
+              $appoint_alert = ($ndate - $sdate)/(60*60*24);
+              if($appoint_alert <= 7) {
+                  array_push($list, ['order_no' => $value->order_no, 'req_date' => $value->appointment_date]);
               }
           }
       }
       if(count($list)>0){
           $this->sendnotify($list);
           $this->createMessage($list);
+          return false;
       }
     }
     public function sendnotify($list){
 
         if(count($list)>0) {
-            $message = 'ทดสอบส่งข้อความจากระบบตรวจสอบสถานะใบสั่งผลิต';
+            $title = 'แจ้งเตือนออเดอร์ใกล้ครบกำหนดส่ง ';
+            $text = '';
+            for($i=0;$i<=count($list)-1;$i++){
+                $order = $list[$i]['order_no'];
+                $text = $text.$order." ".$list[$i]['req_date']."\r\n";
+            }
+
+            $message = $title."\r\n".$text;
 
             $line_api = 'https://notify-api.line.me/api/notify';
             $line_token = 'qy65Mp76Uar44cybVMXvprCiSW61zJjbRQdpJwh48CM'; // octopus
@@ -249,10 +262,24 @@ class SiteController extends Controller
     }
     public function createMessage($list){
         if(count($list)>0){
+
+            $title = 'แจ้งเตือนออเดอร์ใกล้ครบกำหนดส่ง ';
+            $text = '';
+            for($i=0;$i<=count($list)-1;$i++){
+                $order = $list[$i]['order_no'];
+                $text = $text.$order." ".$list[$i]['req_date']."\r\n";
+            }
+
+            $message = $title."\r\n".$text;
+
+            $model = \backend\models\Message::find()->where(['detail'=>$message])->one();
+            if($model){return false;}
+
             $model = new \backend\models\Message();
-            $model->title = "แจ้งเตือน";
+            $model->title = $title;
             $model->message_type = 0;
-            $model->detail = $list[0]['order_no'];
+            $model->detail = $message;
+            $model->status = 0;
             $model->save(false);
         }
     }

@@ -79,9 +79,17 @@ class MessageController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $model = \backend\models\Message::find()->where(['id'=>$id])->one();
+        if($model){
+            $model->status = 1;
+            if($model->save()){
+                return $this->render('view', [
+                    'model' => $this->findModel($id),
+                ]);
+            }
+        }
+
+
     }
 
     /**
