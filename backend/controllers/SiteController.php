@@ -208,7 +208,7 @@ class SiteController extends Controller
         ]);
     }
     public function calOrder(){
-      $model = \backend\models\Order::find()->where(['!=','order_status',[11,21]])->all();
+      $model = \backend\models\Order::find()->where(['AND',['!=','order_status',[11,21]],['!=','appointment_date','NULL']])->all();
       $list = [];
       if($model){
           foreach($model as $value){
@@ -221,7 +221,7 @@ class SiteController extends Controller
           }
       }
       if(count($list)>0){
-          $this->sendnotify($list);
+          //$this->sendnotify($list);
           $this->createMessage($list);
           return false;
       }
@@ -267,12 +267,12 @@ class SiteController extends Controller
             $text = '';
             for($i=0;$i<=count($list)-1;$i++){
                 $order = $list[$i]['order_no'];
-                $text = $text.$order." ".$list[$i]['req_date']."\r\n";
+                $text = $text.$order." ".date('d/m/Y',strtotime($list[$i]['req_date'])).":";
             }
 
-            $message = $title."\r\n".$text;
+            $message = $title."\r\n".":".$text;
 
-            $model = \backend\models\Message::find()->where(['detail'=>$message])->one();
+            $model = \backend\models\Message::find()->where(['detail_ext'=>$message])->one();
             if($model){return false;}
 
             $model = new \backend\models\Message();

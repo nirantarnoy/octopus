@@ -32,7 +32,26 @@ $this->params['breadcrumbs'][] = $this->title;
           //  'id',
            // 'message_type',
             'title',
-            'detail_ext',
+            [
+                    'attribute'=>'detail_ext',
+                    'format'=>'raw',
+                    'value'=> function($data){
+                       $arr = explode(':',$data->detail_ext);
+                       $ti = '';
+                       $body_text = '';
+                       if(count($arr)){
+                           for($i=0;$i<=count($arr)-1;$i++){
+                               if($i==0){
+                                   $ti = $arr[$i];
+                               }else{
+                                   $body_text.=$body_text."<div class='label label-warning'>".$arr[$i]."</div>"." ";
+                               }
+                           }
+                       }
+                        return $ti."<br />".$body_text;
+                    }
+
+            ],
 //            [
 //                'attribute'=>'status',
 //                'contentOptions' => ['style' => 'vertical-align: middle'],
