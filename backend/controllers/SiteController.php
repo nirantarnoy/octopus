@@ -208,28 +208,71 @@ class SiteController extends Controller
         ]);
     }
     public function calOrder(){
-      $model = \backend\models\Order::find()->where(['AND',['!=','order_status',[11,21]],['!=','appointment_date','NULL']])->all();
-      $list = [];
-      if($model){
-          foreach($model as $value){
-              $ndate = strtotime(date('d/m/Y'));
-              $sdate = strtotime($value->appointment_date);
-              $appoint_alert = ($ndate - $sdate)/(60*60*24);
-              if($appoint_alert <= 7) {
-                  array_push($list, ['order_no' => $value->order_no, 'req_date' => $value->appointment_date]);
-              }
-          }
-      }
-      if(count($list)>0){
-          //$this->sendnotify($list);
-          $this->createMessage($list);
-          return false;
-      }
+      $this->calFor24deliver();
+      $this->calForAfter48();
+      $this->calForCompeted();
+    }
+    public function calFor24deliver(){
+        $list = [];
+        $model = \backend\models\Order::find()->where(['AND',['!=','order_status',[11,21]],['!=','appointment_date','NULL']])->all();
+        if($model){
+            foreach($model as $value){
+                $ndate = strtotime(date('d/m/Y'));
+                $sdate = strtotime($value->appointment_date);
+                $appoint_alert = ($ndate - $sdate)/(60*60*24);
+                if($appoint_alert <= 1) {
+                    array_push($list, ['title'=>\backend\helpers\NotifyType::getTypeById(1),'order_no' => $value->order_no, 'req_date' => $value->appointment_date]);
+                }
+            }
+        }
+        if(count($list)>0){
+            //$this->sendnotify($list);
+            $this->createMessage($list);
+            return false;
+        }
+    }
+    public function calForAfter48(){
+        $list = [];
+        $model = \backend\models\Order::find()->where(['order_status'=>[10,20]])->all();
+        if($model){
+            foreach($model as $value){
+                $ndate = strtotime(date('d/m/Y'));
+                $sdate = strtotime($value->appointment_date);
+                $appoint_alert = ($ndate - $sdate)/(60*60*24);
+                if($appoint_alert >= 2) {
+                    array_push($list, ['title'=>\backend\helpers\NotifyType::getTypeById(2),'order_no' => $value->order_no, 'req_date' => $value->appointment_date]);
+                }
+            }
+        }
+        if(count($list)>0){
+            //$this->sendnotify($list);
+            $this->createMessage($list);
+            return false;
+        }
+    }
+    public function calForCompeted(){
+   //     $list = [];
+   //     $model = \backend\models\Order::find()->where(['order_status'=>[10,20]])->all();
+//        if($model){
+//            foreach($model as $value){
+//                $ndate = strtotime(date('d/m/Y'));
+//                $sdate = strtotime($value->appointment_date);
+//                $appoint_alert = ($ndate - $sdate)/(60*60*24);
+//                if($appoint_alert >= 2) {
+//                    array_push($list, ['title'=>\backend\helpers\NotifyType::getTypeById(2),'order_no' => $value->order_no, 'req_date' => $value->appointment_date]);
+//                }
+//            }
+//        }
+//        if(count($list)>0){
+//            //$this->sendnotify($list);
+//            $this->createMessage($list);
+//            return false;
+//        }
     }
     public function sendnotify($list){
 
         if(count($list)>0) {
-            $title = 'แจ้งเตือนออเดอร์ใกล้ครบกำหนดส่ง ';
+            $title = $list[0]['title'];
             $text = '';
             for($i=0;$i<=count($list)-1;$i++){
                 $order = $list[$i]['order_no'];
@@ -263,7 +306,7 @@ class SiteController extends Controller
     public function createMessage($list){
         if(count($list)>0){
 
-            $title = 'แจ้งเตือนออเดอร์ใกล้ครบกำหนดส่ง ';
+            $title = $list[0]['title'];
             $text = '';
             for($i=0;$i<=count($list)-1;$i++){
                 $order = $list[$i]['order_no'];
