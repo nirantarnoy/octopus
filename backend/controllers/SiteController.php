@@ -226,7 +226,7 @@ class SiteController extends Controller
             }
         }
         if(count($list)>0){
-            //$this->sendnotify($list);
+            $this->sendnotify($list);
             $this->createMessage($list);
             return false;
         }
@@ -245,7 +245,7 @@ class SiteController extends Controller
             }
         }
         if(count($list)>0){
-            //$this->sendnotify($list);
+            $this->sendnotify($list);
             $this->createMessage($list);
             return false;
         }
