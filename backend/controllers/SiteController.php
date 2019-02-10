@@ -81,7 +81,7 @@ class SiteController extends Controller
 
          //   $received_amt = \backend\models\Prodrecline::find()->where(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->sum('qty * price');
 
-            $this->calOrder();
+            //$this->calOrder();
             $order_all = \backend\models\Order::find()->where(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
             $order_late = \backend\models\Order::find()->where(['>','appointment_date',strtotime(date('d-m-Y'))])->all();
             $order_process = \backend\models\Order::find()->where(['>','order_status',2])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
@@ -102,7 +102,7 @@ class SiteController extends Controller
             $install = \backend\models\Order::find()->where(['order_status'=>[19]])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
             $installcomplete = \backend\models\Order::find()->where(['order_status'=>[20]])->andFilterWhere(['BETWEEN','created_at',strtotime($from_date),strtotime($to_date)])->all();
         }else{
-            $this->calOrder();
+            //$this->calOrder();
             $order_all = \backend\models\Order::find()->all();
             $order_late = \backend\models\Order::find()->where(['>','appointment_date',strtotime(date('d-m-Y'))])->all();
             $order_process = \backend\models\Order::find()->where(['>','order_status',2])->all();
@@ -123,6 +123,8 @@ class SiteController extends Controller
             $install = \backend\models\Order::find()->where(['order_status'=>[19]])->all();
             $installcomplete = \backend\models\Order::find()->where(['order_status'=>[20]])->all();
         }
+
+        $this->calOrder();
 
         //$system_message = \backend\models\Message::find()->where(['status'=>0])->all();
 
