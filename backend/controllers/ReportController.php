@@ -16,7 +16,9 @@ class ReportController extends \yii\web\Controller
 
         $searchModel = new \backend\models\OrderSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andFilterWhere(['order_type'=>1]);
         $dates = Yii::$app->request->queryParams;
+
         if(!empty($dates['OrderSearch'])){
             $dataProvider->query->andFilterWhere(['DATE(appointment_date)'=>$dates['OrderSearch']['appointment_date']])
                                ->andFilterWhere(['like','phone',$dates['OrderSearch']['phone']]);

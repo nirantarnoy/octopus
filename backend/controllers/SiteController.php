@@ -210,9 +210,9 @@ class SiteController extends Controller
         ]);
     }
     public function calOrder(){
-      $this->calFor24deliver();
-      $this->calForAfter48();
-      $this->calForCompeted();
+      //$this->calFor24deliver();
+      //$this->calForAfter48();
+      //$this->calForCompeted();
     }
     public function calFor24deliver(){
         $list = [];
