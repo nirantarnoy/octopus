@@ -124,7 +124,7 @@ class SiteController extends Controller
             $installcomplete = \backend\models\Order::find()->where(['order_status'=>[20]])->all();
         }
 
-        $this->calOrder();
+       // $this->calOrder();
 
         //$system_message = \backend\models\Message::find()->where(['status'=>0])->all();
 
@@ -213,6 +213,11 @@ class SiteController extends Controller
       $this->calFor24deliver();
       $this->calForAfter48();
       $this->calForCompeted();
+    }
+    public function actionCalorder(){
+        $this->calFor24deliver();
+        $this->calForAfter48();
+        $this->calForCompeted();
     }
     public function calFor24deliver(){
         $list = [];
